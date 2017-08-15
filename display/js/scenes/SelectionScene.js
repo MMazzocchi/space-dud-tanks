@@ -62,7 +62,7 @@ var SelectionScene = function(game, controller, width, height) {
 
     controller.on('start', function(value) {
       if(value === 1) {
-//        game.setScene(new FlightScene(game, ship, controller, width, height));
+        game.setScene(new ArenaScene(game, controller, tank, width, height));
       }
     });
   };
