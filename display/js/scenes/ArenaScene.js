@@ -17,11 +17,17 @@ var ArenaScene = function(game, controller, tank, width, height) {
 
   function setup() {
     JSONLoader.load('/json/arena.json').then(function(model) {
-      scene.add(model);
+//      scene.add(model);
       arena = model;
+
+      return CubeTextureLoader.load('/cube_textures/ame_iceflats/');
+
+    }).then(function(texture) {
+      scene.background = texture;
       setupScene();
+
     }).catch(function(e) {
-      console.error("Could not load arena: "+e);
+      console.error("Could not setup: "+e);
     });
   };
 
