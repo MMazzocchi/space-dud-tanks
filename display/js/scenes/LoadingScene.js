@@ -1,5 +1,5 @@
-var LoadingScene = function(game, controller, width, height) {
-  var that = new Scene(width, height);
+var LoadingScene = function(game, controller) {
+  var that = new Scene();
 
   // Fields
   var controller = new Controller(client);
@@ -10,7 +10,7 @@ var LoadingScene = function(game, controller, width, height) {
 
   // Public functions
   that.onLoad = function(callback) {
-    on_load = callback
+    on_load = callback;
   };
 
   that.setProgress = function(progress) {

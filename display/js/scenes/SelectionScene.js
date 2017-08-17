@@ -1,5 +1,5 @@
-var SelectionScene = function(game, controller, width, height) {
-  var that = new Scene(width, height);
+var SelectionScene = function(game, controller) {
+  var that = new Scene();
 
   // Fields
   var camera = that.getCamera();
@@ -62,7 +62,7 @@ var SelectionScene = function(game, controller, width, height) {
 
     controller.on('start', function(value) {
       if(value === 1) {
-        game.setScene(new ArenaScene(game, controller, tank, width, height));
+        game.setScene(new ArenaScene(game, controller, tank));
       }
     });
   };

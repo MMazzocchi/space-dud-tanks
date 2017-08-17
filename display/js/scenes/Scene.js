@@ -1,9 +1,9 @@
-var Scene = function(width, height) {
+var Scene = function() {
   var that = {};
 
   // Fields
   var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
+  var camera = new THREE.PerspectiveCamera(75, 0.5, 0.1, 10000);
   var controls = undefined;
 
   // Public functions
@@ -19,8 +19,8 @@ var Scene = function(width, height) {
     renderer.render(scene, camera);
   };
 
-  that.resize = function(new_width, new_height) {
-    camera.aspect = new_width / new_height;
+  that.resize = function(width, height) {
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
   };
 

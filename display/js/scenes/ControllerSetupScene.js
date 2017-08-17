@@ -1,5 +1,5 @@
-var ControllerSetupScene = function(game, client, width, height) {
-  var that = new Scene(width, height);
+var ControllerSetupScene = function(game, client) {
+  var that = new Scene();
 
   // Fields
   var controller = new Controller(client);
@@ -28,7 +28,7 @@ var ControllerSetupScene = function(game, client, width, height) {
         sprite.addEvent("");
         controller.activate(); 
 
-        game.setScene(new SelectionScene(game, controller, width, height));
+        game.setScene(new SelectionScene(game, controller));
       }
     };
 

@@ -1,5 +1,5 @@
-var ArenaScene = function(game, controller, tank, width, height) {
-  var that = new Scene(width, height);
+var ArenaScene = function(game, controller, tank) {
+  var that = new Scene();
 
   // Fields
   var camera = that.getCamera();

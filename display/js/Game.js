@@ -1,9 +1,14 @@
-var Game = function(width, height, client) {
+var Game = function(current_width, current_height, client) {
   var that = {};
 
   // Fields
-  var scene = new ControllerSetupScene(that, client, width, height);
+  var width = current_width;
+  var height = current_height;
   var mobile = false;
+
+  var scene = new ControllerSetupScene(that, client);
+  scene.resize(width, height);
+
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize(width, height);
 
@@ -35,7 +40,10 @@ var Game = function(width, height, client) {
   };
 
   // Public functions
-  that.setSize = function(width, height) {
+  that.setSize = function(new_width, new_height) {
+    width = new_width;
+    height = new_height;
+
     renderer.setSize(width, height);
     scene.resize(width, height);
   };
@@ -44,6 +52,8 @@ var Game = function(width, height, client) {
 
   that.setScene = function(new_scene) {
     scene = new_scene;
+    scene.resize(width, height);
+
     if(mobile === true) {
       scene.setupForMobile();
     }
