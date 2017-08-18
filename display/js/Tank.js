@@ -16,6 +16,7 @@ var Tank = function() {
     var throttle = 0;
     var left = 0;
     var right = 0;
+    var health = 10;
 
     // Public functions
     that.getModel = function() {
@@ -67,6 +68,10 @@ var Tank = function() {
 
       var rot = left - right;
       model.rotation.y += rot*ROT_COEF;
+    };
+
+    that.getHealth = function() {
+      return health;
     };
 
     return that;

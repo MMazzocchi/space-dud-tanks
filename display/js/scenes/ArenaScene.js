@@ -4,7 +4,7 @@ var ArenaScene = function(game, controller, tank) {
   // Fields
   var camera = that.getCamera();
   var scene = that.getScene();
-  var hud = new Hud();
+  var hud = new Hud(tank);
   var tank_model = tank.resetModel();
   var arena = undefined;
 
@@ -25,7 +25,7 @@ var ArenaScene = function(game, controller, tank) {
     camera.position.z -= 3.5;
 
     var sprite = hud.getSprite();
-    sprite.position.z -= 1;
+    sprite.position.z -= 0.5;
     camera.add(sprite);
 
     scene.add(tank_model);
@@ -63,7 +63,7 @@ var ArenaScene = function(game, controller, tank) {
   // Public functions
   that.renderStep = function() {
     tank.step();
-    hud.draw();
+    hud.step();
   };
 
   setup();
