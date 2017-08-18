@@ -4,7 +4,7 @@ var ArenaScene = function(game, controller, tank) {
   // Fields
   var camera = that.getCamera();
   var scene = that.getScene();
-  var crosshair = new CrosshairSprite();
+  var hud = new Hud();
   var tank_model = tank.resetModel();
   var arena = undefined;
 
@@ -21,10 +21,10 @@ var ArenaScene = function(game, controller, tank) {
 
     tank.setBarrelVisible(false);
     tank_model.add(camera);
-    camera.position.y += 10;
+    camera.position.y += 7;
     camera.position.z -= 3.5;
 
-    var sprite = crosshair.getSprite();
+    var sprite = hud.getSprite();
     sprite.position.z -= 1;
     camera.add(sprite);
 
@@ -63,6 +63,7 @@ var ArenaScene = function(game, controller, tank) {
   // Public functions
   that.renderStep = function() {
     tank.step();
+    hud.draw();
   };
 
   setup();
