@@ -1,7 +1,8 @@
 var Tank = function() {
 
-  const MAX_SPEED = 0.5;
+  const MAX_SPEED = 0.6;
   const SPEED_COEF = 0.005;
+  const ROT_COEF = 0.01;
   const DECAY = 0.01;
   const FORWARD = new THREE.Vector3(0, 0, -1);
 
@@ -13,6 +14,8 @@ var Tank = function() {
     var barrel = model.children[0];
     var speed = 0;
     var throttle = 0;
+    var left = 0;
+    var right = 0;
 
     // Public functions
     that.getModel = function() {
@@ -39,6 +42,14 @@ var Tank = function() {
       throttle = value;
     };
 
+    that.left = function(value) {
+      left = value;
+    };
+
+    that.right = function(value) {
+      right = value;
+    };
+
     that.step = function() {
       if(throttle === 0) {
         speed -= DECAY;
@@ -48,12 +59,14 @@ var Tank = function() {
 
       if(speed > MAX_SPEED) {
         speed = MAX_SPEED;
-        console.log("MAX!");
       } else if(speed < 0) {
         speed = 0;
       }
 
       model.translateOnAxis(FORWARD, speed);
+
+      var rot = left - right;
+      model.rotation.y += rot*ROT_COEF;
     };
 
     return that;

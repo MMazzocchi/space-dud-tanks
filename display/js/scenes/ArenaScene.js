@@ -34,6 +34,8 @@ var ArenaScene = function(game, controller, tank) {
   function setupController() {
     controller.resetEventMappings();
     controller.on('throttle', tank.throttle);
+    controller.on('right', tank.right);
+    controller.on('left', tank.left);
   };
 
   function setup() {
