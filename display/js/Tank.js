@@ -4,7 +4,7 @@ var Tank = function() {
   const SPEED_COEF = 0.005;
   const ROT_COEF = 0.01;
   const DECAY = 0.01;
-  const FORWARD = new THREE.Vector3(0, 0, -1);
+  const FORWARD = new THREE.Vector3(0, 0, 1);
 
   function TankDef(mesh) {
     var that = {};

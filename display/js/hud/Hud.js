@@ -6,6 +6,8 @@ var Hud = function(tank) {
   canvas.width = 512;
   canvas.height = 512;
 
+  const CH_WIDTH = 10;
+
   var ctx = canvas.getContext('2d');
   var map = new THREE.Texture(canvas);
   var mat = new THREE.SpriteMaterial({ 'map': map });
@@ -19,7 +21,7 @@ var Hud = function(tank) {
 
     ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
-      ctx.lineWidth = 10;
+      ctx.lineWidth = 5;
       ctx.strokeStyle = '#00FF00';
       ctx.globalAlpha = 0.5;
 
@@ -28,7 +30,7 @@ var Hud = function(tank) {
          var theta2 = start_theta + d_theta - gap_theta;
 
          ctx.beginPath();
-           ctx.arc(0, 0, 35, theta1, theta2);
+           ctx.arc(0, 0, 1.5*CH_WIDTH, theta1, theta2);
          ctx.stroke();
 
          start_theta += d_theta;
@@ -39,19 +41,19 @@ var Hud = function(tank) {
   function drawCrosshair() {
     ctx.save();
       ctx.strokeStyle = '#FF0000';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 2;
       ctx.globalAlpha = 0.5;
       ctx.translate(canvas.width / 2, canvas.height / 2);
 
       ctx.beginPath();
-        ctx.moveTo(-20, 0);
-        ctx.lineTo(20, 0);
+        ctx.moveTo(-CH_WIDTH, 0);
+        ctx.lineTo(CH_WIDTH, 0);
 
-        ctx.moveTo(0, -20);
-        ctx.lineTo(0, 20);
+        ctx.moveTo(0, -CH_WIDTH);
+        ctx.lineTo(0, CH_WIDTH);
 
         ctx.moveTo(0, 0);
-        ctx.arc(0, 0, 20, 0, 2*Math.PI);
+        ctx.arc(0, 0, CH_WIDTH, 0, 2*Math.PI);
 
       ctx.stroke();
     ctx.restore();
