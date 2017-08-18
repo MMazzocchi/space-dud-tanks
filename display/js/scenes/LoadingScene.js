@@ -1,25 +1,29 @@
-var LoadingScene = function(game, controller) {
+var LoadingScene = function(game, next_scene) {
   var that = new Scene();
 
   // Fields
-  var controller = new Controller(client);
   var camera = that.getCamera();
   var scene = that.getScene();
-  var progress = 0;
-  var on_load = undefined;
+  var sprite = new LoadingSprite();
 
-  // Public functions
-  that.onLoad = function(callback) {
-    on_load = callback;
-  };
+  // Private functions
+  function handleProgress(progress) {
+    sprite.update(progress);
 
-  that.setProgress = function(progress) {
-    console.log(progress);
-
-    if(on_load !== undefined) {
-      on_load(progress);
+    if(progress >= 100) {
+      game.setScene(next_scene);
     }
   };
 
-  return left;
+  function setup() {
+    next_scene.onProgress(handleProgress);
+
+    camera.position.z += 1.2;
+    scene.add(sprite.getSprite());
+    sprite.update();
+  };
+
+  setup();
+
+  return that;
 };

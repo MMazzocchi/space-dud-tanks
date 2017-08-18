@@ -62,7 +62,9 @@ var SelectionScene = function(game, controller) {
 
     controller.on('start', function(value) {
       if(value === 1) {
-        game.setScene(new ArenaScene(game, controller, tank));
+        game.setScene(
+          new LoadingScene(game,
+            new ArenaScene(game, controller, tank)));
       }
     });
   };

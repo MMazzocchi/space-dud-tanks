@@ -1,5 +1,5 @@
 var ArenaScene = function(game, controller, tank) {
-  var that = new Scene();
+  var that = new SceneWithLoading();
 
   // Fields
   var camera = that.getCamera();
@@ -13,7 +13,6 @@ var ArenaScene = function(game, controller, tank) {
 
     var am_light = new THREE.AmbientLight( 0x707070 );
     scene.add(am_light);
-
 
     var dir_light = new THREE.DirectionalLight( 0xf9dfae, 0.5 );
     dir_light.position.x = 0.5;
@@ -29,11 +28,16 @@ var ArenaScene = function(game, controller, tank) {
       scene.add(model);
       arena = model;
 
+      that.setProgress(50);
+
       return CubeTextureLoader.load('/cube_textures/ame_iceflats/');
 
     }).then(function(texture) {
       scene.background = texture;
+
       setupScene();
+
+      that.setProgress(100);
 
     }).catch(function(e) {
       console.error("Could not setup: "+e);
