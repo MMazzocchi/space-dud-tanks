@@ -31,6 +31,11 @@ var ArenaScene = function(game, controller, tank) {
     scene.add(tank_model);
   };
 
+  function setupController() {
+    controller.resetEventMappings();
+    controller.on('throttle', tank.throttle);
+  };
+
   function setup() {
     JSONLoader.load('/json/arena.json').then(function(model) {
       scene.add(model);
@@ -44,6 +49,7 @@ var ArenaScene = function(game, controller, tank) {
       scene.background = texture;
 
       setupScene();
+      setupController();
 
       that.setProgress(100);
 
@@ -53,7 +59,9 @@ var ArenaScene = function(game, controller, tank) {
   };
 
   // Public functions
-  that.renderStep = function() {};
+  that.renderStep = function() {
+    tank.step();
+  };
 
   setup();
 
