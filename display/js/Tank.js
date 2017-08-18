@@ -5,6 +5,7 @@ var Tank = function() {
 
     // Fields
     var model = mesh;
+    var barrel = model.children[0];
 
     // Public functions
     that.getModel = function() {
@@ -21,6 +22,10 @@ var Tank = function() {
       model.scale = new THREE.Vector3(1, 1, 1);
 
       return model;
+    };
+
+    that.setBarrelVisible = function(visible) {
+      barrel.visible = visible;
     };
 
     return that;

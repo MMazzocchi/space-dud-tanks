@@ -9,8 +9,6 @@ var ArenaScene = function(game, controller, tank) {
 
   // Private functions
   function setupScene() {
-    camera.position.y += 10;
-
     var am_light = new THREE.AmbientLight( 0x707070 );
     scene.add(am_light);
 
@@ -20,6 +18,9 @@ var ArenaScene = function(game, controller, tank) {
     dir_light.position.z = 0.5;
     scene.add(dir_light);
 
+    tank.setBarrelVisible(false);
+    tank_model.add(camera);
+    camera.position.y += 10;
     scene.add(tank_model);
   };
 
