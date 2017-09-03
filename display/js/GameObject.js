@@ -6,6 +6,7 @@ var GameObject = function(model) {
   bounding_box.setFromObject(model);
 
   var step_functions = [];
+  var done = false;
 
   // Public functions
   that.resetModel = function() {
@@ -46,6 +47,14 @@ var GameObject = function(model) {
 
   that.getBoundingBox = function() {
     return bounding_box;
+  };
+
+  that.isDone = function () {
+    return done;
+  };
+
+  that.done = function() {
+    done = true;
   };
 
   that.step = function() {

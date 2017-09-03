@@ -8,9 +8,27 @@ var Shot = function() {
     var model = new THREE.Mesh(geometry, materials);
     var that = new GameObject(model);
 
-    that.setX(x);
-    that.setY(y);
-    that.setZ(z);
+    // Fields
+    var life = 200;
+
+    // Private methods
+    function step() {
+      if(life === 0) {
+        that.done();
+      } else {
+        life -= 1;
+      }
+    };
+
+    function setup() {
+      that.setX(x);
+      that.setY(y);
+      that.setZ(z);
+
+      that.addStepFunction(step);
+    }
+
+    setup();
 
     return that;
   };

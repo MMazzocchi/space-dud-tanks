@@ -7,6 +7,7 @@ var ArenaScene = function(game, controller, tank) {
   var hud = new Hud(tank);
   var tank_model = tank.resetModel();
   var arena = undefined;
+  var shots = [];
 
   // Private functions
   function setupScene() {
@@ -67,10 +68,21 @@ var ArenaScene = function(game, controller, tank) {
     tank.step();
     hud.step();
 
-    var shots = tank.getNewShots();
-    for(var i=0; i<shots.length; i++) {
-      scene.add(shots[i].getModel());
+    for(var i=shots.length-1; i >= 0; i--) {
+      shots[i].step();
+
+      if(shots[i].isDone() === true) {
+        scene.remove(shots[i].getModel());
+        shots.splice(i, 1);
+      }
     }
+
+    var new_shots = tank.getNewShots();
+    for(var i=0; i<new_shots.length; i++) {
+      scene.add(new_shots[i].getModel());
+    }
+
+    shots = shots.concat(new_shots);
   };
 
   setup();
