@@ -43,11 +43,15 @@ var Controller = (function() {
       };
     };
 
-    that.setNextEvent = function(event_type) {
+    that.setNextEvent = function(event_type, callback) {
       player.onControllerEvent(function(data) {
         if(controller_mappings.hasMappedEvent(data) === false) {
           controller_mappings.setMappedEvent(data, event_type);
           player.onControllerEvent(undefined);
+
+          if(callback !== undefined) {
+            callback(data, event_type);
+          }
         }
       });
     };
