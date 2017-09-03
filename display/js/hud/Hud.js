@@ -13,10 +13,10 @@ var Hud = function(tank) {
   var mat = new THREE.SpriteMaterial({ 'map': map });
 
   var ready_to_fire = tank.readyToFire();
+  var health = tank.getHealth();
 
   // Private methods
   function drawHealth() {
-    var health = tank.getHealth();
     var start_theta = -(Math.PI / 2);
     var d_theta = (2 * Math.PI) / 10;
     var gap_theta = Math.PI / 50;
@@ -82,6 +82,11 @@ var Hud = function(tank) {
 
     if(tank.readyToFire() !== ready_to_fire) {
       ready_to_fire = !ready_to_fire;
+      update = true;
+    }
+
+    if(tank.getHealth() !== health) {
+      health = tank.getHealth();
       update = true;
     }
 
