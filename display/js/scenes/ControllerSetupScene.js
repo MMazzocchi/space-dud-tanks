@@ -8,12 +8,24 @@ var ControllerSetupScene = function(game, client) {
   var sprite = new ControllerSetupSprite();
 
   // Private functions
+  function setup() {
+    console.log("Registering for events...");
+
+    client.onEventType('need_controller_event', function(data) {
+      sprite.addEvent(data.type);
+    });
+
+    console.log("Registered.");
+    setupScene();
+  };
+
   function setupScene() {
     camera.position.z += 1.2;
     scene.add(sprite.getSprite());
     sprite.update();
   };
 
+/*
   function assignControls() {
 
     var event_types = controller.getEventTypes();
@@ -34,12 +46,12 @@ var ControllerSetupScene = function(game, client) {
 
     callback();
   };
+*/
 
   // Public functions
   that.setupForMobile = function() {};
 
-  setupScene();
-  assignControls();
+  setup();
 
   return that;
 };

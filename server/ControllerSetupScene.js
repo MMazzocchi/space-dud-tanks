@@ -9,26 +9,32 @@ var ControllerSetupScene = function(player, event_types) {
 
   // Public functions
   that.start = function() {
-/*
+    console.log("Starting the controller setup scene!!");
+
     var index = 0;
 
     function callback() {
+      console.log("Callback!");
       var type = event_types[index];
       index += 1;
 
-      // TODO: Communicate with client
+      console.log("Sending "+type+"...");
+      player.sendEventToConsumers({
+        'event_type': 'need_controller_event',
+        'type': type
+      });
+
+      console.log("Sent!");
 
       if(index < event_types.length) {
+        console.log("Waiting for next controller event...");
         controller.setNextEvent(type, callback);
       } else {
-
-        // TODO: Pass on the controller?
         controller.setNextEvent(type, that.next);
       }
     }
 
     callback();
-*/
   };
 
   return that;
