@@ -6,7 +6,6 @@ var ArenaScene = function(game, client) {
   var scene = that.getScene();
   var hud = new Hud();
   var tank_model = new THREE.Object3D(); //tank.resetModel();
-  var arena = undefined;
   var shots = [];
 
   // Private functions
@@ -33,20 +32,19 @@ var ArenaScene = function(game, client) {
     scene.add(tank_model);
   };
 
-  function setup() {
-    JSONLoader.load('/json/arena.json').then(function(model) {
-      scene.add(model);
-      arena = model;
+  async function setup() {
+    try {
+      var arena = await JSONLoader.load('/json/arena.json');
+      scene.add(arena);
 
-      return CubeTextureLoader.load('/cube_textures/ame_iceflats/');
-
-    }).then(function(texture) {
+      var texture = 
+        await CubeTextureLoader.load('/cube_textures/ame_iceflats/');
       scene.background = texture;
 
       setupScene();
-    }).catch(function(e) {
+    } catch(e) {
       console.error("Could not setup: "+e);
-    });
+    }
   };
 
   // Public functions
