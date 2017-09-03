@@ -26,6 +26,10 @@ var DummyPlayer = function() {
     }
   };
 
+  that.onConsumerAdded = function(callback) {
+
+  };
+
   return that;
 };
 
