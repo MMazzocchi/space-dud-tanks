@@ -46,9 +46,8 @@ var Controller = (function() {
     that.setNextEvent = function(event_type) {
       player.onControllerEvent(function(data) {
         if(controller_mappings.hasMappedEvent(data) === false) {
-          player.onControllerEvent(undefined);
-
           controller_mappings.setMappedEvent(data, event_type);
+          player.onControllerEvent(undefined);
         }
       });
     };
