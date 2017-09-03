@@ -1,10 +1,11 @@
 var TankModelLoader = function() {
 
   var that = {};
-  var body = undefined;
 
   // Private static functions
   function loadMesh() {
+    var body = undefined;
+
     return JSONLoader.load('/json/tank.json').then(function(body_mesh) {
 
       body = body_mesh;
