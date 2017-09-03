@@ -48,6 +48,10 @@ var Tank = function() {
       fire = value;
     };
 
+    that.readyToFire = function() {
+      return (cooldown === 0);
+    };
+
     that.getHealth = function() {
       return health;
     };

@@ -12,6 +12,8 @@ var Hud = function(tank) {
   var map = new THREE.Texture(canvas);
   var mat = new THREE.SpriteMaterial({ 'map': map });
 
+  var ready_to_fire = tank.readyToFire();
+
   // Private methods
   function drawHealth() {
     var health = tank.getHealth();
@@ -40,7 +42,11 @@ var Hud = function(tank) {
 
   function drawCrosshair() {
     ctx.save();
-      ctx.strokeStyle = '#FF0000';
+      if(ready_to_fire === true) {
+        ctx.strokeStyle = '#FF0000';
+      } else {
+        ctx.strokeStyle = '#0000FF';
+      }
       ctx.lineWidth = 2;
       ctx.globalAlpha = 0.5;
       ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -72,7 +78,16 @@ var Hud = function(tank) {
 
   // Public methods
   that.step = function() {
-    // TODO: Update on health
+    var update = false;
+
+    if(tank.readyToFire() !== ready_to_fire) {
+      ready_to_fire = !ready_to_fire;
+      update = true;
+    }
+
+    if(update === true) {
+      draw();
+    }
   };
 
   that.getSprite = function() { 
