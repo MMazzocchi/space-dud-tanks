@@ -17,7 +17,7 @@ var Tank = function() {
     function attack() {
       if(cooldown === 0) {
         if(fire === 1) {
-          var shot = new Shot(that.x(), that.y()+7, that.z());
+          var shot = new Shot(that.x(), that.y()+7, that.z(), model.rotation.y);
           shots.push(shot);
 
           cooldown = MAX_COOLDOWN;
