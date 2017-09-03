@@ -3,19 +3,12 @@ var TankModelLoader = function() {
   var that = {};
 
   // Private static functions
-  function loadMesh() {
-    var body = undefined;
+  async function loadMesh() {
+    var body = await JSONLoader.load('/json/tank.json');
+    var barrel = await JSONLoader.load('/json/barrel.json');
 
-    return JSONLoader.load('/json/tank.json').then(function(body_mesh) {
-
-      body = body_mesh;
-      return JSONLoader.load('/json/barrel.json');
-    
-    }).then(function(barrel) {
-
-      body.add(barrel);
-      return body;
-    });
+    body.add(barrel);
+    return body;
   }
 
   // Public static functions
