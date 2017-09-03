@@ -4,6 +4,7 @@ var DummyPlayer = function() {
   // Private fields
   var event_callback = undefined;
   var consumer_callback = undefined;
+  var consumer_added_callback = undefined;
 
   // Public functions
   that.onControllerEvent = function(callback) {
@@ -27,7 +28,11 @@ var DummyPlayer = function() {
   };
 
   that.onConsumerAdded = function(callback) {
+    consumer_added_callback = callback;
+  };
 
+  that.simulateAddConsumerClient = function() {
+    consumer_added_callback(1);
   };
 
   return that;
