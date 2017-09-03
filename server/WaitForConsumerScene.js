@@ -5,10 +5,7 @@ var WaitForConsumerScene = function(player) {
 
   // Public functions
   that.start = function() {
-    console.log("Waiting for display client...");
-
-    player.onConsumerAdded(function() {
-      console.log("Consumer added, let's go!");
+    player.onConsumerAdded(function(client_id) {
       that.next();
     });
   };

@@ -29,11 +29,7 @@ var Controller = function(player) {
   };
 
   that.setNextEvent = function(event_type, callback) {
-    console.log("Setting next event to: "+event_type);
-
     player.onControllerEvent(function(data) {
-      console.log("Got an event: "+JSON.stringify(data));
-
       if(controller_mappings.hasMappedEvent(data) === false) {
         controller_mappings.setMappedEvent(data, event_type);
         player.onControllerEvent(undefined);
