@@ -7,7 +7,9 @@ var Storyboard = function(client, game) {
   // Private methods
   function loadScene(name) {
     if(scenes[name] !== undefined) {
-      game.setScene(scenes[name]);
+      var SceneConstructor = scenes[name];
+      var scene = new SceneConstructor(game, client);
+      game.setScene(scene);
     }
   };
 
