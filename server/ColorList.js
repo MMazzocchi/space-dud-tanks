@@ -30,4 +30,6 @@ var ColorList = function() {
   };
 
   return that;
-};
+}();
+
+module.exports = ColorList;

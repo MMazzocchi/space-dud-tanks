@@ -1,4 +1,4 @@
-var SelectionScene = function(game, controller) {
+var SelectionScene = function(game, client) {
   var that = new Scene();
 
   // Fields
@@ -46,6 +46,7 @@ var SelectionScene = function(game, controller) {
     scene.add(spot_light);
   };
 
+/*
   function setupController() {
     // Set up controller events
     controller.on('left', function(value) {
@@ -68,11 +69,20 @@ var SelectionScene = function(game, controller) {
       }
     });
   };
+*/
+
+  function setupClient() {
+    client.onEventType('tank_color', function(data) {
+      if(tank !== undefined) {
+        tank.setColor(data.color);
+      }
+    });
+  };
 
   function setup() {
     new Tank().then(function(new_tank) {
       setTank(new_tank);
-//      setupController();
+      setupClient();
     }).catch(function(e) {
       console.error("Tank could not be instantiated: "+e);
     });
