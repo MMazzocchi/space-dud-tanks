@@ -1,4 +1,5 @@
 var ControllerMappings = require('./ControllerMappings.js');
+var Observable = require('./Observable.js');
 
 var Controller = function(player) {
   var that = {};
@@ -10,7 +11,7 @@ var Controller = function(player) {
   // Private methods
   function handleEvent(event_type, value) {
     if(event_mappings[event_type] !== undefined) {
-      event_mappings[event_type](Math.abs(value));
+      event_mappings[event_type].triggerEvent(Math.abs(value));
     }
   }
 
@@ -20,13 +21,19 @@ var Controller = function(player) {
   };
 
   that.on = function(event_type, callback) {
-    event_mappings[event_type] = async function(value) {
-      callback(value)
-    };
+    if(event_mappings[event_type] === undefined) {
+      event_mappings[event_type] = new Observable(['event']);
+    }
+
+    event_mappings[event_type].onEvent(callback);
   };
 
   that.setNextEvent = function(event_type, callback) {
+    console.log("Setting next event to: "+event_type);
+
     player.onControllerEvent(function(data) {
+      console.log("Got an event: "+JSON.stringify(data));
+
       if(controller_mappings.hasMappedEvent(data) === false) {
         controller_mappings.setMappedEvent(data, event_type);
         player.onControllerEvent(undefined);
