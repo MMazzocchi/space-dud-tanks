@@ -1,6 +1,9 @@
 const HOST = '0.0.0.0';
 const PORT = 3000;
 
+var Storyboard = require('./server/Storyboard.js');
+var PassThroughScene = require('./server/PassThroughScene.js');
+
 // Set up the express app and space-dud.
 var express = require('express');
 var app = express();
@@ -9,7 +12,9 @@ var space_dud = require('space-dud')(http);
 
 var game = space_dud.getGame();
 game.onPlayerReady(function(player) {
-  player.onControllerEvent(player.sendEventToConsumers);
+  var storyboard = new Storyboard();
+  storyboard.addScene(new PassThroughScene(player)); 
+  storyboard.start();
 });
 
 space_dud.start();
