@@ -8,7 +8,9 @@ var Storyboard = function() {
   // Private methods
   function next() {
     index += 1;
-    loadScene();
+    if(index < scenes.length) {
+      loadScene();
+    }
   };
 
   function loadScene() {
