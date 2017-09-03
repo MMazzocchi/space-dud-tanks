@@ -1,6 +1,6 @@
 var assert = require('assert');
 
-var PassThroughScene = require('../server/PassThroughScene.js');
+var PassThroughScene = require('../server/scenes/PassThroughScene.js');
 var DummyPlayer = require('./DummyPlayer.js');
 
 const TEST_EVENT = { 
@@ -18,7 +18,7 @@ describe('PassThroughScene', function() {
         done();
       });
 
-      var scene = new PassThroughScene(player);
+      var scene = new PassThroughScene({ 'player': player });
       scene.start();
 
       player.simulateEvent(TEST_EVENT);

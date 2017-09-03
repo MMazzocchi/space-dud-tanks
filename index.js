@@ -2,10 +2,10 @@ const HOST = '0.0.0.0';
 const PORT = 3000;
 
 var Storyboard = require('./server/Storyboard.js');
-var ControllerSetupScene = require('./server/ControllerSetupScene.js');
-var PassThroughScene = require('./server/PassThroughScene.js');
-var TankSelectScene = require('./server/TankSelectScene.js');
-var WaitForConsumerScene = require('./server/WaitForConsumerScene.js');
+var ControllerSetupScene = require('./server/scenes/ControllerSetupScene.js');
+var PassThroughScene = require('./server/scenes/PassThroughScene.js');
+var TankSelectScene = require('./server/scenes/TankSelectScene.js');
+var WaitForConsumerScene = require('./server/scenes/WaitForConsumerScene.js');
 
 // Set up the express app and space-dud.
 var express = require('express');

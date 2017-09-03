@@ -1,5 +1,5 @@
 var Scene = require('./Scene.js');
-var color_list = require('./ColorList.js');
+var color_list = require('../ColorList.js');
 
 var TankSelectScene = function(game_data) {
   var that = new Scene('tank_select');

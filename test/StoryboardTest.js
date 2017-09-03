@@ -1,6 +1,5 @@
 var assert = require('assert');
 var Storyboard = require('../server/Storyboard.js');
-var Scene = require('../server/Scene.js');
 var TestScene = require('./TestScene.js');
 var DummyPlayer = require('./DummyPlayer');
 
@@ -11,11 +10,9 @@ describe('Storyboard', function() {
       var storyboard = new Storyboard(player);
 
       var test_scene_1 = new TestScene();
-      test_scene_1.onStart(test_scene_1.next);
       storyboard.addScene(test_scene_1);
 
-      var test_scene_2 = new TestScene();
-      test_scene_2.onStart(done);
+      var test_scene_2 = new TestScene(done);
       storyboard.addScene(test_scene_2);
 
       storyboard.start();
@@ -27,8 +24,7 @@ describe('Storyboard', function() {
       var player = new DummyPlayer();
       var storyboard = new Storyboard(player);
 
-      var test_scene = new TestScene();
-      test_scene.onStart(done);
+      var test_scene = new TestScene(done);
       storyboard.addScene(test_scene);
 
       storyboard.start();

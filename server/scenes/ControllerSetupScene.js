@@ -1,5 +1,5 @@
 var Scene = require('./Scene.js');
-var Controller = require('./Controller.js');
+var Controller = require('../Controller.js');
 
 var ControllerSetupScene = function(game_data) {
   var that = new Scene("controller_setup");

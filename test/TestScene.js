@@ -1,20 +1,23 @@
-var Scene = require('../server/Scene.js');
+var Scene = require('../server/scenes/Scene.js');
 
-var TestScene = function() {
-  var that = new Scene();
+var TestScene = function(start_callback) {
 
-  // Private fields
-  var start_callback = undefined;
+  var TestSceneGenerator = function() {
+    var that = new Scene();
 
-  that.onStart = function(callback) {
-    start_callback = callback;
+    // Private fields
+    that.start = function() {
+      if(start_callback !== undefined) {
+        start_callback();
+      } else {
+        that.next();
+      }
+    };
+
+    return that;
   };
 
-  that.start = function() {
-    start_callback();
-  };
-
-  return that;
+  return TestSceneGenerator;
 };
 
 module.exports = TestScene;
