@@ -5,7 +5,7 @@ var ArenaScene = function(game, client) {
   var camera = that.getCamera();
   var scene = that.getScene();
   var hud = new Hud();
-  var tank_model = new THREE.Object3D(); //tank.resetModel();
+  var tank_model = undefined;
   var shots = [];
 
   // Private functions
@@ -19,7 +19,6 @@ var ArenaScene = function(game, client) {
     dir_light.position.z = 0.5;
     scene.add(dir_light);
 
-//    tank.setBarrelVisible(false);
     tank_model.add(camera);
     camera.position.y += 7;
     camera.position.z -= 3.5;
@@ -28,8 +27,6 @@ var ArenaScene = function(game, client) {
     var sprite = hud.getSprite();
     sprite.position.z -= 0.5;
     camera.add(sprite);
-
-    scene.add(tank_model);
   };
 
   async function setup() {
@@ -40,6 +37,11 @@ var ArenaScene = function(game, client) {
       var texture = 
         await CubeTextureLoader.load('/cube_textures/ame_iceflats/');
       scene.background = texture;
+
+      tank_model = await TankModelLoader.load();
+      tank_model.children[0].visible = false;
+
+      scene.add(tank_model);
 
       setupScene();
     } catch(e) {
