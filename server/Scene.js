@@ -1,18 +1,11 @@
-var Scene = function(name) {
-  var that = {};
+var Observable = require('./Observable.js');
 
-  // Private fields
-  var next_callback = undefined;
+var Scene = function(name) {
+  var that = new Observable(['next']);
 
   // Public methods
-  that.onNext = function(callback) {
-    next_callback = callback;
-  };
-
   that.next = function() {
-    if(next_callback !== undefined) {
-      next_callback();
-    };
+    that.triggerNext();
   };
 
   that.start = function() {
