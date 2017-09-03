@@ -1,4 +1,4 @@
-var Scene = function() {
+var Scene = function(name) {
   var that = {};
 
   // Private fields
@@ -17,6 +17,10 @@ var Scene = function() {
 
   that.start = function() {
     throw new Error("Start should be overriden by child classes!");
+  };
+
+  that.getName = function() {
+    return name;
   };
 
   return that;

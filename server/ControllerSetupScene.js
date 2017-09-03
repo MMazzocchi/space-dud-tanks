@@ -2,13 +2,14 @@ var Scene = require('./Scene.js');
 var Controller = require('./Controller.js');
 
 var ControllerSetupScene = function(player, event_types) {
-  var that = new Scene();
+  var that = new Scene("controller_setup");
 
   // Fields
   var controller = new Controller(player);
 
   // Public functions
   that.start = function() {
+/*
     var index = 0;
 
     function callback() {
@@ -27,6 +28,7 @@ var ControllerSetupScene = function(player, event_types) {
     }
 
     callback();
+*/
   };
 
   return that;

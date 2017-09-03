@@ -15,8 +15,7 @@ $(function() {
     }
   };
 
-  function setupGame(client) {
-    var game = new Game(window.innerWidth, window.innerHeight, client);
+  function setupGame(game) {
 
     window.addEventListener( 'resize', function() {
       game.setSize(window.innerWidth, window.innerHeight);
@@ -30,12 +29,13 @@ $(function() {
 
   function start() {
     var client = new DisplayConnection();
-    
+    var game = new Game(window.innerWidth, window.innerHeight, client);
+
     document.getElementById('submit_player_id').onclick = function(e) {
         var player_id = document.getElementById('player_id').value;
         client.selectPlayer(player_id, function(valid) {
           if(valid) {
-            setupGame(client);
+            setupGame(game);
           }
         });
     };

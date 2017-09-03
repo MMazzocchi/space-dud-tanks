@@ -6,11 +6,15 @@ var Game = function(current_width, current_height, client) {
   var height = current_height;
   var mobile = false;
 
-  var scene = new ControllerSetupScene(that, client);
+  var scene = new Scene();
   scene.resize(width, height);
 
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize(width, height);
+
+  var storyboard = new Storyboard(client, that);
+  storyboard.registerScene("controller_setup",
+                           new ControllerSetupScene(that, client));
 
   // Private functions
   function setupForMobile() {

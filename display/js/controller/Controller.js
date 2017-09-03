@@ -37,9 +37,9 @@ var Controller = (function() {
     };
 
     that.setNextEvent = function(event_type, callback) {
-      client.onEvent(function(data) {
+      client.onEventType("controller", function(data) {
         if(controller_mappings.hasMappedEvent(data) === false) {
-          client.onEvent(undefined);
+          client.onEventType("controller", undefined);
 
           controller_mappings.setMappedEvent(data, event_type);
           callback();

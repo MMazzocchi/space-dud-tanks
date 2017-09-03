@@ -1,4 +1,4 @@
-var Storyboard = function() {
+var Storyboard = function(player) {
   var that = {};
 
   // Private fields
@@ -6,6 +6,26 @@ var Storyboard = function() {
   var index = 0;
 
   // Private methods
+  function createSceneEvent() {
+    var scene = scenes[index];
+
+    // TODO: Make an official event type
+    return {
+      'event_type': 'scene',
+      'name': scene.getName()
+    };
+  };
+
+  function setup() {
+    player.onConsumerAdded(function(client_id) {
+      if(index < scenes.length) {
+        player.sendEventToConsumer(createSceneEvent(), client_id);
+      }
+
+      next();
+    });
+  };
+
   function next() {
     index += 1;
     if(index < scenes.length) {
@@ -15,6 +35,7 @@ var Storyboard = function() {
 
   function loadScene() {
     var scene = scenes[index];
+    player.sendEventToConsumers(createSceneEvent());
     scene.start();
   };
 
@@ -27,6 +48,8 @@ var Storyboard = function() {
   that.start = function() {
     loadScene();
   };
+
+  setup();
 
   return that;
 };
