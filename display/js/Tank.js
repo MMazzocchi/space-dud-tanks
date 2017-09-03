@@ -55,6 +55,13 @@ var Tank = function() {
       }
     };
 
+    function setup() {
+      that.addStepFunction(function() {
+        move();
+        attack();
+      });
+    };
+
     // Public functions
     that.getModel = function() {
       return model;
@@ -84,11 +91,6 @@ var Tank = function() {
       fire = value;
     };
 
-    that.step = function() {
-      move();
-      attack();
-    };
-
     that.getHealth = function() {
       return health;
     };
@@ -98,6 +100,8 @@ var Tank = function() {
       shots = [];
       return new_shots;
     };
+
+    setup();
 
     return that;
   };

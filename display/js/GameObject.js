@@ -5,6 +5,8 @@ var GameObject = function(model) {
   var bounding_box = new THREE.Box3();
   bounding_box.setFromObject(model);
 
+  var step_functions = [];
+
   // Public functions
   that.resetModel = function() {
     model.position = new THREE.Vector3(0, 0, 0);
@@ -47,7 +49,13 @@ var GameObject = function(model) {
   };
 
   that.step = function() {
-    // TODO: Recalculate bounding box??
+    for(var i=0; i<step_functions.length; i++) {
+      step_functions[i]();
+    }
+  };
+
+  that.addStepFunction = function(step_function) {
+    step_functions.push(step_function);
   };
 
   return that;
