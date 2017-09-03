@@ -6,6 +6,7 @@ var ControllerSetupScene = require('./server/scenes/ControllerSetupScene.js');
 var PassThroughScene = require('./server/scenes/PassThroughScene.js');
 var TankSelectScene = require('./server/scenes/TankSelectScene.js');
 var WaitForConsumerScene = require('./server/scenes/WaitForConsumerScene.js');
+var ArenaScene = require('./server/scenes/ArenaScene.js');
 
 // Set up the express app and space-dud.
 var express = require('express');
@@ -20,7 +21,7 @@ game.onPlayerReady(function(player) {
   storyboard.addScene(WaitForConsumerScene);
   storyboard.addScene(ControllerSetupScene);
   storyboard.addScene(TankSelectScene); 
-  storyboard.addScene(PassThroughScene); 
+  storyboard.addScene(ArenaScene); 
 
   storyboard.start();
 });

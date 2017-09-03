@@ -17,6 +17,8 @@ var Game = function(current_width, current_height, client) {
                            new ControllerSetupScene(that, client));
   storyboard.registerScene("tank_select",
                            new SelectionScene(that, client));
+  storyboard.registerScene("arena",
+                           new ArenaScene(that, client));
 
   // Private functions
   function setupForMobile() {

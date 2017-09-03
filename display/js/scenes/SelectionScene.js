@@ -6,7 +6,6 @@ var SelectionScene = function(game, client) {
   var scene = that.getScene();
   var model = undefined;
   var tank = undefined;
-  var colorList = new ColorList();
   var index = 0;
 
   // Private functions
@@ -45,31 +44,6 @@ var SelectionScene = function(game, client) {
     spot_light.position.y += 30;
     scene.add(spot_light);
   };
-
-/*
-  function setupController() {
-    // Set up controller events
-    controller.on('left', function(value) {
-      if(value === 1) {
-        tank.setColor(colorList.getPreviousColor());
-      }
-    });
-
-    controller.on('right', function(value) {
-      if(value === 1) {
-        tank.setColor(colorList.getNextColor());
-      }
-    });
-
-    controller.on('start', function(value) {
-      if(value === 1) {
-        game.setScene(
-          new LoadingScene(game,
-            new ArenaScene(game, controller, tank)));
-      }
-    });
-  };
-*/
 
   function setupClient() {
     client.onEventType('tank_color', function(data) {

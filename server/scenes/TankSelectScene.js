@@ -30,6 +30,13 @@ var TankSelectScene = function(game_data) {
         setColor(color_list.getNextColor());        
       }
     });
+
+    controller.on('start', function(value) {
+      if(value === 1) {
+        game_data.tank_color = color_list.getCurrentColor();
+        that.next();
+      }
+    });
   };
 
   return that;
