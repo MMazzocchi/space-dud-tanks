@@ -7,6 +7,10 @@
   "dependencies": {
     "express": "^4.15.3",
     "jquery": "^3.2.1",
+    "mocha": "^3.4.2",
     "space-dud": "^2.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }
