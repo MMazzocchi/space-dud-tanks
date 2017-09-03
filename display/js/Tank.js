@@ -5,11 +5,10 @@ var Tank = function() {
   const ROT_COEF = 0.01;
   const DECAY = 0.01;
   const FORWARD = new THREE.Vector3(0, 0, 1);
-  const MAX_COOLDOWN = 1000;
-
+  const MAX_COOLDOWN = 100;
 
   function TankDef(mesh) {
-    var that = {};
+    var that = new GameObject(mesh);
 
     // Fields
     var model = mesh;
@@ -46,7 +45,7 @@ var Tank = function() {
     function attack() {
       if(cooldown === 0) {
         if(fire === 1) {
-          var shot = new Shot(model.position.x, model.position.y+7, model.position.z);
+          var shot = new Shot(that.x(), that.y()+7, that.z());
           shots.push(shot);
 
           cooldown = MAX_COOLDOWN;
@@ -63,14 +62,6 @@ var Tank = function() {
 
     that.setColor = function(color) {
       model.material[2].color = new THREE.Color(color);
-    };
-
-    that.resetModel = function() {
-      model.position = new THREE.Vector3(0, 0, 0);
-      model.rotation = new THREE.Vector3(0, 0, 0);
-      model.scale = new THREE.Vector3(1, 1, 1);
-
-      return model;
     };
 
     that.setBarrelVisible = function(visible) {
