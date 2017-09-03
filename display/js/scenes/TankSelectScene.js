@@ -35,7 +35,7 @@ var TankSelectScene = function(game, client) {
 
   function setupClient() {
     client.onEventType('tank_color', function(data) {
-      model.material[2].color = new THREE.Color(color);
+      model.material[2].color = new THREE.Color(data.color);
     });
   };
 
