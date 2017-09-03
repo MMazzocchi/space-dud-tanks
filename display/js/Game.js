@@ -16,7 +16,7 @@ var Game = function(current_width, current_height, client) {
   storyboard.registerScene("controller_setup",
                            new ControllerSetupScene(that, client));
   storyboard.registerScene("tank_select",
-                           new SelectionScene(that, client));
+                           new TankSelectScene(that, client));
   storyboard.registerScene("arena",
                            new ArenaScene(that, client));
 

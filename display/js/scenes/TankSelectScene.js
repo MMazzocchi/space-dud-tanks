@@ -1,4 +1,4 @@
-var SelectionScene = function(game, client) {
+var TankSelectScene = function(game, client) {
   var that = new Scene();
 
   // Fields
