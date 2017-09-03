@@ -3,6 +3,7 @@ var DummyPlayer = function() {
 
   // Private fields
   var event_callback = undefined;
+  var consumer_callback = undefined;
 
   // Public functions
   that.onControllerEvent = function(callback) {
@@ -12,6 +13,16 @@ var DummyPlayer = function() {
   that.simulateEvent = function(data) {
     if(event_callback !== undefined) {
       event_callback(data);
+    }
+  };
+
+  that.onSendEventToConsumers = function(callback) {
+    consumer_callback = callback;
+  };
+
+  that.sendEventToConsumers = function(data) {
+    if(consumer_callback !== undefined) {
+      consumer_callback(data);
     }
   };
 
