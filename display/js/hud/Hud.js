@@ -1,4 +1,4 @@
-var Hud = function(tank) {
+var Hud = function() {
   var that = {};
 
   // Fields
@@ -12,8 +12,8 @@ var Hud = function(tank) {
   var map = new THREE.Texture(canvas);
   var mat = new THREE.SpriteMaterial({ 'map': map });
 
-  var ready_to_fire = tank.readyToFire();
-  var health = tank.getHealth();
+  var ready_to_fire = false;
+  var health = 0;
 
   // Private methods
   function drawHealth() {
@@ -47,6 +47,7 @@ var Hud = function(tank) {
       } else {
         ctx.strokeStyle = '#0000FF';
       }
+
       ctx.lineWidth = 2;
       ctx.globalAlpha = 0.5;
       ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -77,22 +78,8 @@ var Hud = function(tank) {
   };
 
   // Public methods
-  that.step = function() {
-    var update = false;
-
-    if(tank.readyToFire() !== ready_to_fire) {
-      ready_to_fire = !ready_to_fire;
-      update = true;
-    }
-
-    if(tank.getHealth() !== health) {
-      health = tank.getHealth();
-      update = true;
-    }
-
-    if(update === true) {
-      draw();
-    }
+  that.update = function() {
+    draw();
   };
 
   that.getSprite = function() { 
@@ -102,8 +89,15 @@ var Hud = function(tank) {
     return sprite;
   };
 
+  that.setHealth = function(new_health) {
+    health = new_health;
+  };
+
+  that.setReadyToFire = function(ready) {
+    ready_to_fire = ready;
+  };
+
   draw();
 
   return that;
-
 };
