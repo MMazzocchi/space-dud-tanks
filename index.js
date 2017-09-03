@@ -4,6 +4,7 @@ const PORT = 3000;
 var Storyboard = require('./server/Storyboard.js');
 var ControllerSetupScene = require('./server/ControllerSetupScene.js');
 var PassThroughScene = require('./server/PassThroughScene.js');
+var TankSelectScene = require('./server/TankSelectScene.js');
 var WaitForConsumerScene = require('./server/WaitForConsumerScene.js');
 
 // Set up the express app and space-dud.
@@ -21,6 +22,7 @@ game.onPlayerReady(function(player) {
 
   storyboard.addScene(new WaitForConsumerScene(player));
   storyboard.addScene(new ControllerSetupScene(player, event_types));
+  storyboard.addScene(new TankSelectScene(player)); 
   storyboard.addScene(new PassThroughScene(player)); 
 
   storyboard.start();

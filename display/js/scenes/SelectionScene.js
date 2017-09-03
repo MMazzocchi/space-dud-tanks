@@ -72,7 +72,7 @@ var SelectionScene = function(game, controller) {
   function setup() {
     new Tank().then(function(new_tank) {
       setTank(new_tank);
-      setupController();
+//      setupController();
     }).catch(function(e) {
       console.error("Tank could not be instantiated: "+e);
     });

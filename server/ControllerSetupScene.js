@@ -11,6 +11,11 @@ var ControllerSetupScene = function(player, event_types) {
   that.start = function() {
     var index = 0;
 
+    function done() {
+      controller.activate();
+      that.next();
+    };
+
     function callback() {
       var type = event_types[index];
       index += 1;
@@ -23,9 +28,9 @@ var ControllerSetupScene = function(player, event_types) {
       if(index < event_types.length) {
         controller.setNextEvent(type, callback);
       } else {
-        controller.setNextEvent(type, that.next);
+        controller.setNextEvent(type, done);
       }
-    }
+    };
 
     callback();
   };
