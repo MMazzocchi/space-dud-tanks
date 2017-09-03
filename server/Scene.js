@@ -12,6 +12,10 @@ var Scene = function(name) {
     throw new Error("Start should be overriden by child classes!");
   };
 
+  that.stop = function() {
+    // Not required to be overriden
+  };
+
   that.getName = function() {
     return name;
   };

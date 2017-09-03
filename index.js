@@ -13,17 +13,14 @@ var app = express();
 var http = require('http').Server(app);
 var space_dud = require('space-dud')(http);
 
-var event_types = ['start', 'fire',  'throttle', 'brake',
-                   'left',  'right', 'up',       'down' ];
-
 var game = space_dud.getGame();
 game.onPlayerReady(function(player) {
   var storyboard = new Storyboard(player);
 
-  storyboard.addScene(new WaitForConsumerScene(player));
-  storyboard.addScene(new ControllerSetupScene(player, event_types));
-  storyboard.addScene(new TankSelectScene(player)); 
-  storyboard.addScene(new PassThroughScene(player)); 
+  storyboard.addScene(WaitForConsumerScene);
+  storyboard.addScene(ControllerSetupScene);
+  storyboard.addScene(TankSelectScene); 
+  storyboard.addScene(PassThroughScene); 
 
   storyboard.start();
 });
