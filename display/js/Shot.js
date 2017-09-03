@@ -5,18 +5,12 @@ var Shot = function() {
   var materials = new THREE.MeshLambertMaterial( {color: 0x333333} );
 
   var ShotDef = function(x, y, z) {
-    var that = {};
-
-    // Private fields
     var model = new THREE.Mesh(geometry, materials);
-    model.position.x = x;
-    model.position.y = y;
-    model.position.z = z;
+    var that = new GameObject(model);
 
-    // Public methods
-    that.getModel = function() {
-      return model;
-    };
+    that.setX(x);
+    that.setY(y);
+    that.setZ(z);
 
     return that;
   };
