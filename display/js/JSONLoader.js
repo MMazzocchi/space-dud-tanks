@@ -35,18 +35,21 @@ var JSONLoader = function() {
     return new THREE.Mesh(data.geometry, data.materials);
   };
 
-  function loadMesh(url) {
-    return loadJSON(url).then(makeMesh);
+  async function loadMesh(url) {
+    var data = await loadJSON(url);
+    var mesh = makeMesh(data);
+    return mesh;
+  };
+
+  async function loadMeshFromCache(url) {
+    var mesh = makeMesh(cache[url]);
+    return mesh;
   };
 
   // Public static functions
   that.load = function(url) {
     if(cache[url] !== undefined) {
-      return new Promise(function(resolve) {
-        var mesh = makeMesh(cache[url]);
-        resolve(mesh);
-      });
-
+      return loadMeshFromCache(url);
     } else {
       return loadMesh(url);
     }
