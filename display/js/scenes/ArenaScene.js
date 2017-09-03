@@ -23,6 +23,7 @@ var ArenaScene = function(game, controller, tank) {
     tank_model.add(camera);
     camera.position.y += 7;
     camera.position.z -= 3.5;
+    camera.rotation.y += Math.PI;
 
     var sprite = hud.getSprite();
     sprite.position.z -= 0.5;
@@ -36,6 +37,7 @@ var ArenaScene = function(game, controller, tank) {
     controller.on('throttle', tank.throttle);
     controller.on('right', tank.right);
     controller.on('left', tank.left);
+    controller.on('fire', tank.fire);
   };
 
   function setup() {
@@ -64,6 +66,11 @@ var ArenaScene = function(game, controller, tank) {
   that.renderStep = function() {
     tank.step();
     hud.step();
+
+    var shots = tank.getNewShots();
+    for(var i=0; i<shots.length; i++) {
+      scene.add(shots[i].getModel());
+    }
   };
 
   setup();

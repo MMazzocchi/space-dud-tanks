@@ -5,6 +5,8 @@ var Tank = function() {
   const ROT_COEF = 0.01;
   const DECAY = 0.01;
   const FORWARD = new THREE.Vector3(0, 0, 1);
+  const MAX_COOLDOWN = 1000;
+
 
   function TankDef(mesh) {
     var that = {};
@@ -16,7 +18,43 @@ var Tank = function() {
     var throttle = 0;
     var left = 0;
     var right = 0;
+    var fire = 0;
+    var cooldown = 0;
     var health = 10;
+    var shots = [];
+
+    // Private functions
+    function move() {
+      if(throttle === 0) {
+        speed -= DECAY;
+      } else {
+        speed += throttle*SPEED_COEF;
+      }
+
+      if(speed > MAX_SPEED) {
+        speed = MAX_SPEED;
+      } else if(speed < 0) {
+        speed = 0;
+      }
+
+      model.translateOnAxis(FORWARD, speed);
+
+      var rot = left - right;
+      model.rotation.y += rot*ROT_COEF;
+    };
+
+    function attack() {
+      if(cooldown === 0) {
+        if(fire === 1) {
+          var shot = new Shot(model.position.x, model.position.y+7, model.position.z);
+          shots.push(shot);
+
+          cooldown = MAX_COOLDOWN;
+        }
+      } else {
+        cooldown -= 1;
+      }
+    };
 
     // Public functions
     that.getModel = function() {
@@ -51,27 +89,23 @@ var Tank = function() {
       right = value;
     };
 
+    that.fire = function(value) {
+      fire = value;
+    };
+
     that.step = function() {
-      if(throttle === 0) {
-        speed -= DECAY;
-      } else {
-        speed += throttle*SPEED_COEF;
-      }
-
-      if(speed > MAX_SPEED) {
-        speed = MAX_SPEED;
-      } else if(speed < 0) {
-        speed = 0;
-      }
-
-      model.translateOnAxis(FORWARD, speed);
-
-      var rot = left - right;
-      model.rotation.y += rot*ROT_COEF;
+      move();
+      attack();
     };
 
     that.getHealth = function() {
       return health;
+    };
+
+    that.getNewShots = function() {
+      var new_shots = shots;
+      shots = [];
+      return new_shots;
     };
 
     return that;
