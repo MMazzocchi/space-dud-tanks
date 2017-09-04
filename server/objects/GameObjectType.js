@@ -36,6 +36,8 @@ var GameObjectType = function(fields) {
       return data;
     };
 
+    that.update = function(delta) {};
+
     setup();
 
     return that;
