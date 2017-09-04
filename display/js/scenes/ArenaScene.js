@@ -29,6 +29,10 @@ var ArenaScene = function(game, client) {
 
   async function setup() {
     try {
+      client.onEventType('arena_state', function(data) {
+        console.log(data);
+      });
+
       var arena = await JSONLoader.load('/json/arena.json');
       scene.add(arena);
 

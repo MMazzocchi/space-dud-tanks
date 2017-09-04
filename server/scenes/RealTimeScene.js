@@ -52,6 +52,8 @@ var RealTimeScene = function(name, game_data) {
     id += 1;
   };
 
+  setup();
+
   return that;
 };
 
