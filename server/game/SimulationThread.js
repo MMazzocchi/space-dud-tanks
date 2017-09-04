@@ -6,10 +6,19 @@ var SimulationThread = function() {
   // Fields
   const TICK_INTERVAL = 1000;
   var interval_id = undefined;
+  var last_update = new Date();
+
+  // Private functions
+  function tick() {
+    var now = new Date();
+    var delta = now - last_update;
+
+    that.triggerTick(delta);
+  };
 
   // Public functions
   that.start = function() {
-    interval_id = setInterval(that.triggerTick, TICK_INTERVAL);
+    interval_id = setInterval(tick, TICK_INTERVAL);
   };
 
   that.stop = function() {
