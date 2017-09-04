@@ -4,7 +4,7 @@ var GameObjectType = function(fields) {
     return token.toUpperCase().replace("_", "");
   }
 
-  var constructor = function() {
+  var constructor = function(...args) {
     var that = {};
 
     // Fields
@@ -27,7 +27,12 @@ var GameObjectType = function(fields) {
 
     function setup() {
       for(var i=0; i<fields.length; i++) {
-        addField(fields[i]);
+        var field = fields[i];
+        addField(field);
+
+        if(args[i] !== undefined) {
+          data[field] = args[i];
+        }
       }
     };
 
