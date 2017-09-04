@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Storyboard = require('../server/Storyboard.js');
+var Storyboard = require('../server/player/Storyboard.js');
 var TestScene = require('./TestScene.js');
 var DummyPlayer = require('./DummyPlayer');
 

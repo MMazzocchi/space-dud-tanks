@@ -1,5 +1,5 @@
 var assert = require('assert');
-var ControllerMappings = require('../server/ControllerMappings.js');
+var ControllerMappings = require('../server/player/ControllerMappings.js');
 
 const TEST_EVENT_TYPE_1 = 'start';
 const TEST_EVENT_TYPE_2 = 'select';

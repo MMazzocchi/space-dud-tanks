@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Controller = require('../server/Controller.js');
+var Controller = require('../server/player/Controller.js');
 var DummyPlayer = require('./DummyPlayer.js');
 
 const TEST_EVENT_TYPE = 'start';

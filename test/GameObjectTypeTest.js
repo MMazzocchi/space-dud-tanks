@@ -1,5 +1,5 @@
 var assert = require('assert');
-var GameObjectType = require('../server/objects/GameObjectType.js');
+var GameObjectType = require('../server/game/objects/GameObjectType.js');
 
 describe('GameObjectType', function() {
   describe('#Constructor', function() {

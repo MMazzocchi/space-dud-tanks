@@ -1,5 +1,6 @@
 var assert = require('assert');
-var ControllerSetupScene = require('../server/scenes/ControllerSetupScene.js');
+var ControllerSetupScene =
+  require('../server/player/scenes/ControllerSetupScene.js');
 var DummyPlayer = require('./DummyPlayer.js');
 var wait = require('./Util.js').wait;
 

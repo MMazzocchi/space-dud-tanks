@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Observable = require('../server/Observable.js');
+var Observable = require('../server/util/Observable.js');
 
 const REFERENCE_DATA = {
   'a': 1,

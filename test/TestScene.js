@@ -1,4 +1,4 @@
-var Scene = require('../server/scenes/Scene.js');
+var Scene = require('../server/player/scenes/Scene.js');
 
 var TestScene = function(start_callback) {
 

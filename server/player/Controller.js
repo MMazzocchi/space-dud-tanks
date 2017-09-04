@@ -1,5 +1,5 @@
 var ControllerMappings = require('./ControllerMappings.js');
-var Observable = require('./Observable.js');
+var Observable = require('../util/Observable.js');
 
 var Controller = function(player) {
   var that = {};

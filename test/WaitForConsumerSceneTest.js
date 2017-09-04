@@ -1,6 +1,7 @@
 var assert = require('assert');
 
-var WaitForConsumerScene = require('../server/scenes/WaitForConsumerScene.js');
+var WaitForConsumerScene =
+  require('../server/player/scenes/WaitForConsumerScene.js');
 var DummyPlayer = require('./DummyPlayer.js');
 
 const TEST_EVENT = { 

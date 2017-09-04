@@ -1,6 +1,6 @@
 var assert = require('assert');
 
-var PassThroughScene = require('../server/scenes/PassThroughScene.js');
+var PassThroughScene = require('../server/player/scenes/PassThroughScene.js');
 var DummyPlayer = require('./DummyPlayer.js');
 
 const TEST_EVENT = { 

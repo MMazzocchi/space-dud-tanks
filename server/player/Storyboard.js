@@ -1,5 +1,3 @@
-var SimulationThread = require('./SimulationThread.js');
-
 var Storyboard = function(player, game) {
   var that = {};
 

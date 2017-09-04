@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Scene = require('../server/scenes/Scene.js');
+var Scene = require('../server/player/scenes/Scene.js');
 
 describe('Scene', function() {
   describe('#onNext', function() {

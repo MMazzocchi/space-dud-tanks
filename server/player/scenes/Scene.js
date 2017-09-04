@@ -1,4 +1,4 @@
-var Observable = require('../Observable.js');
+var Observable = require('../../util/Observable.js');
 
 var Scene = function(name) {
   var that = new Observable(['next']);
