@@ -6,7 +6,6 @@ var RealTimeScene = function(name, game_data) {
   // Fields
   var id = 0;
   var objects = [];
-  var last_update = new Date();
   var player = game_data.player;
   var state_event = {
     'event_type': name+"_state"
@@ -27,19 +26,13 @@ var RealTimeScene = function(name, game_data) {
     player.sendEventToConsumers(state_event);
   };
 
-  function step() {
-    var now = new Date();
-    var delta = now - last_update;
-
+  function tick(delta) {
     updateStateEvent(delta);
     sendStateEvent();
-
-    last_update = now;
   };
 
   function setup() {
-    sim_thread.clearTick();
-    sim_thread.onTick(step);
+    sim_thread.onTick(tick);
   };
 
   // Public methods
@@ -50,6 +43,10 @@ var RealTimeScene = function(name, game_data) {
     });
 
     id += 1;
+  };
+
+  that.stop = function() {
+    // TODO: Remove tick() from simulation thread
   };
 
   setup();
