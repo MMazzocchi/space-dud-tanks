@@ -11,7 +11,7 @@ var RealTimeScene = function(name, game_data) {
   var state_event = {
     'event_type': name+"_state"
   };
-  var sim_thread = game_data.simulation_thread;
+  var sim_thread = game_data.game.getSimulationThread();
 
   // Private methods
   function updateStateEvent(delta) {

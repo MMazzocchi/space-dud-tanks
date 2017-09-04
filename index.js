@@ -19,7 +19,7 @@ var space_dud = require('space-dud')(http);
 var game = new Game();
 
 space_dud.getGame().onPlayerReady(function(player) {
-  var storyboard = new Storyboard(player, game.getSimulationThread());
+  var storyboard = new Storyboard(player, game);
 
   storyboard.addScene(WaitForConsumerScene);
   storyboard.addScene(ControllerSetupScene);

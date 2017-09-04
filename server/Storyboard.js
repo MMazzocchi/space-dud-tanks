@@ -1,6 +1,6 @@
 var SimulationThread = require('./SimulationThread.js');
 
-var Storyboard = function(player, simulation_thread) {
+var Storyboard = function(player, game) {
   var that = {};
 
   // Private fields
@@ -18,7 +18,7 @@ var Storyboard = function(player, simulation_thread) {
   };
 
   function setup() {
-    game_data.simulation_thread = simulation_thread;
+    game_data.game = game;
 
     game_data.player = player;
     player.onConsumerAdded(function(client_id) {
