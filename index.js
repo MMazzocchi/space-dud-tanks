@@ -2,6 +2,8 @@ const HOST = '0.0.0.0';
 const PORT = 3000;
 
 var Storyboard = require('./server/Storyboard.js');
+var Game = require('./server/Game.js');
+
 var ControllerSetupScene = require('./server/scenes/ControllerSetupScene.js');
 var PassThroughScene = require('./server/scenes/PassThroughScene.js');
 var TankSelectScene = require('./server/scenes/TankSelectScene.js');
@@ -14,9 +16,10 @@ var app = express();
 var http = require('http').Server(app);
 var space_dud = require('space-dud')(http);
 
-var game = space_dud.getGame();
-game.onPlayerReady(function(player) {
-  var storyboard = new Storyboard(player);
+var game = new Game();
+
+space_dud.getGame().onPlayerReady(function(player) {
+  var storyboard = new Storyboard(player, game.getSimulationThread());
 
   storyboard.addScene(WaitForConsumerScene);
   storyboard.addScene(ControllerSetupScene);
