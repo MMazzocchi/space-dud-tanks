@@ -19,5 +19,9 @@ var TankGame = function() {
     players.push(player_data);
   };
 
+  that.tick = function(delta) {
+
+  };
+
   return that;
 };
