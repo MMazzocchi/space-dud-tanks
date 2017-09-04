@@ -1,4 +1,6 @@
-var Storyboard = function(player) {
+var SimulationThread = require('./SimulationThread.js');
+
+var Storyboard = function(player, simulation_thread) {
   var that = {};
 
   // Private fields
@@ -9,7 +11,6 @@ var Storyboard = function(player) {
 
   // Private methods
   function createSceneEvent() {
-    // TODO: Make an official event type
     return {
       'event_type': 'scene',
       'name': current_scene.getName()
@@ -17,8 +18,9 @@ var Storyboard = function(player) {
   };
 
   function setup() {
-    game_data.player = player;
+    game_data.simulation_thread = simulation_thread;
 
+    game_data.player = player;
     player.onConsumerAdded(function(client_id) {
       if(index < scenes.length) {
         player.sendEventToConsumer(createSceneEvent(), client_id);
