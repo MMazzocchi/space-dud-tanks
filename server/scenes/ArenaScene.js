@@ -1,7 +1,7 @@
-var Scene = require('./Scene.js');
+var RealTimeScene = require('./RealTimeScene.js');
 
 var ArenaScene = function(game_data) {
-  var that = new Scene('arena');
+  var that = new RealTimeScene('arena', game_date);
 
   // Fields
   var controller = game_data.controller;
