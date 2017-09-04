@@ -4,30 +4,19 @@ var RealTimeScene = function(name, game_data) {
   var that = new Scene(name);
 
   // Fields
-  var id = 0;
-  var objects = [];
   var player = game_data.player;
   var state_event = {
-    'event_type': name+"_state"
+    'event_type': name+"_state",
+    'data': {}
   };
   var sim_thread = game_data.game.getSimulationThread();
 
   // Private methods
-  function updateStateEvent(delta) {
-    for(var i=0; i<objects.length; i++) {
-      var object = objects[i].object;
-
-      object.update(delta);
-      state_event[objects[i].id] = object.getData();
-    }
-  };
-
   function sendStateEvent() {
     player.sendEventToConsumers(state_event);
   };
 
   function tick(delta) {
-    updateStateEvent(delta);
     sendStateEvent();
   };
 
@@ -36,13 +25,8 @@ var RealTimeScene = function(name, game_data) {
   };
 
   // Public methods
-  that.addObject = function(object) {
-    objects.push({
-      'id': id,
-      'object': object
-    });
-
-    id += 1;
+  that.setStateData = function(data) {
+    state_event.data = data;
   };
 
   that.stop = function() {
