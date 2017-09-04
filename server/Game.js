@@ -1,3 +1,5 @@
+var SimulationThread = require('./SimulationThread.js');
+
 var Game = function() {
   var that = {};
 
