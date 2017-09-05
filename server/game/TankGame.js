@@ -26,7 +26,7 @@ var TankGame = function() {
     for(var i=0; i<players.length; i++) {
       var player = players[i];
       player.tank.tick(delta);
-      tank_data[players[i].id] = tank.getData();
+      tank_data[players[i].id] = player.tank.getData();
     }    
   };
 

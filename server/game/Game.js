@@ -6,12 +6,6 @@ var Game = function() {
   // Fields
   var simulation_thread = new SimulationThread();
 
-  // Private methods
-  function setup() {
-    simulation_thread.onTick(that.tick);
-    simulation_thread.start();
-  };
-
   // Public methods
   that.tick = function(delta) {};
 
@@ -19,7 +13,10 @@ var Game = function() {
     return simulation_thread;
   };
 
-  setup();
+  that.start = function() {
+    simulation_thread.onTick(that.tick);
+    simulation_thread.start();
+  };
 
   return that;
 };

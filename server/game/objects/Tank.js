@@ -24,19 +24,21 @@ var Tank = function() {
     };
 
     that.fire = function(value) {
-      if(value === 1 && cooldown <= 0) {
-        cooldown = MAX_COOLDOWN;
+      if(value === 1 && that.getCooldown() <= 0) {
+        that.setCooldown(MAX_COOLDOWN);
       }
     };
 
-    that.update = function(delta) {
+    that.tick = function(delta) {
       var rot = (left - right) * delta * ROT_COEFF;
       that.setTheta(that.getTheta() + rot);
 
-      if(cooldown > 0) {
-        cooldown -= delta;
+      if(that.getCooldown() > 0) {
+        that.setCooldown(that.getCoolDown() -= delta);
       }
     };
+
+    return that;
   };
 
   return constructor;

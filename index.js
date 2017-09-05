@@ -19,6 +19,7 @@ var http = require('http').Server(app);
 var space_dud = require('space-dud')(http);
 
 var game = new TankGame();
+game.start();
 
 space_dud.getGame().onPlayerReady(function(player) {
   var storyboard = new Storyboard(player, game);
