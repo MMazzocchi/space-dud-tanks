@@ -13,7 +13,7 @@ var TankGame = function() {
     var tank = new Tank(0, 0, 0, 0, color);
 
     var player_data = {
-      'id': player.getId();
+      'id': player.getId(),
       'player': player,
       'tank': tank
     };
@@ -24,9 +24,17 @@ var TankGame = function() {
 
   that.tick = function(delta) {
     for(var i=0; i<players.length; i++) {
+      var player = players[i];
+      player.tank.tick(delta);
       tank_data[players[i].id] = tank.getData();
     }    
   };
 
+  that.getTankData = function() {
+    return tank_data;
+  };
+
   return that;
 };
+
+module.exports = TankGame;

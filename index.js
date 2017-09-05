@@ -1,7 +1,7 @@
 const HOST = '0.0.0.0';
 const PORT = 3000;
 
-var Game = require('./server/game/Game.js');
+var TankGame = require('./server/game/TankGame.js');
 var Storyboard = require('./server/player/Storyboard.js');
 
 var ControllerSetupScene =
@@ -18,7 +18,7 @@ var app = express();
 var http = require('http').Server(app);
 var space_dud = require('space-dud')(http);
 
-var game = new Game();
+var game = new TankGame();
 
 space_dud.getGame().onPlayerReady(function(player) {
   var storyboard = new Storyboard(player, game);

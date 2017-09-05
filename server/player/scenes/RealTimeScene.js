@@ -16,24 +16,24 @@ var RealTimeScene = function(name, game_data) {
     player.sendEventToConsumers(state_event);
   };
 
+
   function tick(delta) {
+    state_event.data = that.getStateData();
     sendStateEvent();
   };
 
-  function setup() {
-    sim_thread.onTick(tick);
+  // Public methods
+  that.getStateData = function() {
+    return {};
   };
 
-  // Public methods
-  that.setStateData = function(data) {
-    state_event.data = data;
+  that.start = function() {
+    sim_thread.onTick(tick);
   };
 
   that.stop = function() {
     // TODO: Remove tick() from simulation thread
   };
-
-  setup();
 
   return that;
 };
