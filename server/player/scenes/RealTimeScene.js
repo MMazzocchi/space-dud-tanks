@@ -18,7 +18,6 @@ var RealTimeScene = function(name, game_data) {
 
   function tick(delta) {
     state_event.data = that.getStateData();
-    console.log(JSON.stringify(state_event));
     sendStateEvent();
   };
 
