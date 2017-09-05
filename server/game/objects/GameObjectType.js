@@ -1,4 +1,4 @@
-var GameObjectType = function(fields) {
+var GameObjectType = function(name, fields) {
 
   function upperCaseToken(token) {
     return token.toUpperCase().replace("_", "");
@@ -8,7 +8,7 @@ var GameObjectType = function(fields) {
     var that = {};
 
     // Fields
-    var data = {};
+    var data = {'type': name};
 
     // Private methods
     function addField(field) {

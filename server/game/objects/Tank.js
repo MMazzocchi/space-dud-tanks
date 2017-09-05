@@ -1,8 +1,8 @@
 var GameObjectType = require('./GameObjectType.js');
 
 var Tank = function() {
-  var TankType = new GameObjectType(['x', 'y', 'z', 'theta',
-                                     'color', 'health', 'cooldown']);
+  var TankType = new GameObjectType('tank', ['x', 'y', 'z', 'theta',
+                                             'color', 'health', 'cooldown']);
 
   const ROT_COEFF = 1.0;
   const MAX_COOLDOWN = 3000;

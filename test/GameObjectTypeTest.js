@@ -4,7 +4,7 @@ var GameObjectType = require('../server/game/objects/GameObjectType.js');
 describe('GameObjectType', function() {
   describe('#Constructor', function() {
     it('should create a constructor with the appropriate methods', function() {
-      var MyObject = new GameObjectType(["x", "y", "z"]);
+      var MyObject = new GameObjectType('MyObject', ["x", "y", "z"]);
       var thing = new MyObject(1, 2, 3);
 
       assert.equal(thing.getX(), 1);
