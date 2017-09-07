@@ -5,6 +5,7 @@ var ArenaScene = function(game, client) {
   var camera = that.getCamera();
   var scene = that.getScene();
   var hud = new Hud();
+  var tank_data = {};
 
   // Private functions
   function setupScene() {
@@ -17,22 +18,67 @@ var ArenaScene = function(game, client) {
     dir_light.position.z = 0.5;
     scene.add(dir_light);
 
-//    tank_model.add(camera);
-    camera.position.y += 7;
-    camera.position.z -= 3.5;
-    camera.rotation.y += Math.PI;
-
     var sprite = hud.getSprite();
     sprite.position.z -= 0.5;
     camera.add(sprite);
   };
 
+  async function createTankModel(id, data) {
+    tank_data[id] = -1;
+    var model = await TankModelLoader.load();
+
+    model.position.x = data.x;
+    model.position.y = data.y;
+    model.position.z = data.z;
+
+    model.rotation.y = data.theta;
+
+    model.material[2].color = new THREE.Color(data.color);
+
+    if(id === client.getPlayerId()) {
+      model.children[0].visible = false;
+
+      model.add(camera);
+      camera.position.y += 7;
+      camera.position.z -= 3.5;
+
+      camera.rotation.y += Math.PI + model.rotation.y;
+    }
+
+    scene.add(model);
+    tank_data[id] = model;
+  };
+
+  function updateTankModel(id, data) {
+    var model = tank_data[id];
+
+    if(model !== -1) {
+      model.position.x = data.x;
+      model.position.y = data.y;
+      model.position.z = data.z;
+
+      model.rotation.y = data.theta;
+    }
+  };
+
+  function handleArenaState(data) {
+    var tank_state = data.data;
+    var ids = Object.keys(tank_state);
+
+    for(var i=0; i<ids.length; i++) {
+      var id = ids[i];
+
+      if(tank_data[id] === undefined) {
+        createTankModel(id, tank_state[id]);
+
+      } else {
+        updateTankModel(id, tank_state[id]);
+      }
+    }
+  };
+
   async function setup() {
     try {
-      client.onEventType('arena_state', function(data) {
-        console.log(data);
-      });
-
       var arena = await JSONLoader.load('/json/arena.json');
       scene.add(arena);
 
@@ -40,12 +86,9 @@ var ArenaScene = function(game, client) {
         await CubeTextureLoader.load('/cube_textures/ame_iceflats/');
       scene.background = texture;
 
-//      tank_model = await TankModelLoader.load();
-//      tank_model.children[0].visible = false;
-//
-//      scene.add(tank_model);
-
       setupScene();
+
+      client.onEventType('arena_state', handleArenaState);
     } catch(e) {
       console.error("Could not setup: "+e);
     }
