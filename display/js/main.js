@@ -23,8 +23,8 @@ $(function() {
 
     document.body.innerHTML = "";
     var domElement = game.getRenderer().domElement;
-    domElement.ondblclick = toggleFullScreen;
     document.body.appendChild(domElement);
+    domElement.ondblclick = toggleFullScreen;
   }
 
   function start() {

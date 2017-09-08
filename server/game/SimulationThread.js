@@ -4,7 +4,7 @@ var SimulationThread = function() {
   var that = new Observable(["tick"]);
 
   // Fields
-  const TICK_INTERVAL = 1000;
+  const TICK_INTERVAL = 16;
   var interval_id = undefined;
   var last_update = new Date();
 
