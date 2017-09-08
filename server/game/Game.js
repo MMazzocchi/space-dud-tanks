@@ -1,21 +1,30 @@
-var SimulationThread = require('./SimulationThread.js');
-
 var Game = function() {
   var that = {};
 
   // Fields
-  var simulation_thread = new SimulationThread();
+  var rooms = {};
 
   // Public methods
-  that.tick = function(delta) {};
+  that.registerRoom = function(name, room) {
+    rooms[name] = room;
+  };
 
-  that.getSimulationThread = function() {
-    return simulation_thread;
+  that.getRoom = function(name) {
+    return rooms[name];
   };
 
   that.start = function() {
-    simulation_thread.onTick(that.tick);
-    simulation_thread.start();
+    var names = Object.keys(rooms);
+    names.forEach(function(name) {
+      rooms[name].start();
+    });
+  };
+
+  that.stop = function() {
+    var names = Object.keys(rooms);
+    names.forEach(function(name) {
+      rooms[name].stop();
+    });
   };
 
   return that;
