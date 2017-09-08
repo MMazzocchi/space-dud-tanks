@@ -6,6 +6,7 @@ var ArenaScene = function(game, client) {
   var scene = that.getScene();
   var hud = new Hud();
   var tank_data = {};
+  var player_id = client.getPlayerId();
 
   // Private functions
   function setupScene() {
@@ -35,7 +36,7 @@ var ArenaScene = function(game, client) {
 
     model.material[2].color = new THREE.Color(data.color);
 
-    if(id === client.getPlayerId()) {
+    if(id === player_id) {
       model.children[0].visible = false;
 
       model.add(camera);
@@ -58,6 +59,12 @@ var ArenaScene = function(game, client) {
       model.position.z = data.z;
 
       model.rotation.y = data.theta;
+
+      if(id === player_id) {
+        hud.setHealth(data.health);
+        hud.setReadyToFire(data.cooldown === 0);
+        hud.update();
+      }
     }
   };
 
