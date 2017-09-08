@@ -34,7 +34,7 @@ var Tank = function() {
       that.setTheta(that.getTheta() + rot);
 
       if(that.getCooldown() > 0) {
-        that.setCooldown(that.getCoolDown() -= delta);
+        that.setCooldown(that.getCooldown() - delta);
       }
     };
 

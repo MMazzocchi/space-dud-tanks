@@ -62,7 +62,7 @@ var ArenaScene = function(game, client) {
 
       if(id === player_id) {
         hud.setHealth(data.health);
-        hud.setReadyToFire(data.cooldown === 0);
+        hud.setReadyToFire(data.cooldown <= 0);
         hud.update();
       }
     }

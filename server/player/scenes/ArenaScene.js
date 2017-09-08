@@ -16,6 +16,7 @@ var ArenaScene = function(game_data) {
 
   // Private methods
   function setup() {
+    controller.resetEventMappings();
     tank = room.addPlayer(player, tank_color);
   };
 
@@ -24,9 +25,15 @@ var ArenaScene = function(game_data) {
     player.sendEventToConsumers(state_event);
   };
 
+  function setupController() {
+    controller.on('left', tank.left);
+    controller.on('right', tank.right);
+    controller.on('fire', tank.fire);
+  };
+
   // Public methods
   that.start = function() {
-    controller.resetEventMappings();
+    setupController(); 
     room.onTick(tick);
   };
 
