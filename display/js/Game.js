@@ -11,6 +11,7 @@ var Game = function(current_width, current_height, client) {
 
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize(width, height);
+  var domElement = renderer.domElement;
 
   var storyboard = new Storyboard(client, that);
   storyboard.registerScene("controller_setup", ControllerSetupScene);
@@ -54,6 +55,7 @@ var Game = function(current_width, current_height, client) {
   };
 
   that.getRenderer = function() { return renderer; };
+  that.getDomElement = function() { return domElement; };
 
   that.setScene = function(new_scene) {
     scene = new_scene;

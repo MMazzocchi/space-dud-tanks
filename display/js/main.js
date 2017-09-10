@@ -22,7 +22,7 @@ $(function() {
     }, false );
 
     document.body.innerHTML = "";
-    var domElement = game.getRenderer().domElement;
+    var domElement = game.getDomElement();
     document.body.appendChild(domElement);
     domElement.ondblclick = toggleFullScreen;
   }
