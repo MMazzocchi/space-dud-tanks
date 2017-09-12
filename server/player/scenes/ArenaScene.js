@@ -9,11 +9,6 @@ var ArenaScene = function(game_data) {
   var tank_color = game_data.tank_color;
   var room = game_data.game.getRoom('arena');
   var tank = undefined;
-  var state_event = {
-    'event_type': "arena_state",
-    'data': {}
-  };
-  var count = 0;
 
   // Private methods
   function setup() {
