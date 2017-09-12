@@ -62,15 +62,14 @@ var ArenaScene = function(game, client) {
     var then = new Date(current_packet.time);
 
     if(model !== -1) {
-//      model.position.x = interpolate(model.position.x, now, data.x, then);
-//      model.position.y = interpolate(model.position.y, now, data.y, then);
-//      model.position.z = interpolate(model.position.z, now, data.z, then);
-//      model.rotation.y = interpolate(model.rotation.y, now,
-//                                     data.theta, then);
-
+      model.position.x = interpolate(model.position.x, last_update,
+                                     data.x, then, now);
+      model.position.y = interpolate(model.position.y, last_update,
+                                     data.y, then, now);
+      model.position.z = interpolate(model.position.z, last_update,
+                                     data.z, then, now);
       model.rotation.y = interpolate(model.rotation.y, last_update,
-                                     data.theta, then,
-                                     now);
+                                     data.theta, then, now);
 
       if(id === player_id) {
         hud.setHealth(data.health);
