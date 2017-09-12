@@ -35,6 +35,8 @@ var ArenaScene = function(game_data) {
     controller.on('left', tank.left);
     controller.on('right', tank.right);
     controller.on('fire', tank.fire);
+    controller.on('throttle', tank.throttle);
+    controller.on('brake', tank.brake);
   };
 
   // Public methods
