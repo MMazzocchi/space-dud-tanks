@@ -1,10 +1,9 @@
 var Observable = require('../util/Observable.js');
 
-var SimulationThread = function() {
+var SimulationThread = function(tick_interval) {
   var that = new Observable(["tick"]);
 
   // Fields
-  const TICK_INTERVAL = 16;
   const OFFSET = 100;
 
   var interval_id = undefined;
@@ -22,7 +21,7 @@ var SimulationThread = function() {
 
   // Public functions
   that.start = function() {
-    interval_id = setInterval(tick, TICK_INTERVAL);
+    interval_id = setInterval(tick, tick_interval);
   };
 
   that.stop = function() {

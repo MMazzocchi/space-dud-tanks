@@ -1,11 +1,11 @@
 var SimulationThread = require('../SimulationThread.js');
 var Observable = require('../../util/Observable.js');
 
-var Room = function() {
+var Room = function(tick_interval, state_interval) {
   var that = new Observable(['player_added', 'player_removed']);
 
   // Fields
-  var simulation_thread = new SimulationThread();
+  var simulation_thread = new SimulationThread(tick_interval);
 
   var objects = [];
   var players = [];
@@ -17,6 +17,8 @@ var Room = function() {
       'objects': []
     }
   };
+
+  var state_timer = 0;
 
   // Private methods
   function tickAllObjects(delta, time) {
@@ -41,7 +43,12 @@ var Room = function() {
 
   function tick(delta, time) {
     tickAllObjects(delta, time);
-    sendStatePacket();
+
+    state_timer += delta;
+    if(state_timer >= state_interval) {
+      sendStatePacket();
+      state_timer = 0;
+    }
   };
 
   function setup() {
