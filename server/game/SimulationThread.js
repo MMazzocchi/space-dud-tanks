@@ -5,6 +5,8 @@ var SimulationThread = function() {
 
   // Fields
   const TICK_INTERVAL = 16;
+  const OFFSET = 100;
+
   var interval_id = undefined;
   var last_update = new Date();
 
@@ -12,8 +14,10 @@ var SimulationThread = function() {
   function tick() {
     var now = new Date();
     var delta = now - last_update;
+    var future_time = now.getTime() + OFFSET;
 
-    that.triggerTick(delta);
+    that.triggerTick(delta, future_time);
+    last_update = now;
   };
 
   // Public functions

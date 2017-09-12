@@ -4,8 +4,8 @@ var Tank = function() {
   var TankType = new GameObjectType('tank', ['x', 'y', 'z', 'theta',
                                              'color', 'health', 'cooldown']);
 
-  const ROT_COEFF = 0.000001;
-  const MAX_COOLDOWN = 1000000;
+  const ROT_COEFF = 0.001;
+  const MAX_COOLDOWN = 1000;
 
   var constructor = function(x, y, z, theta, color) {
     var that = new TankType(x, y, z, theta, color, 10, 0);

@@ -6,14 +6,19 @@ var ArenaRoom = function() {
 
   // Fields
   var players = [];
-  var tank_data = {};
+  var tank_data = {
+    'time': new Date(),
+    'tanks': {}
+  };
 
   // Private methods
-  function tick(delta) {
+  function tick(delta, time) {
+    tank_data.time = time;
+
     for(var i=0; i<players.length; i++) {
       var player = players[i];
-      player.tank.tick(delta);
-      tank_data[players[i].id] = player.tank.getData();
+      player.tank.tick(delta, time);
+      tank_data.tanks[players[i].id] = player.tank.getData();
     }    
   };
 

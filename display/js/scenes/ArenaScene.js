@@ -7,6 +7,10 @@ var ArenaScene = function(game, client) {
   var hud = new Hud();
   var tank_data = {};
   var player_id = client.getPlayerId();
+  var last_update = new Date();
+  var current_packet = undefined;
+
+  var interpolate = Util.interpolate;
 
   // Private functions
   function setupScene() {
@@ -50,36 +54,44 @@ var ArenaScene = function(game, client) {
     tank_data[id] = model;
   };
 
-  function updateTankModel(id, data) {
+  function updateTankModel(id) {
+    var now = new Date();
+
     var model = tank_data[id];
+    var data = current_packet.tanks[id];
+    var then = new Date(current_packet.time);
 
     if(model !== -1) {
-      model.position.x = data.x;
-      model.position.y = data.y;
-      model.position.z = data.z;
+//      model.position.x = interpolate(model.position.x, now, data.x, then);
+//      model.position.y = interpolate(model.position.y, now, data.y, then);
+//      model.position.z = interpolate(model.position.z, now, data.z, then);
+//      model.rotation.y = interpolate(model.rotation.y, now,
+//                                     data.theta, then);
 
-      model.rotation.y = data.theta;
+      model.rotation.y = interpolate(model.rotation.y, last_update,
+                                     data.theta, then,
+                                     now);
 
       if(id === player_id) {
         hud.setHealth(data.health);
         hud.setReadyToFire(data.cooldown <= 0);
+
         hud.update();
       }
     }
   };
 
   function handleArenaState(data) {
-    var tank_state = data.data;
-    var ids = Object.keys(tank_state);
+    current_packet = data.data;
+
+    var tanks = current_packet.tanks;
+    var ids = Object.keys(tanks);
 
     for(var i=0; i<ids.length; i++) {
       var id = ids[i];
 
       if(tank_data[id] === undefined) {
-        createTankModel(id, tank_state[id]);
-
-      } else {
-        updateTankModel(id, tank_state[id]);
+        createTankModel(id, tanks[id]);
       }
     }
   };
@@ -103,23 +115,16 @@ var ArenaScene = function(game, client) {
 
   // Public functions
   that.renderStep = function() {
-//    tank.step();
-//
-//    for(var i=shots.length-1; i >= 0; i--) {
-//      shots[i].step();
-//
-//      if(shots[i].isDone() === true) {
-//        scene.remove(shots[i].getModel());
-//        shots.splice(i, 1);
-//      }
-//    }
-//
-//    var new_shots = tank.getNewShots();
-//    for(var i=0; i<new_shots.length; i++) {
-//      scene.add(new_shots[i].getModel());
-//    }
-//
-//    shots = shots.concat(new_shots);
+    if(current_packet !== undefined) {
+      var ids = Object.keys(current_packet.tanks);
+
+      for(var i=0; i<ids.length; i++) {
+        var id = ids[i];
+        updateTankModel(id);
+      }
+    }
+
+    last_update = new Date();
   };
 
   setup();
