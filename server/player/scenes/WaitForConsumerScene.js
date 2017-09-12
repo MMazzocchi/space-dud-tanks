@@ -9,6 +9,7 @@ var WaitForConsumerScene = function(game_data) {
   // Public functions
   that.start = function() {
     player.onConsumerAdded(function(client_id) {
+      player.onConsumerAdded(function() {});
       that.next();
     });
   };

@@ -23,8 +23,6 @@ var Storyboard = function(player, game) {
       if(index < scenes.length) {
         player.sendEventToConsumer(createSceneEvent(), client_id);
       }
-
-      next();
     });
   };
 
