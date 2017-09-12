@@ -41,7 +41,7 @@ var GameObjectType = function(name, fields) {
       return data;
     };
 
-    that.tick = function(delta) {};
+    that.tick = function(delta, time) {};
 
     setup();
 

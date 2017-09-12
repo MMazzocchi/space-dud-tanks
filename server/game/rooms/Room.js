@@ -1,10 +1,52 @@
 var SimulationThread = require('../SimulationThread.js');
+var Observable = require('../../util/Observable.js');
 
 var Room = function() {
-  var that = {};
+  var that = new Observable(['player_added', 'player_removed']);
 
   // Fields
   var simulation_thread = new SimulationThread();
+
+  var objects = [];
+  var players = [];
+
+  var packet = {
+    'event_type': 'room_state',
+    'time': new Date().getTime(),
+    'data': {
+      'objects': []
+    }
+  };
+
+  // Private methods
+  function tickAllObjects(delta, time) {
+    packet.data.objects.length = 0;
+
+    for(var i=0; i<objects.length; i++) {
+      var object = objects[i];
+      object.tick(delta, time);
+
+      packet.data.objects.push(object.getData());
+    }
+
+    packet.time = time;
+  };
+
+  function sendStatePacket() {
+    for(var i=0; i<players.length; i++) {
+      var player = players[i];
+      player.sendEventToConsumers(packet);
+    }
+  };
+
+  function tick(delta, time) {
+    tickAllObjects(delta, time);
+    sendStatePacket();
+  };
+
+  function setup() {
+    simulation_thread.onTick(tick);
+  };
 
   // Public methods
   that.start = function() {
@@ -18,6 +60,33 @@ var Room = function() {
   that.onTick = function(callback) {
     simulation_thread.onTick(callback);
   };
+
+  that.addObject = function(object) {
+    objects.push(object);
+  };
+
+  that.removeObject = function(object) {
+    var index = objects.indexOf(object);
+    if(index !== -1) {
+      objects.splice(index, 1);
+    }
+  };
+
+  that.addPlayer = function(player) {
+    players.push(player);
+    that.triggerPlayerAdded(player);
+  };
+
+  that.removePlayer = function(player) {
+    var index = players.indexOf(player);
+    if(index !== -1) {
+      players.splice(index, 1);
+    }
+
+    that.triggerPlayerRemoved(player);
+  };
+
+  setup();
 
   return that;
 };

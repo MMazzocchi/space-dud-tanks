@@ -21,16 +21,6 @@ var ArenaScene = function(game_data) {
     tank = room.addPlayer(player, tank_color);
   };
 
-  function tick(delta, time) {
-    state_event.data = room.getTankData();
-    if(count >= 5) {
-      player.sendEventToConsumers(state_event);
-      count = 0;
-    } else {
-      count += 1;
-    }
-  };
-
   function setupController() {
     controller.on('left', tank.left);
     controller.on('right', tank.right);
@@ -42,7 +32,6 @@ var ArenaScene = function(game_data) {
   // Public methods
   that.start = function() {
     setupController(); 
-    room.onTick(tick);
   };
 
   setup();

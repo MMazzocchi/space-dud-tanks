@@ -1,7 +1,7 @@
 var GameObjectType = require('./GameObjectType.js');
 
 var Tank = function() {
-  var TankType = new GameObjectType('tank', ['x', 'y', 'z', 'theta',
+  var TankType = new GameObjectType('tank', ['player_id', 'x', 'y', 'z', 'theta',
                                              'color', 'health', 'cooldown']);
 
   const ROT_COEFF = 0.001;
@@ -9,8 +9,8 @@ var Tank = function() {
   const BRAKE_COEFF = 0.5;
   const MAX_COOLDOWN = 1000;
 
-  var constructor = function(x, y, z, theta, color) {
-    var that = new TankType(x, y, z, theta, color, 10, 0);
+  var constructor = function(player_id, x, y, z, theta, color) {
+    var that = new TankType(player_id, x, y, z, theta, color, 10, 0);
 
     // Fields
     var left = 0;

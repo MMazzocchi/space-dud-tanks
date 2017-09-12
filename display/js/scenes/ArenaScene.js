@@ -5,7 +5,7 @@ var ArenaScene = function(game, client) {
   var camera = that.getCamera();
   var scene = that.getScene();
   var hud = new Hud();
-  var tank_data = {};
+  var model_data = {};
   var player_id = client.getPlayerId();
   var last_update = new Date();
   var current_packet = undefined;
@@ -28,8 +28,8 @@ var ArenaScene = function(game, client) {
     camera.add(sprite);
   };
 
-  async function createTankModel(id, data) {
-    tank_data[id] = -1;
+  async function createTankModel(data) {
+    model_data[data.player_id] = -1;
     var model = await TankModelLoader.load();
 
     model.position.x = data.x;
@@ -40,7 +40,7 @@ var ArenaScene = function(game, client) {
 
     model.material[2].color = new THREE.Color(data.color);
 
-    if(id === player_id) {
+    if(data.player_id === player_id) {
       model.children[0].visible = false;
 
       model.add(camera);
@@ -51,14 +51,13 @@ var ArenaScene = function(game, client) {
     }
 
     scene.add(model);
-    tank_data[id] = model;
+    model_data[data.player_id] = model;
   };
 
-  function updateTankModel(id) {
+  function updateTankModel(data) {
     var now = new Date();
 
-    var model = tank_data[id];
-    var data = current_packet.tanks[id];
+    var model = model_data[data.player_id];
     var then = new Date(current_packet.time);
 
     if(model !== -1) {
@@ -71,7 +70,7 @@ var ArenaScene = function(game, client) {
       model.rotation.y = interpolate(model.rotation.y, last_update,
                                      data.theta, then, now);
 
-      if(id === player_id) {
+      if(data.player_id === player_id) {
         hud.setHealth(data.health);
         hud.setReadyToFire(data.cooldown <= 0);
 
@@ -81,16 +80,15 @@ var ArenaScene = function(game, client) {
   };
 
   function handleArenaState(data) {
-    current_packet = data.data;
+    current_packet = data;
 
-    var tanks = current_packet.tanks;
-    var ids = Object.keys(tanks);
+    var tanks = current_packet.data.objects;
 
-    for(var i=0; i<ids.length; i++) {
-      var id = ids[i];
+    for(var i=0; i<tanks.length; i++) {
+      var tank = tanks[i];
 
-      if(tank_data[id] === undefined) {
-        createTankModel(id, tanks[id]);
+      if(model_data[tank.player_id] === undefined) {
+        createTankModel(tanks[i]);
       }
     }
   };
@@ -106,7 +104,7 @@ var ArenaScene = function(game, client) {
 
       setupScene();
 
-      client.onEventType('arena_state', handleArenaState);
+      client.onEventType('room_state', handleArenaState);
     } catch(e) {
       console.error("Could not setup: "+e);
     }
@@ -115,11 +113,10 @@ var ArenaScene = function(game, client) {
   // Public functions
   that.renderStep = function() {
     if(current_packet !== undefined) {
-      var ids = Object.keys(current_packet.tanks);
+      var tanks = current_packet.data.objects;
 
-      for(var i=0; i<ids.length; i++) {
-        var id = ids[i];
-        updateTankModel(id);
+      for(var i=0; i<tanks.length; i++) {
+        updateTankModel(tanks[i]);
       }
     }
 
