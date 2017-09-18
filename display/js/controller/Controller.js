@@ -37,14 +37,16 @@ var Controller = (function() {
     };
 
     that.setNextEvent = function(event_type, callback) {
-      client.onEventType("controller", function(data) {
+      var controller_callback = function(data) {
         if(controller_mappings.hasMappedEvent(data) === false) {
-          client.onEventType("controller", undefined);
+          client.offEventType("controller", controller_callback);
 
           controller_mappings.setMappedEvent(data, event_type);
           callback();
         }
-      });
+      };
+
+      client.onEventType("controller", controller_callback);
     };
 
     that.activate = function() {

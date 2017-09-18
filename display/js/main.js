@@ -16,7 +16,6 @@ $(function() {
   };
 
   function setupGame(game) {
-
     window.addEventListener( 'resize', function() {
       game.setSize(window.innerWidth, window.innerHeight);
     }, false );
@@ -33,11 +32,12 @@ $(function() {
 
     document.getElementById('submit_player_id').onclick = function(e) {
         var player_id = document.getElementById('player_id').value;
-        client.selectPlayer(player_id, function(valid) {
+        client.onPlayerChosen(function(valid) {
           if(valid) {
             setupGame(game);
           }
         });
+        client.selectPlayer(player_id);
     };
   }
 
