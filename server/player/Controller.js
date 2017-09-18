@@ -29,16 +29,18 @@ var Controller = function(player) {
   };
 
   that.setNextEvent = function(event_type, callback) {
-    player.onControllerEvent(function(data) {
+    var event_callback = function(data) {
       if(controller_mappings.hasMappedEvent(data) === false) {
         controller_mappings.setMappedEvent(data, event_type);
-        player.onControllerEvent(undefined);
+        player.offControllerEvent(event_callback);
 
         if(callback !== undefined) {
           callback(data, event_type);
         }
       }
-    });
+    };
+
+    player.onControllerEvent(event_callback);
   };
 
   that.activate = function() {
