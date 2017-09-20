@@ -20,18 +20,20 @@ $(function() {
       game.setSize(window.innerWidth, window.innerHeight);
     }, false );
 
-    document.body.innerHTML = "";
-    var domElement = game.getDomElement();
-    document.body.appendChild(domElement);
-    domElement.ondblclick = toggleFullScreen;
+//    var domElement = game.getDomElement();
+//    document.body.appendChild(domElement);
+//    domElement.ondblclick = toggleFullScreen;
   }
 
   function start() {
     var client = new DisplayConnection();
-    var game = new Game(window.innerWidth, window.innerHeight, client);
 
     document.getElementById('submit_player_id').onclick = function(e) {
         var player_id = document.getElementById('player_id').value;
+
+        document.body.innerHTML = "";
+        var game = new Game(document.body, window.innerWidth, window.innerHeight, client);
+
         client.onPlayerChosen(function(valid) {
           if(valid) {
             setupGame(game);

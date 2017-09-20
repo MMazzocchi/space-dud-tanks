@@ -1,4 +1,4 @@
-var Game = function(current_width, current_height, client) {
+var Game = function(parent_element, current_width, current_height, client) {
   var that = {};
 
   // Fields
@@ -6,12 +6,14 @@ var Game = function(current_width, current_height, client) {
   var height = current_height;
   var mobile = false;
 
+  var render_window = new RenderWindow(parent_element, width, height);
+  render_window.show3dCanvas();
+
   var scene = new Scene();
   scene.resize(width, height);
 
-  var renderer = new THREE.WebGLRenderer();
+  var renderer = new THREE.WebGLRenderer({ canvas: render_window.get3dCanvas() });
   renderer.setSize(width, height);
-  var domElement = renderer.domElement;
 
   var storyboard = new Storyboard(client, that);
   storyboard.registerScene("controller_setup", ControllerSetupScene);
@@ -50,12 +52,12 @@ var Game = function(current_width, current_height, client) {
     width = new_width;
     height = new_height;
 
+    render_window.resize(width, height);
     renderer.setSize(width, height);
     scene.resize(width, height);
   };
 
   that.getRenderer = function() { return renderer; };
-  that.getDomElement = function() { return domElement; };
 
   that.setScene = function(new_scene) {
     scene = new_scene;
