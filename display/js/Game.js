@@ -12,14 +12,6 @@ var Game = function(parent_element, current_width, current_height, client) {
   scene.triggerResize(width, height);
 
   // Private functions
-  function setupForMobile() {
-//    var effect = new THREE.StereoEffect(renderer);
-//    effect.setSize(width, height);
-//    renderer = effect;
-
-    scene.setupForMobile();
-  };
-
   function render() {
     scene.triggerRender();
     window.requestAnimationFrame(render);
@@ -33,7 +25,7 @@ var Game = function(parent_element, current_width, current_height, client) {
     window.addEventListener('deviceorientation', function(e) {
       if(mobile === false) {
         mobile = true;
-        setupForMobile();
+        scene.setupForMobile();
       }
     }, false );
 
