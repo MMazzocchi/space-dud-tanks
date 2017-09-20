@@ -1,5 +1,5 @@
-var ArenaScene = function(game, client) {
-  var that = new Scene();
+var ArenaScene = function(game, client, render_window) {
+  var that = new ThreeScene(render_window);
 
   // Fields
   var camera = that.getCamera();
@@ -105,22 +105,22 @@ var ArenaScene = function(game, client) {
       setupScene();
 
       client.onEventType('room_state', handleArenaState);
+
+      that.onRender(function() {
+        if(current_packet !== undefined) {
+          var tanks = current_packet.data.objects;
+
+          for(var i=0; i<tanks.length; i++) {
+            updateTankModel(tanks[i]);
+          }
+        }
+
+        last_update = new Date();
+      });
+
     } catch(e) {
       console.error("Could not setup: "+e);
     }
-  };
-
-  // Public functions
-  that.renderStep = function() {
-    if(current_packet !== undefined) {
-      var tanks = current_packet.data.objects;
-
-      for(var i=0; i<tanks.length; i++) {
-        updateTankModel(tanks[i]);
-      }
-    }
-
-    last_update = new Date();
   };
 
   setup();

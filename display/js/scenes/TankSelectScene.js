@@ -1,5 +1,5 @@
-var TankSelectScene = function(game, client) {
-  var that = new Scene();
+var TankSelectScene = function(game, client, render_window) {
+  var that = new ThreeScene(render_window);
 
   // Fields
   var camera = that.getCamera();
@@ -33,34 +33,25 @@ var TankSelectScene = function(game, client) {
     scene.add(spot_light);
   };
 
-  function setupClient() {
-    client.onEventType('tank_color', function(data) {
-      model.material[2].color = new THREE.Color(data.color);
-    });
-  };
-
-  function setupRenderStep() {
-    that.renderStep = function() {
-      model.rotation.y += 0.02;
-    };
-  };
-
   function setup() {
     TankModelLoader.load().then(function(tank_model) {
       model = tank_model;
       scene.add(tank_model);
 
-      setupClient();
-      setupRenderStep();
+      client.onEventType('tank_color', function(data) {
+        model.material[2].color = new THREE.Color(data.color);
+      });
+
+      that.onRender(function() {
+        model.rotation.y += 0.02;
+      });
+
     }).catch(function(e) {
       console.error("Tank could not be instantiated: "+e);
     });
 
     setupScene();
   };
-
-  // Public functions
-  that.setupForMobile = function() {};
 
   // After instantiation, call setup methods
   setup();
