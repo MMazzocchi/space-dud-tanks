@@ -47,7 +47,7 @@ var ArenaScene = function(game, client) {
       camera.position.y += 7;
       camera.position.z -= 3.5;
 
-      camera.rotation.y += Math.PI + model.rotation.y;
+      camera.rotation.y += Math.PI;
     }
 
     scene.add(model);
