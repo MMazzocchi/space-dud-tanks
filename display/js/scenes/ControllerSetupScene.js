@@ -1,6 +1,8 @@
-var ControllerSetupScene = function(game, client) {
-  var that = new Scene();
-
+var ControllerSetupScene = function(game, client, render_window) {
+  console.log("Creating ThreeScene");
+  var that = new ThreeScene(render_window);
+  console.log("Done");
+ 
   // Fields
   var controller = new Controller(client);
   var camera = that.getCamera();

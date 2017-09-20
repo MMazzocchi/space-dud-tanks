@@ -5,38 +5,31 @@ var Game = function(parent_element, current_width, current_height, client) {
   var width = current_width;
   var height = current_height;
   var mobile = false;
-
   var render_window = new RenderWindow(parent_element, width, height);
-  render_window.show3dCanvas();
+  var storyboard = new Storyboard(client, that, render_window);
 
   var scene = new Scene();
-  scene.resize(width, height);
-
-  var renderer = new THREE.WebGLRenderer({ canvas: render_window.get3dCanvas() });
-  renderer.setSize(width, height);
-
-  var storyboard = new Storyboard(client, that);
-  storyboard.registerScene("controller_setup", ControllerSetupScene);
-  storyboard.registerScene("tank_select", TankSelectScene);
-  storyboard.registerScene("arena", ArenaScene);
+  scene.triggerResize(width, height);
 
   // Private functions
   function setupForMobile() {
-    renderer.setPixelRatio(window.devicePixelRatio);
-
-    var effect = new THREE.StereoEffect(renderer);
-    effect.setSize(width, height);
-    renderer = effect;
+//    var effect = new THREE.StereoEffect(renderer);
+//    effect.setSize(width, height);
+//    renderer = effect;
 
     scene.setupForMobile();
   };
 
   function render() {
-    scene.render(renderer);
+    scene.triggerRender();
     window.requestAnimationFrame(render);
   }
 
   function setup() {
+    storyboard.registerScene("controller_setup", ControllerSetupScene);
+    storyboard.registerScene("tank_select", TankSelectScene);
+    storyboard.registerScene("arena", ArenaScene);
+
     window.addEventListener('deviceorientation', function(e) {
       if(mobile === false) {
         mobile = true;
@@ -53,15 +46,12 @@ var Game = function(parent_element, current_width, current_height, client) {
     height = new_height;
 
     render_window.resize(width, height);
-    renderer.setSize(width, height);
-    scene.resize(width, height);
+    scene.triggerResize(width, height);
   };
-
-  that.getRenderer = function() { return renderer; };
 
   that.setScene = function(new_scene) {
     scene = new_scene;
-    scene.resize(width, height);
+    scene.triggerResize(width, height);
 
     if(mobile === true) {
       scene.setupForMobile();
