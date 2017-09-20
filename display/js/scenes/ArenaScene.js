@@ -1,5 +1,5 @@
 var ArenaScene = function(game, client, render_window) {
-  var that = new ThreeScene(render_window);
+  var that = new OrientationThreeScene(render_window);
 
   // Fields
   var camera = that.getCamera();

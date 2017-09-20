@@ -10,7 +10,6 @@ var ThreeScene = function() {
     // Fields
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(75, 0.5, 0.1, 10000);
-    var controls = new THREE.DeviceOrientationControls(camera);
     var mobile = false;
 
     // Private functions
@@ -22,7 +21,6 @@ var ThreeScene = function() {
 
       that.onRender(function() {
         if(mobile === true) {
-          controls.update();
           mobile_renderer.render(scene, camera);
 
         } else {
@@ -38,15 +36,15 @@ var ThreeScene = function() {
         mobile_renderer.setSize(width, height);
       });
 
+      that.onSetupForMobile(function() {
+        mobile = true;
+        mobile_renderer.setPixelRatio(window.devicePixelRatio);
+      });
+
       render_window.show3dCanvas();
     };
   
     // Public functions
-    that.setupForMobile = function() {
-      mobile = true;
-      mobile_renderer.setPixelRatio(window.devicePixelRatio);
-    };
-  
     that.getCamera = function() { return camera; };
     that.getScene = function() { return scene; };
   

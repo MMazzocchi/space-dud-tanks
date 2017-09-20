@@ -25,7 +25,7 @@ var Game = function(parent_element, current_width, current_height, client) {
     window.addEventListener('deviceorientation', function(e) {
       if(mobile === false) {
         mobile = true;
-        scene.setupForMobile();
+        scene.triggerSetupForMobile();
       }
     }, false );
 
@@ -46,7 +46,7 @@ var Game = function(parent_element, current_width, current_height, client) {
     scene.triggerResize(width, height);
 
     if(mobile === true) {
-      scene.setupForMobile();
+      scene.triggerSetupForMobile();
     }
   };
 
