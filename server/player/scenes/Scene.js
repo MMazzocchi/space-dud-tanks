@@ -1,7 +1,7 @@
 var Observable = require('../../util/Observable.js');
 
 var Scene = function(name) {
-  var that = new Observable(['next']);
+  var that = new Observable('next');
 
   // Public methods
   that.next = function() {

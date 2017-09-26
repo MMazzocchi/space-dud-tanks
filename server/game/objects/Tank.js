@@ -1,4 +1,6 @@
 var PointObjectConstructor = require('./PointObjectConstructor.js');
+var Collidable = require('./Collidable.js');
+var Observable = require('../../util/Observable.js');
 
 var Tank = function() {
   var TankConstructor = new PointObjectConstructor('tank');
@@ -13,15 +15,19 @@ var Tank = function() {
   const THROTTLE_COEFF = 0.5;
   const BRAKE_COEFF = 0.5;
   const MAX_COOLDOWN = 1000;
+  const RADIUS = 5;
 
   var constructor = function(player_id, x, y, z, theta, color) {
     var that = new TankConstructor();
+    Collidable.augment(that, RADIUS);
+    Observable.augment(that, 'fire');
 
     // Fields
     var left = 0;
     var right = 0;
     var throttle = 0;
     var brake = 0;
+    var fire = 0;
 
     // Private methods
     function setup() {
@@ -43,9 +49,7 @@ var Tank = function() {
     };
 
     that.fire = function(value) {
-      if(value === 1 && that.getCooldown() <= 0) {
-        that.setCooldown(MAX_COOLDOWN);
-      }
+      fire = value;
     };
 
     that.throttle = function(value) {
@@ -69,6 +73,11 @@ var Tank = function() {
 
       if(that.getCooldown() > 0) {
         that.setCooldown(that.getCooldown() - delta);
+
+      } else if(fire === 1) {
+        that.setCooldown(MAX_COOLDOWN);
+        that.triggerFire(player_id, that.getX(), that.getY(), that.getZ(),
+                         that.getTheta());
       }
     };
 

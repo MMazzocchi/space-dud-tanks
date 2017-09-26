@@ -2,7 +2,7 @@ var SimulationThread = require('../SimulationThread.js');
 var Observable = require('../../util/Observable.js');
 
 var Room = function(tick_interval, state_interval) {
-  var that = new Observable(['player_added', 'player_removed']);
+  var that = new Observable('player_added', 'player_removed');
 
   // Fields
   var simulation_thread = new SimulationThread(tick_interval);

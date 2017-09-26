@@ -22,7 +22,7 @@ var Controller = function(player) {
 
   that.on = function(event_type, callback) {
     if(event_mappings[event_type] === undefined) {
-      event_mappings[event_type] = new Observable(['event']);
+      event_mappings[event_type] = new Observable('event');
     }
 
     event_mappings[event_type].onEvent(callback);

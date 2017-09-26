@@ -1,7 +1,7 @@
 var Observable = require('../util/Observable.js');
 
 var SimulationThread = function(tick_interval) {
-  var that = new Observable(["tick"]);
+  var that = new Observable("tick");
 
   // Fields
   const OFFSET = 100;
