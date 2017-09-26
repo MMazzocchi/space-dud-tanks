@@ -1,8 +1,16 @@
-var GameObjectType = require('./GameObjectType.js');
+var GameObjectConstructor = require('./GameObjectConstructor.js');
 
 var Tank = function() {
-  var TankType = new GameObjectType('tank', ['player_id', 'x', 'y', 'z', 'theta',
-                                             'color', 'health', 'cooldown']);
+  var TankConstructor = new GameObjectConstructor('tank');
+
+  TankConstructor.addField('player_id', 0);
+  TankConstructor.addField('x', 0);
+  TankConstructor.addField('y', 0);
+  TankConstructor.addField('z', 0);
+  TankConstructor.addField('theta', 0);
+  TankConstructor.addField('color', '#000000');
+  TankConstructor.addField('health', 10);
+  TankConstructor.addField('cooldown', 0);
 
   const ROT_COEFF = 0.001;
   const THROTTLE_COEFF = 0.5;
@@ -10,13 +18,23 @@ var Tank = function() {
   const MAX_COOLDOWN = 1000;
 
   var constructor = function(player_id, x, y, z, theta, color) {
-    var that = new TankType(player_id, x, y, z, theta, color, 10, 0);
+    var that = new TankConstructor();
 
     // Fields
     var left = 0;
     var right = 0;
     var throttle = 0;
     var brake = 0;
+
+    // Private methods
+    function setup() {
+      that.setPlayerId(player_id);
+      that.setX(x);
+      that.setY(y);
+      that.setZ(z);
+      that.setTheta(theta);
+      that.setColor(color);
+    };
 
     // Public methods
     that.left = function(value) {
@@ -56,6 +74,8 @@ var Tank = function() {
         that.setCooldown(that.getCooldown() - delta);
       }
     };
+
+    setup();
 
     return that;
   };

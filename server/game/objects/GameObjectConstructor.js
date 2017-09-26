@@ -1,17 +1,19 @@
-var GameObjectType = function(name, fields) {
+var GameObjectConstructor = function(name) {
+
+  var fields = [];
 
   function upperCaseToken(token) {
     return token.toUpperCase().replace("_", "");
   }
 
-  var constructor = function(...args) {
+  var constructor = function() {
     var that = {};
 
     // Fields
     var data = {'type': name};
 
     // Private methods
-    function addField(field) {
+    function addField(field, initial_value) {
       var caps_name = field.replace(/(^.|_.)/g, upperCaseToken);
       var setter = "set"+caps_name;
       var getter = "get"+caps_name;
@@ -23,16 +25,14 @@ var GameObjectType = function(name, fields) {
       that[getter] = function() {
         return data[field];
       };
+
+      data[field] = initial_value;
     };
 
     function setup() {
       for(var i=0; i<fields.length; i++) {
         var field = fields[i];
-        addField(field);
-
-        if(args[i] !== undefined) {
-          data[field] = args[i];
-        }
+        addField(field.name, field.initial_value);
       }
     };
 
@@ -48,7 +48,14 @@ var GameObjectType = function(name, fields) {
     return that;
   };
 
+  constructor.addField = function(field_name, initial_value) {
+    fields.push({
+      'name': field_name,
+      'initial_value': initial_value
+    })
+  };
+
   return constructor;
 };
 
-module.exports = GameObjectType;
+module.exports = GameObjectConstructor;
