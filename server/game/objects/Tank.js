@@ -1,12 +1,9 @@
-var GameObjectConstructor = require('./GameObjectConstructor.js');
+var PointObjectConstructor = require('./PointObjectConstructor.js');
 
 var Tank = function() {
-  var TankConstructor = new GameObjectConstructor('tank');
+  var TankConstructor = new PointObjectConstructor('tank');
 
   TankConstructor.addField('player_id', 0);
-  TankConstructor.addField('x', 0);
-  TankConstructor.addField('y', 0);
-  TankConstructor.addField('z', 0);
   TankConstructor.addField('theta', 0);
   TankConstructor.addField('color', '#000000');
   TankConstructor.addField('health', 10);
