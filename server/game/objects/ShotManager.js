@@ -5,6 +5,7 @@ var ShotManager = function(room) {
 
   // Fields
   var shots = [];
+  var shot_id = 0;
 
   // Private methods
   function removeShotAtIndex(index) {
@@ -16,7 +17,9 @@ var ShotManager = function(room) {
 
   // Public methods
   that.add = function(player_id, x, y, z, theta) {
-    var shot = new Shot(x, y, z, theta, that);
+
+    var shot = new Shot(shot_id, x, y, z, theta, that);
+    shot_id += 1;
 
     shots.push({
       'player_id': player_id,
