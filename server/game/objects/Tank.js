@@ -12,8 +12,8 @@ var Tank = function() {
   TankConstructor.addField('cooldown', 0);
 
   const ROT_COEFF = 0.001;
-  const THROTTLE_COEFF = 0.5;
-  const BRAKE_COEFF = 0.5;
+  const THROTTLE_COEFF = 0.05;
+  const BRAKE_COEFF = 0.05;
   const MAX_COOLDOWN = 1000;
   const RADIUS = 5;
 
@@ -60,13 +60,15 @@ var Tank = function() {
       brake = value;
     };
 
-    that.tick = function(delta) {
+    that.tick = function(delta, speed) {
       var rot = (left - right) * delta * ROT_COEFF;
       that.setTheta(that.getTheta() + rot);
 
       var speed = (throttle * THROTTLE_COEFF) - (brake * BRAKE_COEFF);
-      var dx = Math.sin(that.getTheta()) * speed;
-      var dz = Math.cos(that.getTheta()) * speed;
+      var dist = delta * speed;
+
+      var dx = Math.sin(that.getTheta()) * dist;
+      var dz = Math.cos(that.getTheta()) * dist;
 
       that.setX(that.getX() + dx);
       that.setZ(that.getZ() + dz);
