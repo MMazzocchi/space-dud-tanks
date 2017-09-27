@@ -6,29 +6,32 @@ var Room = function(tick_interval, state_interval) {
 
   // Fields
   var simulation_thread = new SimulationThread(tick_interval);
+  var object_id = 0;
+  var state_timer = 0;
 
-  var objects = [];
+  var objects = {};
   var players = [];
 
   var packet = {
     'event_type': 'room_state',
     'time': new Date().getTime(),
     'data': {
-      'objects': []
+      'objects': {}
     }
   };
 
-  var state_timer = 0;
 
   // Private methods
   function tickAllObjects(delta, time) {
-    packet.data.objects.length = 0;
+    packet.data.objects = {};
 
-    for(var i=0; i<objects.length; i++) {
-      var object = objects[i];
+    var object_ids = Object.keys(objects);
+    for(var i=0; i<object_ids.length; i++) {
+      var id = object_ids[i];
+      var object = objects[id];
+
       object.tick(delta, time);
-
-      packet.data.objects.push(object.getData());
+      packet.data.objects[id] = object.getData();
     }
 
     packet.time = time;
@@ -69,13 +72,17 @@ var Room = function(tick_interval, state_interval) {
   };
 
   that.addObject = function(object) {
-    objects.push(object);
+    objects[object_id] = object;
+    object_id += 1;
   };
 
   that.removeObject = function(object) {
-    var index = objects.indexOf(object);
-    if(index !== -1) {
-      objects.splice(index, 1);
+    var object_ids = Object.keys(objects);
+    for(var i=0; i<object_ids.length; i++) {
+      var id = object_ids[i];
+      if(object === objects[id]) {
+        delete(objects[id]);
+      }
     }
   };
 

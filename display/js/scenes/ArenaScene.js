@@ -116,17 +116,21 @@ var ArenaScene = function(game, client, render_window) {
     current_packet = data;
 
     var objects = current_packet.data.objects;
+    var object_ids = Object.keys(objects);
 
-    for(var i=0; i<objects.length; i++) {
-      if(objects[i].type === 'tank') {
-        var tank = objects[i];
+    for(var i=0; i<object_ids.length; i++) {
+      var id = object_ids[i];
+      var object = objects[id];
+
+      if(object.type === 'tank') {
+        var tank = object;
 
         if(tank_models[tank.player_id] === undefined) {
           createTankModel(tank);
         }
 
-      } else if(objects[i].type === 'shot') {
-        var shot = objects[i];
+      } else if(object.type === 'shot') {
+        var shot = object;
 
         if(shot_models[shot.shot_id] === undefined) {
           createShotModel(shot);
@@ -151,13 +155,17 @@ var ArenaScene = function(game, client, render_window) {
       that.onRender(function() {
         if(current_packet !== undefined) {
           var objects = current_packet.data.objects;
+          var object_ids = Object.keys(objects);
 
-          for(var i=0; i<objects.length; i++) {
-            if(objects[i].type === 'tank') {
-              updateTankModel(objects[i]);
+          for(var i=0; i<object_ids.length; i++) {
+            var id = object_ids[i];
+            var object = objects[id];
 
-            } else if(objects[i].type === 'shot') {
-              updateShotModel(objects[i]);
+            if(object.type === 'tank') {
+              updateTankModel(object);
+
+            } else if(object.type === 'shot') {
+              updateShotModel(object);
             }
           }
         }
