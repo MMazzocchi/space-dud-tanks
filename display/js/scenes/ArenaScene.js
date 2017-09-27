@@ -5,10 +5,14 @@ var ArenaScene = function(game, client, render_window) {
   var camera = that.getCamera();
   var scene = that.getScene();
   var hud = new Hud();
-  var model_data = {};
+  var tank_models = {};
+  var shot_models = {};
   var player_id = client.getPlayerId();
   var last_update = new Date();
   var current_packet = undefined;
+
+  var shot_geometry = new THREE.SphereGeometry(0.5, 12, 12);
+  var shot_material = new THREE.MeshLambertMaterial({ color: 0x333333 });
 
   var interpolate = Util.interpolate;
 
@@ -29,7 +33,7 @@ var ArenaScene = function(game, client, render_window) {
   };
 
   async function createTankModel(data) {
-    model_data[data.player_id] = -1;
+    tank_models[data.player_id] = -1;
     var model = await TankModelLoader.load();
 
     model.position.x = data.x;
@@ -51,13 +55,13 @@ var ArenaScene = function(game, client, render_window) {
     }
 
     scene.add(model);
-    model_data[data.player_id] = model;
+    tank_models[data.player_id] = model;
   };
 
   function updateTankModel(data) {
     var now = new Date();
 
-    var model = model_data[data.player_id];
+    var model = tank_models[data.player_id];
     var then = new Date(current_packet.time);
 
     if(model !== -1) {
@@ -79,16 +83,54 @@ var ArenaScene = function(game, client, render_window) {
     }
   };
 
+  function createShotModel(data) {
+    var point = new THREE.Object3D();
+
+    point.position.x = data.x;
+    point.position.y = data.y;
+    point.position.z = data.z;
+
+    var sphere = new THREE.Mesh(shot_geometry, shot_material);
+    sphere.position.y = 7;
+    point.add(sphere);
+
+    shot_models[data.shot_id] = point;
+    scene.add(point);
+  };
+
+  function updateShotModel(data) {
+    var now = new Date();
+
+    var model = shot_models[data.shot_id];
+    var then = new Date(current_packet.time);
+
+    model.position.x = interpolate(model.position.x, last_update,
+                                   data.x, then, now);
+    model.position.y = interpolate(model.position.y, last_update,
+                                   data.y, then, now);
+    model.position.z = interpolate(model.position.z, last_update,
+                                   data.z, then, now);
+  };
+
   function handleArenaState(data) {
     current_packet = data;
 
-    var tanks = current_packet.data.objects;
+    var objects = current_packet.data.objects;
 
-    for(var i=0; i<tanks.length; i++) {
-      var tank = tanks[i];
+    for(var i=0; i<objects.length; i++) {
+      if(objects[i].type === 'tank') {
+        var tank = objects[i];
 
-      if(model_data[tank.player_id] === undefined) {
-        createTankModel(tanks[i]);
+        if(tank_models[tank.player_id] === undefined) {
+          createTankModel(tank);
+        }
+
+      } else if(objects[i].type === 'shot') {
+        var shot = objects[i];
+
+        if(shot_models[shot.shot_id] === undefined) {
+          createShotModel(shot);
+        }
       }
     }
   };
@@ -108,10 +150,15 @@ var ArenaScene = function(game, client, render_window) {
 
       that.onRender(function() {
         if(current_packet !== undefined) {
-          var tanks = current_packet.data.objects;
+          var objects = current_packet.data.objects;
 
-          for(var i=0; i<tanks.length; i++) {
-            updateTankModel(tanks[i]);
+          for(var i=0; i<objects.length; i++) {
+            if(objects[i].type === 'tank') {
+              updateTankModel(objects[i]);
+
+            } else if(objects[i].type === 'shot') {
+              updateShotModel(objects[i]);
+            }
           }
         }
 

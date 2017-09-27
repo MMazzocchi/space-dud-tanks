@@ -9,7 +9,7 @@ var Shot = function() {
 
   const MAX_LIFE = 1000;
   const RADIUS = 1;
-  const SPEED = 0.0001;
+  const SPEED = 0.1;
 
   var constructor = function(shot_id, x, y, z, theta, shot_manager) {
     var that = new ShotConstructor();
