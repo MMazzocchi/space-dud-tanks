@@ -50,7 +50,7 @@ var Controller = (function() {
     };
 
     that.activate = function() {
-      client.onEvent(function(data) {
+      client.on('event', function(data) {
         var event_type = controller_mappings.getMappedEvent(data);
         if(event_type !== undefined) {
           handleEvent(event_type, data.value);

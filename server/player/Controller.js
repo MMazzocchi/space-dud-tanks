@@ -32,7 +32,7 @@ var Controller = function(player) {
     var event_callback = function(data) {
       if(controller_mappings.hasMappedEvent(data) === false) {
         controller_mappings.setMappedEvent(data, event_type);
-        player.offControllerEvent(event_callback);
+        player.removeListener('controller_event', event_callback);
 
         if(callback !== undefined) {
           callback(data, event_type);
@@ -40,11 +40,11 @@ var Controller = function(player) {
       }
     };
 
-    player.onControllerEvent(event_callback);
+    player.on('controller_event', event_callback);
   };
 
   that.activate = function() {
-    player.onControllerEvent(function(data) {
+    player.on('controller_event', function(data) {
       var event_type = controller_mappings.getMappedEvent(data);
       if(event_type !== undefined) {
         handleEvent(event_type, data.value);

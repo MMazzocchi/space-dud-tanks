@@ -19,7 +19,7 @@ var Storyboard = function(player, game) {
     game_data.game = game;
 
     game_data.player = player;
-    player.onConsumerAdded(function(client_id) {
+    player.on('consumer_added', function(client_id) {
       if(index < scenes.length) {
         player.sendEventToConsumer(createSceneEvent(), client_id);
       }

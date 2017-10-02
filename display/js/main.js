@@ -34,7 +34,7 @@ $(function() {
         document.body.innerHTML = "";
         var game = new Game(document.body, window.innerWidth, window.innerHeight, client);
 
-        client.onPlayerChosen(function(valid) {
+        client.on('player_chosen', function(valid) {
           if(valid) {
             setupGame(game);
           }
