@@ -55,7 +55,7 @@ var Room = function(tick_interval, state_interval) {
   };
 
   function setup() {
-    simulation_thread.onTick(tick);
+    simulation_thread.on('tick', tick);
   };
 
   // Public methods
@@ -68,7 +68,7 @@ var Room = function(tick_interval, state_interval) {
   };
 
   that.onTick = function(callback) {
-    simulation_thread.onTick(callback);
+    simulation_thread.on('tick', callback);
   };
 
   that.addObject = function(object) {

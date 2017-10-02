@@ -1,7 +1,7 @@
-var Observable = require('../util/Observable.js');
+var EventEmitter = require('events');
 
 var SimulationThread = function(tick_interval) {
-  var that = new Observable("tick");
+  var that = new EventEmitter();
 
   // Fields
   const OFFSET = 100;
@@ -15,7 +15,7 @@ var SimulationThread = function(tick_interval) {
     var delta = now - last_update;
     var future_time = now.getTime() + OFFSET;
 
-    that.triggerTick(delta, future_time);
+    that.emit('tick', delta, future_time);
     last_update = now;
   };
 
