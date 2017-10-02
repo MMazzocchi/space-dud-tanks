@@ -1,3 +1,5 @@
+var EventEmitter = require('events');
+
 var GameObjectConstructor = function(name) {
 
   var fields = [];
@@ -7,7 +9,7 @@ var GameObjectConstructor = function(name) {
   }
 
   var constructor = function() {
-    var that = {};
+    var that = new EventEmitter();
 
     // Fields
     var data = {'type': name};

@@ -17,7 +17,7 @@ var ArenaRoom = function() {
   // Public methods
   that.addPlayer = function(player, color) {
     var tank = new Tank(player.getId(), 0, 0, 0, 0, color);
-    tank.onFire(shot_manager.add)
+    tank.on('fire', shot_manager.add)
     that.addObject(tank);
 
     superAddPlayer(player);

@@ -1,6 +1,5 @@
 var PointObjectConstructor = require('./PointObjectConstructor.js');
 var Collidable = require('./Collidable.js');
-var Observable = require('../../util/Observable.js');
 
 var Tank = function() {
   var TankConstructor = new PointObjectConstructor('tank');
@@ -20,7 +19,6 @@ var Tank = function() {
   var constructor = function(player_id, x, y, z, theta, color) {
     var that = new TankConstructor();
     Collidable.augment(that, RADIUS);
-    Observable.augment(that, 'fire');
 
     // Fields
     var left = 0;
@@ -78,8 +76,8 @@ var Tank = function() {
 
       } else if(fire === 1) {
         that.setCooldown(MAX_COOLDOWN);
-        that.triggerFire(player_id, that.getX(), that.getY(), that.getZ(),
-                         that.getTheta());
+        that.emit('fire', player_id, that.getX(), that.getY(), that.getZ(),
+                          that.getTheta());
       }
     };
 
