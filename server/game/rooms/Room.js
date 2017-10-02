@@ -1,8 +1,8 @@
+var EventEmitter = require('events');
 var SimulationThread = require('../SimulationThread.js');
-var Observable = require('../../util/Observable.js');
 
 var Room = function(tick_interval, state_interval) {
-  var that = new Observable('player_added', 'player_removed');
+  var that = new EventEmitter();
 
   // Fields
   var simulation_thread = new SimulationThread(tick_interval);
@@ -88,7 +88,7 @@ var Room = function(tick_interval, state_interval) {
 
   that.addPlayer = function(player) {
     players.push(player);
-    that.triggerPlayerAdded(player);
+    that.emit('player_added', player);
   };
 
   that.removePlayer = function(player) {
@@ -97,7 +97,7 @@ var Room = function(tick_interval, state_interval) {
       players.splice(index, 1);
     }
 
-    that.triggerPlayerRemoved(player);
+    that.emit('player_removed', player);
   };
 
   setup();
