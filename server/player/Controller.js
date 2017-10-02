@@ -1,31 +1,28 @@
+var EventEmitter = require('events');
 var ControllerMappings = require('./ControllerMappings.js');
-var Observable = require('../util/Observable.js');
 
 var Controller = function(player) {
   var that = {};
 
   // Fields
-  var event_mappings = {};
+  var emitter = new EventEmitter();
   var controller_mappings = new ControllerMappings();
 
   // Private methods
-  function handleEvent(event_type, value) {
-    if(event_mappings[event_type] !== undefined) {
-      event_mappings[event_type].triggerEvent(Math.abs(value));
-    }
-  }
+  function handleEvent(data) {
+      var event_type = controller_mappings.getMappedEvent(data);
+      if(event_type !== undefined) {
+        emitter.emit(event_type, Math.abs(data.value));
+      }
+  };
 
   // Public methods
   that.resetEventMappings = function() {
-    event_mappings = {};
+    emitter.removeAllListeners();
   };
 
   that.on = function(event_type, callback) {
-    if(event_mappings[event_type] === undefined) {
-      event_mappings[event_type] = new Observable('event');
-    }
-
-    event_mappings[event_type].onEvent(callback);
+    emitter.on(event_type, callback);
   };
 
   that.setNextEvent = function(event_type, callback) {
@@ -44,12 +41,7 @@ var Controller = function(player) {
   };
 
   that.activate = function() {
-    player.on('controller_event', function(data) {
-      var event_type = controller_mappings.getMappedEvent(data);
-      if(event_type !== undefined) {
-        handleEvent(event_type, data.value);
-      }
-    });
+    player.on('controller_event', handleEvent);
   };
 
   return that;
