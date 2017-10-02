@@ -39,7 +39,7 @@ var Storyboard = function(player, game) {
     var SceneConstructor = scenes[index];
     current_scene = new SceneConstructor(game_data);
 
-    current_scene.onNext(next);
+    current_scene.on('next', next);
     player.sendEventToConsumers(createSceneEvent());
 
     current_scene.start();

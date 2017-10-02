@@ -1,11 +1,11 @@
-var Observable = require('../../util/Observable.js');
+var EventEmitter = require('events');
 
 var Scene = function(name) {
-  var that = new Observable('next');
+  var that = new EventEmitter();
 
   // Public methods
   that.next = function() {
-    that.triggerNext();
+    that.emit('next');
   };
 
   that.start = function() {
