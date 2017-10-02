@@ -2,29 +2,20 @@ var EventEmitter = require('events');
 var ControllerMappings = require('./ControllerMappings.js');
 
 var Controller = function(player) {
-  var that = {};
+  var that = new EventEmitter();
 
   // Fields
-  var emitter = new EventEmitter();
   var controller_mappings = new ControllerMappings();
 
   // Private methods
   function handleEvent(data) {
       var event_type = controller_mappings.getMappedEvent(data);
       if(event_type !== undefined) {
-        emitter.emit(event_type, Math.abs(data.value));
+        that.emit(event_type, Math.abs(data.value));
       }
   };
 
   // Public methods
-  that.resetEventMappings = function() {
-    emitter.removeAllListeners();
-  };
-
-  that.on = function(event_type, callback) {
-    emitter.on(event_type, callback);
-  };
-
   that.setNextEvent = function(event_type, callback) {
     var event_callback = function(data) {
       if(controller_mappings.hasMappedEvent(data) === false) {

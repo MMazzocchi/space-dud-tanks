@@ -12,7 +12,7 @@ var ArenaScene = function(game_data) {
 
   // Private methods
   function setup() {
-    controller.resetEventMappings();
+    controller.removeAllListeners();
     tank = room.addPlayer(player, tank_color);
   };
 
