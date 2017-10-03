@@ -1,4 +1,6 @@
 var ThreeScene = require('./ThreeScene.js');
+var THREE = require('../../lib/three.min.js');
+require('../../lib/DeviceOrientationControls.js');
 
 var OrientationThreeScene = function(render_window) {
   var that = new ThreeScene(render_window);

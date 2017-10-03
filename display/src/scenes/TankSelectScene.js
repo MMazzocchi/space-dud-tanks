@@ -1,3 +1,4 @@
+var THREE = require('../../lib/three.min.js');
 var ThreeScene = require('./ThreeScene.js');
 var TankModelLoader = require('../TankModelLoader.js');
 
@@ -62,4 +63,4 @@ var TankSelectScene = function(game, client, render_window) {
   return that;
 };
 
-module.exports = TankModelLoader;
+module.exports = TankSelectScene;

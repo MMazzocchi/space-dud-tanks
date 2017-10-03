@@ -1,5 +1,6 @@
 var Scene = require('./Scene.js');
-var StereoEffect = require('../../lib/StereoEffect.js');
+var THREE = require('../../lib/three.min.js');
+require('../../lib/StereoEffect.js');
 
 var ThreeScene = function() {
 

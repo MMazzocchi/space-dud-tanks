@@ -1,3 +1,5 @@
+var THREE = require('../../lib/three.min.js');
+
 var Hud = function() {
   var that = {};
 
