@@ -57,3 +57,5 @@ var Observable = function() {
 
   return constructor;
 }();
+
+module.exports = Observable;

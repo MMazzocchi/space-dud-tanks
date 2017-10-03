@@ -48,3 +48,5 @@ var Player = (function() {
 
   return PlayerDef;
 })();
+
+module.exports = Player;

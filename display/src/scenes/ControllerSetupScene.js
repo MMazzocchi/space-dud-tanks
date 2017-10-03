@@ -1,3 +1,5 @@
+var Canvas2dScene = require('./Canvas2dScene.js');
+
 var ControllerSetupScene = function(game, client, render_window) {
   var that = new Canvas2dScene(render_window);
  
@@ -65,3 +67,5 @@ var ControllerSetupScene = function(game, client, render_window) {
 
   return that;
 };
+
+module.exports = ControllerSetupScene;

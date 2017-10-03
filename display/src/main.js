@@ -1,3 +1,5 @@
+var Game = require('./Game.js');
+
 $(function() {
   function toggleFullScreen() {
 

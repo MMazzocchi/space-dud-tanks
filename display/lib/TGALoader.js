@@ -1,3 +1,5 @@
+var THREE = require('./three.min.js');
+
 /*
  * @author Daosheng Mu / https://github.com/DaoshengMu/
  * @author mrdoob / http://mrdoob.com/

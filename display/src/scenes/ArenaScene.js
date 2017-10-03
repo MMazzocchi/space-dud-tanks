@@ -1,3 +1,8 @@
+var THREE = require('../../lib/three.min.js');
+var OrientationThreeScene = require('./OrientationThreeScene.js');
+var JSONLoader = require('../JSONLoader.js');
+var CubeTextureLoader = require('../CubeTextureLoader.js');
+
 var ArenaScene = function(game, client, render_window) {
   var that = new OrientationThreeScene(render_window);
 
@@ -182,3 +187,5 @@ var ArenaScene = function(game, client, render_window) {
 
   return that;
 };
+
+module.exports = ArenaScene;

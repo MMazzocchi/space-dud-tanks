@@ -54,3 +54,5 @@ var RenderWindow = function(parent_element, width, height) {
 
   return that;
 };
+
+module.exports = RenderWindow;

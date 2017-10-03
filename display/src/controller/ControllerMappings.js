@@ -81,3 +81,5 @@ var ControllerMappings = function() {
 
   return that;
 };
+
+module.exports = ControllerMappings;

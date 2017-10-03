@@ -1,3 +1,5 @@
+var THREE = require('../../lib/three.min.js');
+
 var ControllerSetupSprite = function() {
   var that = {};
 
@@ -67,3 +69,5 @@ var ControllerSetupSprite = function() {
 
   return that;
 };
+
+module.exports = ControllerSetupSprite;

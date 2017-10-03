@@ -1,3 +1,10 @@
+var RenderWindow = require('./RenderWindow.js');
+var Storyboard = require('./Storyboard.js');
+var Scene = require('./scenes/Scene.js');
+var ControllerSetupScene = require('./scenes/ControllerSetupScene.js');
+var TankSelectScene = require('./scenes/TankSelectScene.js');
+var ArenaScene = require('./scenes/ArenaScene.js');
+
 var Game = function(parent_element, current_width, current_height, client) {
   var that = {};
 
@@ -55,3 +62,5 @@ var Game = function(parent_element, current_width, current_height, client) {
 
   return that;
 };
+
+module.exports = Game;

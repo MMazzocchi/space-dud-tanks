@@ -1,3 +1,6 @@
+var Scene = require('./Scene.js');
+var StereoEffect = require('../../lib/StereoEffect.js');
+
 var ThreeScene = function() {
 
   // Static fields
@@ -55,3 +58,5 @@ var ThreeScene = function() {
 
   return constructor;
 }();
+
+module.exports = ThreeScene;

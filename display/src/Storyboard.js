@@ -28,3 +28,5 @@ var Storyboard = function(client, game, render_window) {
 
   return that;
 };
+
+module.exports = Storyboard;

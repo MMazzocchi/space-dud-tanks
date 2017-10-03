@@ -1,3 +1,5 @@
+var THREE = require('../lib/three.min.js');
+
 var JSONLoader = function() {
 
   // Static fields
@@ -57,3 +59,5 @@ var JSONLoader = function() {
 
   return that;
 }();
+
+module.exports = JSONLoader;

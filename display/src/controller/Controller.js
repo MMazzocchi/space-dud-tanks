@@ -1,3 +1,5 @@
+var ControllerMappings = require('./ControllerMappings.js');
+
 var Controller = (function() {
 
   // Private static fields
@@ -63,3 +65,5 @@ var Controller = (function() {
 
   return ControllerClass;
 })();
+
+module.exports = Controller;

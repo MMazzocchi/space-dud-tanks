@@ -1,3 +1,6 @@
+var Scene = require('./Scene.js');
+var Observable = require('../Observable.js');
+
 var Canvas2dScene = function(render_window) {
   var that = new Scene();
   Observable.augment(that, "draw");
@@ -41,3 +44,5 @@ var Canvas2dScene = function(render_window) {
 
   return that;
 };
+
+module.exports = Canvas2dScene;

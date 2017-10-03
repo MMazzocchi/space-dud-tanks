@@ -1,3 +1,5 @@
+var THREE = require('../lib/three.min.js');
+
 var ModelLoader = function() {
 
   var cache = {};
@@ -62,3 +64,5 @@ var ModelLoader = function() {
 
   return ModelLoaderDefinition;
 }();
+
+module.exports = ModelLoader;

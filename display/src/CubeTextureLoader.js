@@ -1,3 +1,6 @@
+var THREE = require('../lib/three.min.js');
+require('../lib/TGALoader');
+
 var CubeTextureLoader = function() {
   var that = {};
 
@@ -69,3 +72,5 @@ var CubeTextureLoader = function() {
   return that;
 
 }();
+
+module.exports = CubeTextureLoader;

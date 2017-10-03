@@ -18,3 +18,5 @@ var Util = function() {
 
   return that;
 }();
+
+module.exports = Util;

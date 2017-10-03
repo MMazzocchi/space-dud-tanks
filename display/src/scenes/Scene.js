@@ -17,3 +17,5 @@ var Scene = function() {
 
   return that;
 };
+
+module.exports = Scene;

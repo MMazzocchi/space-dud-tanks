@@ -1,3 +1,5 @@
+var JSONLoader = require('./JSONLoader.js');
+
 var TankModelLoader = function() {
 
   var that = {};
@@ -18,3 +20,5 @@ var TankModelLoader = function() {
 
   return that;
 }();
+
+module.exports = TankModelLoader;

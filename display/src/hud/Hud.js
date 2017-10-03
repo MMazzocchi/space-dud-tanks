@@ -101,3 +101,5 @@ var Hud = function() {
 
   return that;
 };
+
+module.exports = Hud;

@@ -1,3 +1,5 @@
+var ThreeScene = require('./ThreeScene.js');
+
 var OrientationThreeScene = function(render_window) {
   var that = new ThreeScene(render_window);
 
@@ -18,3 +20,5 @@ var OrientationThreeScene = function(render_window) {
 
   return that;
 };
+
+module.exports = OrientationThreeScene;
