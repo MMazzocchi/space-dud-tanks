@@ -152,7 +152,7 @@ var ArenaScene = function(game, client, render_window) {
 
       client.onEventType('room_state', handleArenaState);
 
-      that.onRender(function() {
+      that.on('render', function() {
         if(current_packet !== undefined) {
           var objects = current_packet.data.objects;
           var object_ids = Object.keys(objects);

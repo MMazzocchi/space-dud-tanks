@@ -19,7 +19,7 @@ var ThreeScene = function() {
         mobile_renderer = new THREE.StereoEffect(renderer);
       }
 
-      that.onRender(function() {
+      that.on('render', function() {
         if(mobile === true) {
           mobile_renderer.render(scene, camera);
 
@@ -28,7 +28,7 @@ var ThreeScene = function() {
         }
       });
 
-      that.onResize(function(width, height) {
+      that.on('resize', function(width, height) {
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
 
@@ -36,7 +36,7 @@ var ThreeScene = function() {
         mobile_renderer.setSize(width, height);
       });
 
-      that.onSetupForMobile(function() {
+      that.on('setup_for_mobile', function() {
         mobile = true;
         mobile_renderer.setPixelRatio(window.devicePixelRatio);
       });

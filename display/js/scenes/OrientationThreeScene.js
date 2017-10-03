@@ -6,13 +6,13 @@ var OrientationThreeScene = function(render_window) {
   var controls = new THREE.DeviceOrientationControls(camera);
   var mobile = false;
 
-  that.onRender(function() {
+  that.on('render', function() {
     if(mobile === true) {
       controls.update();
     }
   });
 
-  that.onSetupForMobile(function() {
+  that.on('setup_for_mobile', function() {
     mobile = true;
   });
 

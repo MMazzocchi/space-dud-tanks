@@ -42,7 +42,7 @@ var TankSelectScene = function(game, client, render_window) {
         model.material[2].color = new THREE.Color(data.color);
       });
 
-      that.onRender(function() {
+      that.on('render', function() {
         model.rotation.y += 0.02;
       });
 

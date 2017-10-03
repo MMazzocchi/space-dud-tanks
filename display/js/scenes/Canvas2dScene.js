@@ -11,7 +11,7 @@ var Canvas2dScene = function(render_window) {
 
   // Private methods
   function setup() {
-    that.onRender(function() {
+    that.on('render', function() {
       context.save();
         context.clearRect(0, 0, width, height);
         if(mobile === false) {
@@ -25,12 +25,12 @@ var Canvas2dScene = function(render_window) {
       context.restore();
     });
 
-    that.onResize(function(new_width, new_height) {
+    that.on('resize', function(new_width, new_height) {
       width = new_width;
       height = new_height;
     });
 
-    that.onSetupForMobile(function() {
+    that.on('setup_for_mobile', function() {
       mobile = true;
     });
 

@@ -9,11 +9,11 @@ var Game = function(parent_element, current_width, current_height, client) {
   var storyboard = new Storyboard(client, that, render_window);
 
   var scene = new Scene();
-  scene.triggerResize(width, height);
+  scene.resize(width, height);
 
   // Private functions
   function render() {
-    scene.triggerRender();
+    scene.render();
     window.requestAnimationFrame(render);
   }
 
@@ -25,7 +25,7 @@ var Game = function(parent_element, current_width, current_height, client) {
     window.addEventListener('deviceorientation', function(e) {
       if(mobile === false) {
         mobile = true;
-        scene.triggerSetupForMobile();
+        scene.setupForMobile();
       }
     }, false );
 
@@ -38,15 +38,15 @@ var Game = function(parent_element, current_width, current_height, client) {
     height = new_height;
 
     render_window.resize(width, height);
-    scene.triggerResize(width, height);
+    scene.resize(width, height);
   };
 
   that.setScene = function(new_scene) {
     scene = new_scene;
-    scene.triggerResize(width, height);
+    scene.resize(width, height);
 
     if(mobile === true) {
-      scene.triggerSetupForMobile();
+      scene.setupForMobile();
     }
   };
 
