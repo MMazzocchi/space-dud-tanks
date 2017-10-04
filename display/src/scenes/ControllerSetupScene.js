@@ -26,7 +26,7 @@ var ControllerSetupScene = function(game, client, render_window) {
   function setup() {
     client.onEventType('need_controller_event', addEvent);
   
-    that.onDraw(function(ctx, width, height) {
+    that.on('draw', function(ctx, width, height) {
       ctx.save();
 
         ctx.fillStyle = "#000000";

@@ -1,9 +1,7 @@
 var Scene = require('./Scene.js');
-var Observable = require('../Observable.js');
 
 var Canvas2dScene = function(render_window) {
   var that = new Scene();
-  Observable.augment(that, "draw");
 
   // Fields
   var canvas = render_window.get2dCanvas();
@@ -18,12 +16,12 @@ var Canvas2dScene = function(render_window) {
       context.save();
         context.clearRect(0, 0, width, height);
         if(mobile === false) {
-          that.triggerDraw(context, width, height);
+          that.emit('draw', context, width, height);
 
         } else {
-          that.triggerDraw(context, width/2, height);
+          that.emit('draw', context, width/2, height);
           context.translate(width/2, 0);
-          that.triggerDraw(context, width/2, height);
+          that.emit('draw', context, width/2, height);
         }
       context.restore();
     });
