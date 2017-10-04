@@ -28,28 +28,6 @@ var Game = function() {
     clock.removeListener('tick', room.tick);
   };
 
-  that.registerRoom = function(name, room) {
-    room_hash[name] = room;
-  };
-
-  that.getRoom = function(name) {
-    return room_hash[name];
-  };
-
-  that.start = function() {
-    var names = Object.keys(room_hash);
-    names.forEach(function(name) {
-      room_hash[name].start();
-    });
-  };
-
-  that.stop = function() {
-    var names = Object.keys(room_hash);
-    names.forEach(function(name) {
-      room_hash[name].stop();
-    });
-  };
-
   setImmediate(tick);
   return that;
 };
