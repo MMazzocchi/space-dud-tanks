@@ -1,12 +1,14 @@
 var EventEmitter = require('events');
+var SpaceDud = require('space-dud');
 
-var Game = function() {
+var Game = function(http) {
   var that = {};
-  var clock = new EventEmitter();
 
   // Fields
   var room_hash = {};
   var last_update = new Date();
+  var clock = new EventEmitter();
+  var space_dud = new SpaceDud(http);
 
   // Private methods
   function tick() {
@@ -15,6 +17,14 @@ var Game = function() {
 
     clock.emit('tick', delta, now);
     last_update = now;
+
+    setImmediate(tick);
+  };
+
+  function setupCallbacks() {
+    setImmediate(function() {
+      space_dud.getGame().on('player_ready', that.playerReady);
+    });
 
     setImmediate(tick);
   };
@@ -28,7 +38,11 @@ var Game = function() {
     clock.removeListener('tick', room.tick);
   };
 
-  setImmediate(tick);
+  that.playerReady = function(player) {};
+
+  // After everything else is done, setup the callbacks
+  setImmediate(setupCallbacks);
+
   return that;
 };
 
