@@ -1,4 +1,5 @@
 var Game = require('./Game.js');
+m
 
 $(function() {
   function toggleFullScreen() {
@@ -29,19 +30,21 @@ $(function() {
 
   function start() {
     var client = new DisplayConnection();
+    client.on('player_chosen', function(valid) {
+      if(valid === true) {
+        console.log("Valid player choice!");
+        client.onEventType('state', function(data) {
+          console.log(data);
+        });
+      } else {
+        console.error("Invalid player choice!");
+      }
+    });
 
     document.getElementById('submit_player_id').onclick = function(e) {
-        var player_id = document.getElementById('player_id').value;
-
-        client.on('player_chosen', function(valid) {
-          if(valid) {
-            client.onEventType('state', function(data) {
-              console.log(data);
-            });
-          } else {
-            console.error("Invalid player choice!");
-          }
-        });
+      var player_id = document.getElementById('player_id').value;
+      client.selectPlayer(player_id);
+    };
 
 //        document.body.innerHTML = "";
 //        var game = new Game(document.body, window.innerWidth, window.innerHeight, client);
@@ -52,7 +55,6 @@ $(function() {
 //          }
 //        });
 //        client.selectPlayer(player_id);
-    };
   }
 
   start();
