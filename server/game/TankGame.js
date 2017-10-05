@@ -1,4 +1,5 @@
 var Game = require('./Game.js');
+var PassThroughScene = require('./scenes/PassThroughScene.js');
 var MultiplayerRoom = require('./rooms/MultiplayerRoom.js');
 
 var TankGame = function(http) {
@@ -7,7 +8,8 @@ var TankGame = function(http) {
 
   // Public functions
   that.playerReady = function(player) {
-    room.addPlayer(player);
+    PassThroughScene(player);
+//    room.addPlayer(player);
   };
 
   that.addRoom(room);

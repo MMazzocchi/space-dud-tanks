@@ -14,6 +14,10 @@ $(function() {
       }
     });
 
+    client.on('event', function(data) {
+      console.log(data);
+    });
+
     document.getElementById('submit_player_id').onclick = function(e) {
       var player_id = document.getElementById('player_id').value;
       client.selectPlayer(player_id);
