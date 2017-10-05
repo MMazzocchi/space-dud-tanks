@@ -37,6 +37,10 @@ var MultiplayerRoom = function() {
     return {};
   };
 
+  that.addPlayer = function(player) {
+    players.push(player);
+  };
+
   setupCallbacks();
 
   return that;

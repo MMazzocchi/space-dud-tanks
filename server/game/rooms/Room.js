@@ -1,7 +1,7 @@
-var EventEmitter = requirE('events');
+var EventEmitter = require('events');
 
 var Room = function() {
-  var that = {};
+  var that = new EventEmitter();
 
   // Public methods
   that.tick = function(delta, now) {
