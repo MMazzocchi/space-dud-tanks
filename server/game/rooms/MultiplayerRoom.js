@@ -22,7 +22,7 @@ var MultiplayerRoom = function() {
 
     var length = players.length;
     for(var i=0; i<length; i++) {
-      player[i].sendEventToConsumers(packet);
+      players[i].sendEventToConsumers(packet);
     }
   };
 
