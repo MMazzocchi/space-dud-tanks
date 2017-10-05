@@ -1,10 +1,17 @@
 var Room = require('./Room.js');
 
-var MultiplayerRoom = function() {
+const DEFAULT_UPDATE_INTERVAL = 33;
+
+var MultiplayerRoom = function(update_interval) {
   var that = new Room();
+
+  if(update_interval === undefined) {
+    update_interval = DEFAULT_UPDATE_INTERVAL;
+  }
 
   // Fields
   var players = [];
+  var last_update = new Date();
 
   // Private methods
   function createStatePacket(now) {
@@ -17,12 +24,19 @@ var MultiplayerRoom = function() {
     return packet;
   };
 
-  function tick(delta, now) {
+  function sendUpdate(now) {
     var packet = createStatePacket(now);
 
     var length = players.length;
     for(var i=0; i<length; i++) {
       players[i].sendEventToConsumers(packet);
+    }
+  }
+
+  function tick(delta, now) {
+    if((now - last_update) > update_interval) {
+      sendUpdate(now);
+      last_update = now;
     }
   };
 
