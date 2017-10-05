@@ -27,6 +27,7 @@ var Game = function(http) {
     });
 
     setImmediate(tick);
+    space_dud.start();
   };
 
   // Public methods
