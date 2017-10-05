@@ -1,8 +1,8 @@
 var Game = require('./Game.js');
 var MultiplayerRoom = require('./rooms/MultiplayerRoom.js');
 
-var TankGame = function() {
-  var that = new Game();
+var TankGame = function(http) {
+  var that = new Game(http);
   var room = new MultiplayerRoom();
 
   // Public functions
