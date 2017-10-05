@@ -10,6 +10,7 @@ var TankGame = function(http) {
     room.addPlayer(player);
   };
 
+  that.addRoom(room);
   return that;
 };
 

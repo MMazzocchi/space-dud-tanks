@@ -21,7 +21,7 @@ var MultiplayerRoom = function() {
     var packet = createStatePacket(now);
 
     var length = players.length;
-    for(var i=0; i<players.length; i++) {
+    for(var i=0; i<length; i++) {
       player[i].sendEventToConsumers(packet);
     }
   };
