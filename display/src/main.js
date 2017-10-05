@@ -33,15 +33,25 @@ $(function() {
     document.getElementById('submit_player_id').onclick = function(e) {
         var player_id = document.getElementById('player_id').value;
 
-        document.body.innerHTML = "";
-        var game = new Game(document.body, window.innerWidth, window.innerHeight, client);
-
         client.on('player_chosen', function(valid) {
           if(valid) {
-            setupGame(game);
+            client.onEventType('state', function(data) {
+              console.log(data);
+            });
+          } else {
+            console.error("Invalid player choice!");
           }
         });
-        client.selectPlayer(player_id);
+
+//        document.body.innerHTML = "";
+//        var game = new Game(document.body, window.innerWidth, window.innerHeight, client);
+//
+//        client.on('player_chosen', function(valid) {
+//          if(valid) {
+//            setupGame(game);
+//          }
+//        });
+//        client.selectPlayer(player_id);
     };
   }
 
