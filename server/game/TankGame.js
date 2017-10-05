@@ -1,13 +1,13 @@
 var Game = require('./Game.js');
-var ArenaRoom = require('./rooms/ArenaRoom.js');
+var MultiplayerRoom = require('./rooms/MultiplayerRoom.js');
 
 var TankGame = function() {
   var that = new Game();
-  var arena = new ArenaRoom();
+  var room = new MultiplayerRoom();
 
   // Public functions
-  that.addPlayer = function(player, color) {
-    return arena.addPlayer(player, color);
+  that.playerReady = function(player) {
+    room.addPlayer(player);
   };
 
   return that;
