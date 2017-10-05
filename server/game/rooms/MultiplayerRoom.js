@@ -9,6 +9,7 @@ var MultiplayerRoom = function() {
   // Private methods
   function createStatePacket(now) {
     var packet = {
+      'type': 'state',
       'time': now,
       'state': that.createState(now)
     };
