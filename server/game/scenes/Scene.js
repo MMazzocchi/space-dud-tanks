@@ -1,4 +1,4 @@
-var Scene = async function(name, player) {
+var Scene = function(name, player, scene_function) {
 
   function createScenePacket() { 
     var data = {
@@ -23,6 +23,8 @@ var Scene = async function(name, player) {
 
   setImmediate(broadcastScenePacket);
   player.on('consumer_added', sendScenePacket);
+
+  return new Promise(scene_function);
 };
 
 module.exports = Scene;
