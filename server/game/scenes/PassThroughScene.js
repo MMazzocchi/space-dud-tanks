@@ -1,12 +1,11 @@
-var Scene = require('./Scene.js');
+var setupScene = require('./Scene.js');
 
 var PassThroughScene = function(player) {
-  function passThrough(resolve, reject) {
+  function passThrough() {
     player.on('controller_event', player.sendEventToConsumers);
   };
 
-  var that = new Scene('pass_through', player, passThrough);
-  return that;
+  return setupScene('pass_through', player).then(passThrough);
 };
 
 module.exports = PassThroughScene;
