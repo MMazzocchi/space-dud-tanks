@@ -1,6 +1,9 @@
 var setupScene = require('./Scene.js');
+var Controller = require('../controller/Controller.js');
 
 var ControllerSetupScene = function(player, ...event_types) {
+  var controller = new Controller(player);
+
   function requestControllerEvent(type) {
     player.sendEventToConsumers({
       'event_type': 'need_controller_event',
@@ -17,8 +20,10 @@ var ControllerSetupScene = function(player, ...event_types) {
         index += 1;
 
         requestControllerEvent(type);
+        controller.setNextEvent(type, callback);
+
       } else {
-        resolve();
+        resolve(controller);
       }
     };
 

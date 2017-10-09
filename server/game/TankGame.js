@@ -11,9 +11,9 @@ var TankGame = function(http) {
   // Public functions
   that.playerReady = async function(player) {
     await WaitForConsumerScene(player);
-    await ControllerSetupScene(player, 'start', 'throttle', 'brake', 'fire',
-                                       'left', 'right');
-//    room.addPlayer(player);
+    var controller = await ControllerSetupScene(
+      player, 'start', 'throttle', 'brake', 'fire', 'left', 'right');
+    room.addPlayer(player);
   };
 
   that.addRoom(room);
