@@ -23,6 +23,7 @@ var ControllerSetupScene = function(player, ...event_types) {
         controller.setNextEvent(type, callback);
 
       } else {
+        controller.activate();
         resolve(controller);
       }
     };
