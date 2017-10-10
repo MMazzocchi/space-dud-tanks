@@ -15,7 +15,7 @@ var GameClient = function() {
       client.once('player_chosen', function(valid) {
         if(valid === true) {
           setImmediate(function() {
-            connectionReady(client);
+            that.connectionReady(client);
           });
 
           resolve();  

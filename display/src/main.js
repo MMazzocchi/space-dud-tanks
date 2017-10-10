@@ -1,7 +1,7 @@
-var GameClient = require('./GameClient.js');
+var TankGameClient = require('./TankGameClient.js');
 
 $(function() {
-  var game_client = new GameClient();
+  var game_client = new TankGameClient();
 
   document.getElementById('submit_player_id').onclick = function(e) {
     var player_id = document.getElementById('player_id').value;
