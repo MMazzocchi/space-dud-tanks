@@ -14,6 +14,10 @@ var SceneSwitcher = function(connection) {
     });
   };
 
+  that.addScene = function(name, scene) {
+    scenes[name] = scene;
+  };
+
   that.update = function() {
     if(scene !== undefined) {
       scene.update(new Date());
