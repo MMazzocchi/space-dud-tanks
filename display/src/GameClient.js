@@ -2,7 +2,6 @@ var setImmediate = require('timers').setImmediate;
 
 var GameClient = function() {
   var that = {};
-  var connection = undefined;
 
   // Public functions
   that.useDisplayConnection = function(player_id) {
@@ -15,6 +14,10 @@ var GameClient = function() {
     return new Promise(function(resolve, reject) {
       client.once('player_chosen', function(valid) {
         if(valid === true) {
+          setImmediate(function() {
+            connectionReady(client);
+          });
+
           resolve();  
 
         } else {
@@ -26,6 +29,10 @@ var GameClient = function() {
 
   that.useJointConnection = function() {
     throw new Error("Not implemented yet!");
+  };
+
+  that.connectionReady = function(connection) {
+    
   };
 
   return that;
