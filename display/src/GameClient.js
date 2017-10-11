@@ -14,10 +14,12 @@ var GameClient = function() {
     return new Promise(function(resolve, reject) {
       client.once('player_chosen', function(valid) {
         if(valid === true) {
-          setImmediate(function() {
-            that.connectionReady(client);
+          // DEBUG ONLY
+          client.on('event', function(data) {
+            console.log("DEBUG: "+JSON.stringify(data));
           });
 
+          that.connectionReady(client);
           resolve();  
 
         } else {
