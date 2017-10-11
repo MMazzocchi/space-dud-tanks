@@ -1,6 +1,6 @@
 var Scene = require('./Scene.js');
 
-var PassThroughScene = function(connection) {
+var LogScene = function(connection) {
   var that = new Scene();
 
   // Private methods
@@ -19,4 +19,4 @@ var PassThroughScene = function(connection) {
   return that;
 };
 
-module.exports = PassThroughScene;
+module.exports = LogScene;
