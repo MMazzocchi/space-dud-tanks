@@ -17,6 +17,8 @@ var SceneSwitcher = function(connection) {
 
         scene = scenes[name];
         scene.setup();
+      } else {
+        console.warn("The "+name+" scene was requested, but none exists.");
       }
     });
   };
