@@ -8,6 +8,7 @@ var TankGameClient = function() {
   that.connectionReady = function(connection) {
     var scene_switcher = new SceneSwitcher(connection);
     scene_switcher.addScene('controller_setup', new LogScene(connection));
+    scene_switcher.addScene('arena', new LogScene(connection));
   };
 
   return that;
