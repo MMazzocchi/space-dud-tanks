@@ -1,5 +1,6 @@
 var GameClient = require('./GameClient.js');
 var LogScene = require('./scene/LogScene.js');
+var SceneSwitcher = require('./SceneSwitcher.js');
 
 var TankGameClient = function() {
   var that = new GameClient();

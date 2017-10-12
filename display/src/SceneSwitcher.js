@@ -1,4 +1,4 @@
-var Scene = require('./Scene.js');
+var Scene = require('./scene/Scene.js');
 
 var SceneSwitcher = function(connection) {
   var that = {};
