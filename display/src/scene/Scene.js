@@ -1,7 +1,7 @@
 var EventEmitter = require('events');
 
 var Scene = function() {
-  var that = new EventEmitter();;
+  var that = new EventEmitter();
 
   // Public methods
   that.setup = function() {
