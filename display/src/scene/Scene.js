@@ -1,9 +1,16 @@
+var EventEmitter = require('events');
+
 var Scene = function() {
-  var that = {};
+  var that = new EventEmitter();;
 
   // Public methods
-  that.setup = function() {};
-  that.teardown = function() {};
+  that.setup = function() {
+    that.emit('setup');
+  };
+
+  that.teardown = function() {
+    that.emit('teardown');
+  };
 
   return that;
 };

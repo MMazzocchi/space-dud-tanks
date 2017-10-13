@@ -8,13 +8,13 @@ var LogScene = function(connection) {
     console.log(data);
   };
 
-  that.setup = function() {
+  that.on('setup', function() {
     connection.on('event', log);
-  };
+  });
 
-  that.teardown = function() {
+  that.on('teardown', function() {
     connection.off('event', log);
-  };
+  });
 
   return that;
 };
