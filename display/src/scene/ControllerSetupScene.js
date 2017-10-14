@@ -1,6 +1,6 @@
 var Scene = require('./Scene.js');
 
-var ControllerSetupScene = function(connection) {
+var ControllerSetupScene = function(canvas, connection) {
   var that = new Scene();
 
   // Private functions
