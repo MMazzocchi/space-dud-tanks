@@ -2,6 +2,9 @@ var TankGameClient = require('./TankGameClient.js');
 
 $(function() {
   var canvas = $('#canvas-2d')[0];
+  canvas.width = $('body')[0].offsetWidth;
+  canvas.height = $('body')[0].offsetHeight;
+
   var game_client = new TankGameClient(canvas);
 
   document.getElementById('submit_player_id').onclick = function(e) {
