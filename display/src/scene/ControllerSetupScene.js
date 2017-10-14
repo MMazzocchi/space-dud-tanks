@@ -2,11 +2,14 @@ var Scene = require('./Scene.js');
 
 var ControllerSetupScene = function(canvas, connection) {
   var that = new Scene();
-  var ctx = canvas.getContext('2d');
 
+  // Fields
+  const OK_LINE = "............................. OK";
+  var ctx = canvas.getContext('2d');
   var lines = [
-    "Controller Setup",
-    "Press button to assign to:"
+    "CONTROLLER SETUP",
+    "",
+    "Press any button to assign to:"
   ];
 
   // Private functions
@@ -21,24 +24,31 @@ var ControllerSetupScene = function(canvas, connection) {
       ctx.fillRect(0, 0, width, height);
 
       ctx.fillStyle = '#11FF11';
-      ctx.font = '600 12px monospace';
-      ctx.textAlign = 'center';
+      ctx.font = '200 24px monospace';
+      ctx.textAlign = 'left';
 
-      ctx.translate(width / 2, 0);
-
-      var x = 0;
-      var y = 20;
+      var x = 20;
+      var y = 40;
 
       for(var i=0; i<lines.length; i++) {
         ctx.fillText(lines[i], x, y);
-        y += 20;
+        y += 40;
       }
 
     ctx.restore();
   };
 
   function handleEventRequest(data) {
-    lines.push(data.type);
+    var new_line = data.type;
+
+    if(lines.length > 3) {
+      var last_index = lines.length - 1;
+      var last_line = lines[last_index];
+
+      lines[last_index] += " " + OK_LINE.substr(last_line.length);
+    }
+
+    lines.push(new_line);
     draw();
   };
 
