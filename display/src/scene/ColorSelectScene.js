@@ -15,9 +15,29 @@ var ColorSelectScene = function(canvas_switcher, connection) {
   var camera = new THREE.PerspectiveCamera(75, 0.5, 0.1, 10000);
   var renderer = new THREE.WebGLRenderer({ canvas: canvas });
 
-  var model = undefined; 
- 
+  var model = undefined;
+
   // Private methods
+  function showLoading() {
+    var canvas_2d = canvas_switcher.get2dCanvas();
+    var ctx = canvas_2d.getContext('2d');
+
+    ctx.save();
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.font = "200 24px monospace";
+      ctx.fillStyle = "#EEEEEE";
+      ctx.textAlign = "center";
+
+      ctx.translate(width/2, height/2);
+      ctx.fillText("Loading...", 0, 0);
+    ctx.restore();
+
+    canvas_switcher.show2dCanvas();
+  };
+
   function setupLighting() {
     var am_light = new THREE.AmbientLight( 0x707070 );
     scene.add(am_light);
@@ -40,43 +60,43 @@ var ColorSelectScene = function(canvas_switcher, connection) {
     scene.add(platform);
   };
 
-  function changeColor(data) { 
-    if(model !== undefined) {
-      model.material[2].color = new THREE.Color(data.color);
-    }
-  };
-
-  function setup() {
-    width = canvas.width;
-    height = canvas.height;
-
-    renderer.setSize(width, height);
-
+  function setupCamera() {
     camera.aspect = width/height;
     camera.updateProjectionMatrix();
 
     camera.position.z += 12; 
     camera.position.y += 11;
     camera.rotation.x -= Math.PI / 4;
+  };
+
+  function changeColor(data) { 
+    if(model !== undefined) {
+      model.material[2].color = new THREE.Color(data.color);
+    }
+  };
+
+  that.on('setup', function() {
+    showLoading();
 
     TankModelLoader.load().then(function(tank_model) {
+      renderer.setSize(width, height);
+
       setupPlatform();
       setupLighting();
+      setupCamera();
 
       model = tank_model;
       scene.add(model);
 
-    }).catch(function(e) {
-      consle.error(e);
-    });
-  };
+      connection.onEventType('tank_color', changeColor);
+      canvas_switcher.show3dCanvas();
 
-  that.on('setup', function() {
-    connection.onEventType('tank_color', changeColor);
-    canvas_switcher.show3dCanvas();
+    }).catch(function(e) {
+      console.error(e);
+    });
   });
 
-  that.on('setup', function() {
+  that.on('teardown', function() {
     connection.offEventType('tank_color', changeColor);
   });
 
@@ -88,8 +108,6 @@ var ColorSelectScene = function(canvas_switcher, connection) {
 
     renderer.render(scene, camera);
   };
-
-  setup();
 
   return that;
 };
