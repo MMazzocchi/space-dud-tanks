@@ -1,31 +1,36 @@
-var Scene = require('./Scene.js');
-
 var AnimatedScene = function() {
-  var that = new Scene();
+  var that = {};
 
-  // Fields
-  var run = false;
+  that.mixin = function(scene) {
 
-  // Private Methods
-  function animationLoop() {
-    if(run === true) {
+    // Fields
+    var run = false;
+
+    // Private Methods
+    function animationLoop() {
+      if(run === true) {
+        requestAnimationFrame(animationLoop);
+      }
+
+      scene.draw();
+    };
+
+    scene.on('setup', function() {
+      run = true;
       requestAnimationFrame(animationLoop);
-    }
+    });
 
-    that.draw();
+    scene.on('teardown', function() {
+      run = false;
+    });
+
+    // Public Methods
+    scene.draw = function() {};
+
+    return scene;
   };
 
-  that.on('setup', function() {
-    run = true;
-    requestAnimationFrame(animationLoop);
-  });
-
-  that.on('teardown', function() {
-    run = false;
-  });
-
-  // Public Methods
-  that.draw = function() {};
-};
+  return that;
+}();
 
 module.exports = AnimatedScene;
