@@ -1,19 +1,22 @@
 var Scene = require('./Scene.js');
 var AnimatedScene = require('./AnimatedScene.js');
 var THREE = require('../../lib/three.min.js');
+var TankModelLoader = require('../loaders/TankModelLoader.js');
 
 var ColorSelectScene = function(canvas_switcher, connection) {
   var that = AnimatedScene.mixin(new Scene());
-  var canvas = canvas_switcher.get3dCanvas();
 
   // Fields
+  var canvas = canvas_switcher.get3dCanvas();
   var width = canvas.width;
   var height = canvas.height;
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(75, 0.5, 0.1, 10000);
   var renderer = new THREE.WebGLRenderer({ canvas: canvas });
-  
+
+  var model = undefined; 
+ 
   // Private methods
   function setupLighting() {
     var am_light = new THREE.AmbientLight( 0x707070 );
@@ -37,6 +40,12 @@ var ColorSelectScene = function(canvas_switcher, connection) {
     scene.add(platform);
   };
 
+  function changeColor(data) { 
+    if(model !== undefined) {
+      model.material[2].color = new THREE.Color(data.color);
+    }
+  };
+
   function setup() {
     width = canvas.width;
     height = canvas.height;
@@ -50,16 +59,33 @@ var ColorSelectScene = function(canvas_switcher, connection) {
     camera.position.y += 11;
     camera.rotation.x -= Math.PI / 4;
 
-    setupPlatform();
-    setupLighting();
+    TankModelLoader.load().then(function(tank_model) {
+      setupPlatform();
+      setupLighting();
+
+      model = tank_model;
+      scene.add(model);
+
+    }).catch(function(e) {
+      consle.error(e);
+    });
   };
 
   that.on('setup', function() {
+    connection.onEventType('tank_color', changeColor);
     canvas_switcher.show3dCanvas();
+  });
+
+  that.on('setup', function() {
+    connection.offEventType('tank_color', changeColor);
   });
 
   // Public methods
   that.draw = function() {
+    if(model !== undefined) {
+      model.rotation.y += 0.02;
+    }
+
     renderer.render(scene, camera);
   };
 
