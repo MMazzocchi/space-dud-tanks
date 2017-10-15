@@ -1,20 +1,13 @@
 var TankGameClient = require('./TankGameClient.js');
 
 $(function() {
-  var canvas = $('#canvas-2d')[0];
-  canvas.width = $('body')[0].offsetWidth;
-  canvas.height = $('body')[0].offsetHeight;
-
-  var game_client = new TankGameClient(canvas);
+  var game_client = new TankGameClient($('body')[0]);
 
   document.getElementById('submit_player_id').onclick = function(e) {
     var player_id = document.getElementById('player_id').value;
 
     game_client.useDisplayConnection(player_id).then(function() {
-
       $('#player-id-form')[0].style.display = "none";
-      canvas.style.display = "";
-
       console.log("It worked!!!");
 
     }).catch(function(e) {

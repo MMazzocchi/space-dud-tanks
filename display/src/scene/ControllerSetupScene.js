@@ -1,7 +1,8 @@
 var Scene = require('./Scene.js');
 
-var ControllerSetupScene = function(canvas, connection) {
+var ControllerSetupScene = function(canvas_switcher, connection) {
   var that = new Scene();
+  var canvas = canvas_switcher.get2dCanvas();
 
   // Fields
   const OK_LINE = "............................. OK";
@@ -54,13 +55,13 @@ var ControllerSetupScene = function(canvas, connection) {
 
   that.on('setup', function() {
     connection.onEventType('need_controller_event', handleEventRequest);
+    canvas_switcher.show2dCanvas();
+    draw();
   });
 
   that.on('teardown', function() {
     connection.offEventType('need_controller_event', handleEventRequest);
   });
-
-  draw();
 
   return that;
 };

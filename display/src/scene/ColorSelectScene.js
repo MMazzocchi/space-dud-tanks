@@ -2,8 +2,9 @@ var LogScene = require('./LogScene.js');
 var AnimatedScene = require('./AnimatedScene.js');
 var THREE = require('../../lib/three.min.js');
 
-var ColorSelectScene = function(canvas, connection) {
+var ColorSelectScene = function(canvas_switcher, connection) {
   var that = AnimatedScene.mixin(new LogScene(connection));
+  var canvas = canvas_switcher.get3dCanvas();
 
   // Fields
   var width = canvas.width;
@@ -23,6 +24,10 @@ var ColorSelectScene = function(canvas, connection) {
 
     renderer.setSize(width, height);
   };
+
+  that.on('setup', function() {
+    canvas_switcher.show3dCanvas();
+  });
 
   // Public methods
   that.draw = function() {
