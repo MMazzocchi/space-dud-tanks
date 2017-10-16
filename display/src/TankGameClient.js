@@ -14,7 +14,7 @@ var TankGameClient = function(parent_component) {
 
     scene_switcher.addScene('controller_setup',
       new ControllerSetupScene(canvas_switcher, connection));
-    scene_switcher.addScene('arena',
+    scene_switcher.addScene('color_select',
       new ColorSelectScene(canvas_switcher, connection));
   };
 

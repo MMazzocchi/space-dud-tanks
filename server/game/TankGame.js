@@ -3,6 +3,7 @@ var MultiplayerRoom = require('./rooms/MultiplayerRoom.js');
 var ControllerSetupScene = require('./scenes/ControllerSetupScene.js');
 var WaitForConsumerScene = require('./scenes/WaitForConsumerScene.js');
 var ArenaScene = require('./scenes/ArenaScene.js');
+var ColorSelectScene = require('./scenes/ColorSelectScene.js');
 
 var TankGame = function(http) {
   var that = new Game(http);
@@ -15,6 +16,7 @@ var TankGame = function(http) {
 
                      await WaitForConsumerScene(player);
     var controller = await ControllerSetupScene(player, ...EVENT_TYPES);
+    var color      = await ColorSelectScene(player, controller);
                      await ArenaScene(player, room);
   };
 
