@@ -1,43 +1,17 @@
-var Scene = require('./Scene.js');
-var AnimatedScene = require('./AnimatedScene.js');
-var THREE = require('../../lib/three.min.js');
+var TankGameBaseScene = require('./TankGameBaseScene.js');
 var TankModelLoader = require('../loaders/TankModelLoader.js');
 
 var ColorSelectScene = function(canvas_switcher, connection) {
-  var that = AnimatedScene.mixin(new Scene());
+  var that = new TankGameBaseScene(canvas_switcher, connection);
 
   // Fields
-  var canvas = canvas_switcher.get3dCanvas();
-  var width = canvas.width;
-  var height = canvas.height;
-
-  var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(75, 0.5, 0.1, 10000);
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas });
+  var scene = that.getScene();
+  var camera = that.getCamera();
+  var renderer = that.getRenderer();
 
   var model = undefined;
 
   // Private methods
-  function showLoading() {
-    var canvas_2d = canvas_switcher.get2dCanvas();
-    var ctx = canvas_2d.getContext('2d');
-
-    ctx.save();
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "#000000";
-      ctx.fillRect(0, 0, width, height);
-
-      ctx.font = "200 24px monospace";
-      ctx.fillStyle = "#EEEEEE";
-      ctx.textAlign = "center";
-
-      ctx.translate(width/2, height/2);
-      ctx.fillText("Loading...", 0, 0);
-    ctx.restore();
-
-    canvas_switcher.show2dCanvas();
-  };
-
   function setupLighting() {
     var am_light = new THREE.AmbientLight( 0x707070 );
     scene.add(am_light);
@@ -76,8 +50,6 @@ var ColorSelectScene = function(canvas_switcher, connection) {
   };
 
   that.on('setup', function() {
-    showLoading();
-
     TankModelLoader.load().then(function(tank_model) {
       renderer.setSize(width, height);
 
