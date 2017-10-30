@@ -9,7 +9,7 @@ var SceneSwitcher = function(connection) {
 
   // Private methods
   function setup() {
-    connection.onEventType('scene', function(data) {
+    connection.on('scene', function(data) {
       var name = data.scene;
 
       if(scenes[name] !== undefined) {

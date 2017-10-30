@@ -88,7 +88,7 @@ var ColorSelectScene = function(canvas_switcher, connection) {
       model = tank_model;
       scene.add(model);
 
-      connection.onEventType('tank_color', changeColor);
+      connection.on('tank_color', changeColor);
       canvas_switcher.show3dCanvas();
 
     }).catch(function(e) {

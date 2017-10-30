@@ -54,7 +54,7 @@ var ControllerSetupScene = function(canvas_switcher, connection) {
   };
 
   that.on('setup', function() {
-    connection.onEventType('need_controller_event', handleEventRequest);
+    connection.on('need_controller_event', handleEventRequest);
     canvas_switcher.show2dCanvas();
     draw();
   });
