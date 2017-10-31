@@ -2,6 +2,7 @@ var GameClient = require('./GameClient.js');
 var LogScene = require('./scene/LogScene.js');
 var ColorSelectScene = require('./scene/ColorSelectScene.js');
 var ControllerSetupScene = require('./scene/ControllerSetupScene.js');
+var ArenaScene = require('./scene/ArenaScene.js');
 var SceneSwitcher = require('./SceneSwitcher.js');
 var CanvasSwitcher = require('./CanvasSwitcher.js');
 
@@ -16,6 +17,8 @@ var TankGameClient = function(parent_component) {
       new ControllerSetupScene(canvas_switcher, connection));
     scene_switcher.addScene('color_select',
       new ColorSelectScene(canvas_switcher, connection));
+    scene_switcher.addScene('arena',
+      new ArenaScene(canvas_switcher, connection));
   };
 
   return that;
