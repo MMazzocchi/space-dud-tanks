@@ -1,10 +1,14 @@
 var TankGameBaseScene = require('./TankGameBaseScene.js');
 var TankModelLoader = require('../loaders/TankModelLoader.js');
+var THREE = require('../../lib/three.min.js');
 
 var ColorSelectScene = function(canvas_switcher, connection) {
   var that = new TankGameBaseScene(canvas_switcher, connection);
 
   // Fields
+  var width = canvas_switcher.get3dCanvas().width;
+  var height = canvas_switcher.get3dCanvas().height;
+
   var scene = that.getScene();
   var camera = that.getCamera();
   var renderer = that.getRenderer();
@@ -69,7 +73,7 @@ var ColorSelectScene = function(canvas_switcher, connection) {
   });
 
   that.on('teardown', function() {
-    connection.offEventType('tank_color', changeColor);
+    connection.removeListener('tank_color', changeColor);
   });
 
   // Public methods
