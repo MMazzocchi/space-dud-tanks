@@ -60,7 +60,7 @@ var ControllerSetupScene = function(canvas_switcher, connection) {
   });
 
   that.on('teardown', function() {
-    connection.offEventType('need_controller_event', handleEventRequest);
+    connection.removeListener('need_controller_event', handleEventRequest);
   });
 
   return that;
