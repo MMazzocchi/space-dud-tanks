@@ -1,4 +1,8 @@
 var TankGameBaseScene = require('./TankGameBaseScene.js');
+var THREE = require('../../lib/three.min.js');
+var JSONLoader = require('../loaders/JSONLoader.js');
+var CubeTextureLoader = require('../loaders/CubeTextureLoader.js');
+var TankModelLoader = require('../loaders/TankModelLoader.js');
 
 var ArenaScene = function(canvas_switcher, connection) {
   var that = new TankGameBaseScene(canvas_switcher, connection);
@@ -8,13 +12,87 @@ var ArenaScene = function(canvas_switcher, connection) {
   var camera = that.getCamera();
   var renderer = that.getRenderer();
 
-  that.on('setup', function() {
-    canvas_switcher.show3dCanvas();
+  var player_id = connection.getPlayerId();
+  var tank_models = {};
+
+  // Private methods
+  that.on('setup', async function() {
+   await setupScene();
+
+   client.on('room_state', preStartHandleRoomState);
   });
 
   that.on('teardown', function() {
-
   });
+
+  async function preStartHandleRoomState(state) {
+    var objects = state.data.objects;
+    var object_ids = Object.keys(objects);
+
+    for(var i=0; i<object_ids.length; i++) {
+      var object_id = object_ids[i];
+      var object = objects[object_id];
+
+      if(object.type === 'tank') {
+        await processTankData(object);
+
+        if(object.player_id === player_id) {
+          var model = tank_models[player_id];
+
+          model.children[0].visible = false;
+
+          model.add(camera);
+          camera.position.y += 7;
+          camera.position.z -= 3.5;
+
+          camera.rotation.y += Math.PI;
+
+          connecton.removeListener('room_state', preStartHandleRoomState);
+          connection.on('room_state', handleRoomState);
+
+          canvas_switcher.show3dCanvas();
+        }
+      }
+    }
+  };
+
+  async function handleRoomState(state) {
+
+  };
+
+  async function processTankData(tank) {
+    if(tank_models[tank.player_id] === undefined) {
+      var model = await TankModelLoader.load();
+      model.material[2].color = new THREE.Color(data.color);
+
+      scene.add(model);
+      tank_models[tank.player_id] = model;
+    }
+
+    model.position.x = tank.x; 
+    model.position.y = tank.y; 
+    model.position.z = tank.z; 
+
+    model.rotation.y = tank.theta;
+  };
+
+  async function setupScene() {
+    var arena = await JSONLoader.load('/json/arena.json');
+    scene.add(arena);
+
+    var texture = await CubeTextureLoader.load(
+      '/cube_textures/ame_iceflats/');
+    scene.background = texture;
+
+    var am_light = new THREE.AmbientLight( 0x707070 );
+    scene.add(am_light);
+
+    var dir_light = new THREE.DirectionalLight( 0xf9dfae, 0.5 );
+    dir_light.position.x = 0.5;
+    dir_light.position.y = 0.5;
+    dir_light.position.z = 0.5;
+    scene.add(dir_light);
+  };
 
   // Public methods
   that.draw = function() {
