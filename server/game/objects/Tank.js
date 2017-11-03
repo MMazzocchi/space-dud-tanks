@@ -92,6 +92,8 @@ var Tank = function(player_id, x, y, z, theta, color) {
 
     return data;
   };
+
+  return that; 
 };
 
 module.exports = Tank;
