@@ -53,6 +53,11 @@ var MultiplayerRoom = function(update_interval) {
 
   that.addPlayer = function(player) {
     players.push(player);
+
+    player.on('disconnect', function() {
+      var index = players.indexOf(player);
+      players.splice(index, 1);
+    });
   };
 
   setupCallbacks();
