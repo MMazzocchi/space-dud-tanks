@@ -1,10 +1,12 @@
 var setupScene = require('./Scene.js');
 
-var ArenaScene = function(player, room) {
+var ArenaScene = function(player, color, room) {
 
   function enterArena() {
     return new Promise(function(resolve, reject) {
-      room.addPlayer(player);
+      var tank = room.createTank(player, color);
+
+      player.on('disconnect', resolve);
     });
   };
 
