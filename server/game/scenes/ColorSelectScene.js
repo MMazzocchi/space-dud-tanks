@@ -42,7 +42,7 @@ var ColorSelectScene = function(player, controller) {
         controller.removeListener('left', prevColor);
         controller.removeListener('right', nextColor);
 
-        resolve();
+        resolve(COLORS[index]);
       });
     });
   };
