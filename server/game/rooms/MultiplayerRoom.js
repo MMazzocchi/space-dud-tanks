@@ -16,7 +16,7 @@ var MultiplayerRoom = function(update_interval) {
   // Private methods
   function createStatePacket(now) {
     var packet = {
-      'event_type': 'state',
+      'event_type': 'room_state',
       'time': now,
       'state': that.createState(now)
     };
