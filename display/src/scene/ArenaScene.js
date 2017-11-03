@@ -17,43 +17,39 @@ var ArenaScene = function(canvas_switcher, connection) {
 
   // Private methods
   that.on('setup', async function() {
-   await setupScene();
-
-   client.on('room_state', preStartHandleRoomState);
+    await setupScene();
+    connection.once('room_state', preStartHandleRoomState);
   });
 
   that.on('teardown', function() {
   });
 
   async function preStartHandleRoomState(state) {
-    var objects = state.data.objects;
-    var object_ids = Object.keys(objects);
+    var tanks = state.state.tanks;
+    for(var i=0; i<tanks.length; i++) {
+      var tank = tanks[i];
+      await processTankData(tank);
 
-    for(var i=0; i<object_ids.length; i++) {
-      var object_id = object_ids[i];
-      var object = objects[object_id];
+      if(tank.player_id === player_id) {
+        var model = tank_models[player_id];
+        setupPlayersTankModel(model);
 
-      if(object.type === 'tank') {
-        await processTankData(object);
-
-        if(object.player_id === player_id) {
-          var model = tank_models[player_id];
-
-          model.children[0].visible = false;
-
-          model.add(camera);
-          camera.position.y += 7;
-          camera.position.z -= 3.5;
-
-          camera.rotation.y += Math.PI;
-
-          connecton.removeListener('room_state', preStartHandleRoomState);
-          connection.on('room_state', handleRoomState);
-
-          canvas_switcher.show3dCanvas();
-        }
+        connection.on('room_state', handleRoomState);
+        canvas_switcher.show3dCanvas();
+      } else {
+        connection.once('room_state', preStartHandleRoomState);
       }
     }
+  };
+
+  function setupPlayersTankModel(model) {
+    model.children[0].visible = false;
+
+    model.add(camera);
+    camera.position.y += 7;
+    camera.position.z -= 3.5;
+
+    camera.rotation.y += Math.PI;
   };
 
   async function handleRoomState(state) {
@@ -63,7 +59,7 @@ var ArenaScene = function(canvas_switcher, connection) {
   async function processTankData(tank) {
     if(tank_models[tank.player_id] === undefined) {
       var model = await TankModelLoader.load();
-      model.material[2].color = new THREE.Color(data.color);
+      model.material[2].color = new THREE.Color(tank.color);
 
       scene.add(model);
       tank_models[tank.player_id] = model;
