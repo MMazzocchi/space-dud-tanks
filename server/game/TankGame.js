@@ -17,7 +17,7 @@ var TankGame = function(http) {
                      await WaitForConsumerScene(player);
     var controller = await ControllerSetupScene(player, ...EVENT_TYPES);
     var color      = await ColorSelectScene(player, controller);
-                     await ArenaScene(player, color, room);
+                     await ArenaScene(player, color, controller, room);
   };
 
   that.addRoom(room);

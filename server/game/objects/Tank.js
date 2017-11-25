@@ -14,7 +14,7 @@ var Tank = function(player_id, x, y, z, theta, color) {
   var right = 0;
   var throttle = 0;
   var brake = 0;
-  var fire = 0;
+  var firing = 0;
 
   var cooldown = 0;
 
@@ -39,10 +39,10 @@ var Tank = function(player_id, x, y, z, theta, color) {
     if(cooldown > 0) {
       cooldown -= delta;
 
-    } else if(fire === 1) {
+    } else if(firing === 1) {
       cooldown = MAX_COOLDOWN;
     }
-  }
+  };
 
   // Public methods
   that.left = function(value) {
@@ -54,7 +54,7 @@ var Tank = function(player_id, x, y, z, theta, color) {
   };
 
   that.fire = function(value) {
-    fire = value;
+    firing = value;
   };
 
   that.throttle = function(value) {
@@ -65,10 +65,10 @@ var Tank = function(player_id, x, y, z, theta, color) {
     brake = value;
   };
 
-  that.tick = function(delta, speed) {
-    rotate();
-    move();
-    fire();
+  that.tick = function(delta) {
+    rotate(delta);
+    move(delta);
+    fire(delta);
   };
 
   that.getPlayerId = function() { return player_id; };

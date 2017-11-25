@@ -11,6 +11,7 @@ var ArenaRoom = function() {
   that.createTank = function(player, color) {
     var tank = new Tank(player.getId(), 0, 0, 0, 0, color);
     tanks.push(tank);
+    that.on('tick', tank.tick);
 
     player.once('disconnect', function() {
       var index = tanks.indexOf(tank);

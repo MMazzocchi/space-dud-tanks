@@ -53,7 +53,11 @@ var ArenaScene = function(canvas_switcher, connection) {
   };
 
   async function handleRoomState(state) {
-
+    var tanks = state.state.tanks;
+    for(var i=0; i<tanks.length; i++) {
+      var tank = tanks[i];
+      await processTankData(tank);
+    }
   };
 
   async function processTankData(tank) {
@@ -64,6 +68,8 @@ var ArenaScene = function(canvas_switcher, connection) {
       scene.add(model);
       tank_models[tank.player_id] = model;
     }
+
+    model = tank_models[tank.player_id];
 
     model.position.x = tank.x; 
     model.position.y = tank.y; 
@@ -85,7 +91,6 @@ var ArenaScene = function(canvas_switcher, connection) {
 
     var dir_light = new THREE.DirectionalLight( 0xf9dfae, 0.5 );
     dir_light.position.x = 0.5;
-    dir_light.position.y = 0.5;
     dir_light.position.z = 0.5;
     scene.add(dir_light);
   };
