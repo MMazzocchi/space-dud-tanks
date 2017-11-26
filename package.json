@@ -11,7 +11,7 @@
     "space-dud": "^2.6.0"
   },
   "scripts": {
-    "build": "browserify -e display/src/main.js > display/js/bundle.js",
+    "build": "bash ./scripts/build.sh",
     "test": "mocha"
   }
 }
