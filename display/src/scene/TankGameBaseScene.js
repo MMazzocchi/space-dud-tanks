@@ -35,12 +35,20 @@ var TankGameBaseScene = function(canvas_switcher, connection) {
     canvas_switcher.show2dCanvas();
   };
 
-  that.on('setup', showLoading);
+  function setup() {
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+    that.on('setup', showLoading);
+  }
 
   // Public methods
   that.getScene = function() { return scene; };
   that.getCamera = function() { return camera; };
   that.getRenderer = function() { return renderer };
+
+  setup();
 
   return that;
 };
