@@ -5,8 +5,8 @@ var CubeTextureLoader = require('../loaders/CubeTextureLoader.js');
 var TankModelLoader = require('../loaders/TankModelLoader.js');
 var Hud = require('./Hud.js');
 
-var ArenaScene = function(canvas_switcher, connection) {
-  var that = new TankGameBaseScene(canvas_switcher, connection);
+var ArenaScene = function(canvas_switcher, connection, vr) {
+  var that = new TankGameBaseScene(canvas_switcher, connection, vr);
 
   // Fields
   var scene = that.getScene();

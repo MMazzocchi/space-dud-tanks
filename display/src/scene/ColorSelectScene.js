@@ -2,8 +2,8 @@ var TankGameBaseScene = require('./TankGameBaseScene.js');
 var TankModelLoader = require('../loaders/TankModelLoader.js');
 var THREE = require('../../lib/three.min.js');
 
-var ColorSelectScene = function(canvas_switcher, connection) {
-  var that = new TankGameBaseScene(canvas_switcher, connection);
+var ColorSelectScene = function(canvas_switcher, connection, vr) {
+  var that = new TankGameBaseScene(canvas_switcher, connection, vr);
 
   // Fields
   var width = canvas_switcher.get3dCanvas().width;

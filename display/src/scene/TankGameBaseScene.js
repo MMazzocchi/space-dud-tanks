@@ -1,8 +1,9 @@
 var Scene = require('./Scene.js');
 var AnimatedScene = require('./AnimatedScene.js');
 var THREE = require('../../lib/three.min.js');
+require('../../lib/StereoEffect.js');
 
-var TankGameBaseScene = function(canvas_switcher, connection) {
+var TankGameBaseScene = function(canvas_switcher, connection, vr) {
   var that = AnimatedScene.mixin(new Scene());
 
   // Fields
@@ -35,18 +36,32 @@ var TankGameBaseScene = function(canvas_switcher, connection) {
     canvas_switcher.show2dCanvas();
   };
 
+  function setupForMobile() {
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    var mobile_renderer = new THREE.StereoEffect(renderer);
+    mobile_renderer.setSize(width, height);
+
+    renderer = mobile_renderer;
+  };
+
   function setup() {
     renderer.setSize(width, height);
+
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
 
     that.on('setup', showLoading);
-  }
+
+    if(vr === true) {
+      setupForMobile();
+    }
+  };
 
   // Public methods
   that.getScene = function() { return scene; };
   that.getCamera = function() { return camera; };
-  that.getRenderer = function() { return renderer };
+  that.getRenderer = function() { return renderer; };
 
   setup();
 
