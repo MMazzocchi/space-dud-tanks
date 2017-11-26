@@ -3,6 +3,7 @@ var THREE = require('../../lib/three.min.js');
 var JSONLoader = require('../loaders/JSONLoader.js');
 var CubeTextureLoader = require('../loaders/CubeTextureLoader.js');
 var TankModelLoader = require('../loaders/TankModelLoader.js');
+var Hud = require('./Hud.js');
 
 var ArenaScene = function(canvas_switcher, connection) {
   var that = new TankGameBaseScene(canvas_switcher, connection);
@@ -14,6 +15,7 @@ var ArenaScene = function(canvas_switcher, connection) {
 
   var player_id = connection.getPlayerId();
   var tank_models = {};
+  var hud = new Hud();
 
   // Private methods
   that.on('setup', async function() {
@@ -50,6 +52,11 @@ var ArenaScene = function(canvas_switcher, connection) {
     camera.position.z -= 3.5;
 
     camera.rotation.y += Math.PI;
+
+    var sprite = hud.getSprite();
+    sprite.position.z -= 0.5;
+    camera.add(sprite);
+    hud.update();
   };
 
   async function handleRoomState(state) {
@@ -67,6 +74,14 @@ var ArenaScene = function(canvas_switcher, connection) {
 
       scene.add(model);
       tank_models[tank.player_id] = model;
+    }
+
+    if(tank.player_id === player_id) {
+      if(tank.cooldown <= 0) {
+        hud.setReadyToFire(true);
+      } else {
+        hud.setReadyToFire(false);
+      }
     }
 
     model = tank_models[tank.player_id];
