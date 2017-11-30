@@ -13,7 +13,7 @@ var TankGameBaseScene = function(canvas_switcher, connection, vr) {
 
   var scene = new THREE.Scene()
   var camera = new THREE.PerspectiveCamera(75, 0.5, 0.1, 10000);
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas });
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 
   // Private methods
   function showLoading() {
@@ -37,7 +37,7 @@ var TankGameBaseScene = function(canvas_switcher, connection, vr) {
   };
 
   function setupForMobile() {
-    renderer.setPixelRatio(window.devicePixelRatio);
+//    renderer.setPixelRatio(window.devicePixelRatio);
 
     var mobile_renderer = new THREE.StereoEffect(renderer);
     mobile_renderer.setSize(width, height);

@@ -6,11 +6,11 @@ var ArenaScene = require('./scene/ArenaScene.js');
 var SceneSwitcher = require('./SceneSwitcher.js');
 var CanvasSwitcher = require('./CanvasSwitcher.js');
 
-var TankGameClient = function(parent_component) {
+var TankGameClient = function(parent_component, vr) {
   var that = new GameClient();
   var canvas_switcher = new CanvasSwitcher(parent_component);
 
-  that.connectionReady = function(connection, vr) {
+  that.connectionReady = function(connection) {
     var scene_switcher = new SceneSwitcher(connection);
 
     scene_switcher.addScene('controller_setup',
