@@ -15,6 +15,7 @@ var TankGameBaseScene = function(canvas_switcher, connection, vr) {
   var scene = new THREE.Scene()
   var camera = new THREE.PerspectiveCamera(75, 0.5, 0.1, 10000);
   var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+  var mobile_renderer = new THREE.StereoEffect(renderer);
 
   var controls = new THREE.DeviceOrientationControls(camera);
 
@@ -39,32 +40,43 @@ var TankGameBaseScene = function(canvas_switcher, connection, vr) {
     canvas_switcher.show2dCanvas();
   };
 
-  function setupForMobile() {
-//    renderer.setPixelRatio(window.devicePixelRatio);
-
-    var mobile_renderer = new THREE.StereoEffect(renderer);
-    mobile_renderer.setSize(width, height);
-
-    renderer = mobile_renderer;
+  function setup() {
+    that.on('setup', showLoading);
+    resize();
   };
 
-  function setup() {
-    renderer.setSize(width, height);
+  function resize() {
+    width = canvas.width;
+    height = canvas.height;
 
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
 
-    that.on('setup', showLoading);
-
+    renderer.setSize(width, height);
     if(vr === true) {
-      setupForMobile();
+      mobile_renderer.setSize(width, height);
     }
+
+    var ratio = 1;
+    if(window.devicePixelRatio !== undefined) {
+      ratio = window.devicePixelRatio;
+    }
+
+    renderer.setViewport(0, 0, width*ratio, height*ratio);
   };
 
   // Public methods
   that.getScene = function() { return scene; };
   that.getCamera = function() { return camera; };
-  that.getRenderer = function() { return renderer; };
+
+  that.getRenderer = function() {
+    if(vr === true) {
+      return mobile_renderer;
+    } else {
+      return renderer;
+    }
+  };
+
   that.getControls = function() { return controls; };
 
   setup();
