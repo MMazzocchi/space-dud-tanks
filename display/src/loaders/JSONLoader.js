@@ -1,4 +1,4 @@
-var THREE = require('../lib/three.min.js');
+var THREE = require('../../lib/three.min.js');
 
 var JSONLoader = function() {
 

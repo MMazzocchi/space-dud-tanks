@@ -1,31 +1,48 @@
-var Game = function() {
+var EventEmitter = require('events');
+var SpaceDud = require('space-dud');
+
+var Game = function(http) {
   var that = {};
 
   // Fields
-  var rooms = {};
+  var room_hash = {};
+  var last_update = new Date();
+  var clock = new EventEmitter();
+  var space_dud = new SpaceDud(http);
+
+  // Private methods
+  function tick() {
+    var now = new Date();
+    var delta = now - last_update;
+
+    clock.emit('tick', delta, now);
+    last_update = now;
+
+    setImmediate(tick);
+  };
+
+  function setupCallbacks() {
+    setImmediate(function() {
+      space_dud.getGame().on('player_ready', that.playerReady);
+    });
+
+    setImmediate(tick);
+    space_dud.start();
+  };
 
   // Public methods
-  that.registerRoom = function(name, room) {
-    rooms[name] = room;
+  that.addRoom = function(room) {
+    clock.on('tick', room.tick);
   };
 
-  that.getRoom = function(name) {
-    return rooms[name];
+  that.removeRoom = function(room) {
+    clock.removeListener('tick', room.tick);
   };
 
-  that.start = function() {
-    var names = Object.keys(rooms);
-    names.forEach(function(name) {
-      rooms[name].start();
-    });
-  };
+  that.playerReady = function(player) {};
 
-  that.stop = function() {
-    var names = Object.keys(rooms);
-    names.forEach(function(name) {
-      rooms[name].stop();
-    });
-  };
+  // After everything else is done, setup the callbacks
+  setImmediate(setupCallbacks);
 
   return that;
 };

@@ -8,10 +8,10 @@
     "express": "^4.15.3",
     "jquery": "^3.2.1",
     "mocha": "^3.4.2",
-    "space-dud": "^2.0.0"
+    "space-dud": "^2.6.0"
   },
   "scripts": {
-    "build": "browserify -e display/src/main.js > display/js/bundle.js",
+    "build": "bash ./scripts/build.sh",
     "test": "mocha"
   }
 }

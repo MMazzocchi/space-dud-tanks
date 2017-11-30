@@ -1,92 +1,99 @@
-var PointObjectConstructor = require('./PointObjectConstructor.js');
-var Collidable = require('./Collidable.js');
+var EventEmitter = require('events');
 
-var Tank = function() {
-  var TankConstructor = new PointObjectConstructor('tank');
+var Tank = function(player_id, x, y, z, theta, color) {
+  var that = new EventEmitter();
 
-  TankConstructor.addField('player_id', 0);
-  TankConstructor.addField('theta', 0);
-  TankConstructor.addField('color', '#000000');
-  TankConstructor.addField('health', 10);
-  TankConstructor.addField('cooldown', 0);
-
+  // Constants
   const ROT_COEFF = 0.001;
   const THROTTLE_COEFF = 0.05;
   const BRAKE_COEFF = 0.05;
   const MAX_COOLDOWN = 1000;
-  const RADIUS = 5;
 
-  var constructor = function(player_id, x, y, z, theta, color) {
-    var that = new TankConstructor();
-    Collidable.augment(that, RADIUS);
+  // Fields
+  var left = 0;
+  var right = 0;
+  var throttle = 0;
+  var brake = 0;
+  var firing = 0;
 
-    // Fields
-    var left = 0;
-    var right = 0;
-    var throttle = 0;
-    var brake = 0;
-    var fire = 0;
+  var cooldown = 0;
 
-    // Private methods
-    function setup() {
-      that.setPlayerId(player_id);
-      that.setX(x);
-      that.setY(y);
-      that.setZ(z);
-      that.setTheta(theta);
-      that.setColor(color);
-    };
-
-    // Public methods
-    that.left = function(value) {
-      left = value;
-    };
-
-    that.right = function(value) {
-      right = value;
-    };
-
-    that.fire = function(value) {
-      fire = value;
-    };
-
-    that.throttle = function(value) {
-      throttle = value;
-    };
-
-    that.brake = function(value) {
-      brake = value;
-    };
-
-    that.tick = function(delta, speed) {
-      var rot = (left - right) * delta * ROT_COEFF;
-      that.setTheta(that.getTheta() + rot);
-
-      var speed = (throttle * THROTTLE_COEFF) - (brake * BRAKE_COEFF);
-      var dist = delta * speed;
-
-      var dx = Math.sin(that.getTheta()) * dist;
-      var dz = Math.cos(that.getTheta()) * dist;
-
-      that.setX(that.getX() + dx);
-      that.setZ(that.getZ() + dz);
-
-      if(that.getCooldown() > 0) {
-        that.setCooldown(that.getCooldown() - delta);
-
-      } else if(fire === 1) {
-        that.setCooldown(MAX_COOLDOWN);
-        that.emit('fire', player_id, that.getX(), that.getY(), that.getZ(),
-                          that.getTheta());
-      }
-    };
-
-    setup();
-
-    return that;
+  // Private methods
+  function rotate(delta) {
+    var rot = (left - right) * delta * ROT_COEFF;
+    theta += rot;
   };
 
-  return constructor;
-}();
+  function move(delta) {
+    var speed = (throttle * THROTTLE_COEFF) - (brake * BRAKE_COEFF);
+    var dist = delta * speed;
+
+    var dx = Math.sin(theta) * dist;
+    var dz = Math.cos(theta) * dist;
+
+    x += dx;
+    z += dz;
+  };
+
+  function fire(delta) {
+    if(cooldown > 0) {
+      cooldown -= delta;
+
+    } else if(firing === 1) {
+      cooldown = MAX_COOLDOWN;
+    }
+  };
+
+  // Public methods
+  that.left = function(value) {
+    left = value;
+  };
+
+  that.right = function(value) {
+    right = value;
+  };
+
+  that.fire = function(value) {
+    firing = value;
+  };
+
+  that.throttle = function(value) {
+    throttle = value;
+  };
+
+  that.brake = function(value) {
+    brake = value;
+  };
+
+  that.tick = function(delta) {
+    rotate(delta);
+    move(delta);
+    fire(delta);
+  };
+
+  that.getPlayerId = function() { return player_id; };
+  that.getX        = function() { return x; };
+  that.getY        = function() { return y; };
+  that.getZ        = function() { return z; };
+  that.getTheta    = function() { return theta; };
+  that.getColor    = function() { return color; };
+  that.getCooldown = function() { return cooldown; };
+
+  that.getData = function() {
+    var data = {
+      'player_id': player_id,
+      'x': x,
+      'y': y,
+      'z': z,
+      'theta': theta,
+      'color': color,
+      'cooldown': cooldown
+    };
+
+    return data;
+  };
+
+  return that; 
+};
 
 module.exports = Tank;

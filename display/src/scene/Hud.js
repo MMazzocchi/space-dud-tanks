@@ -15,7 +15,7 @@ var Hud = function() {
   var mat = new THREE.SpriteMaterial({ 'map': map });
 
   var ready_to_fire = false;
-  var health = 0;
+  var health = 10;
 
   // Private methods
   function drawHealth() {
@@ -73,7 +73,7 @@ var Hud = function() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       drawCrosshair();
-      drawHealth();
+//      drawHealth();
     ctx.restore();
 
     map.needsUpdate = true;
@@ -92,11 +92,17 @@ var Hud = function() {
   };
 
   that.setHealth = function(new_health) {
-    health = new_health;
+    if(new_health !== health) {
+      health = new_health;
+      draw();
+    }
   };
 
   that.setReadyToFire = function(ready) {
-    ready_to_fire = ready;
+    if(ready !== ready_to_fire) {
+      ready_to_fire = ready;
+      draw();
+    }
   };
 
   draw();

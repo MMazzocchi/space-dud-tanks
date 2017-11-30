@@ -2,11 +2,11 @@
 <html>
     <body>
         <p>Player ID: <span id="player_id">None</span>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/space-dud/ControllerConnection.js"></script>
+        <script src="/space-dud/GamepadConnection.js"></script>
         <script>
 
-var client = new ControllerConnection((player_id) => {
+var client = new GamepadConnection();
+client.on('player_id', (player_id) => {
   document.getElementById('player_id').innerHTML = player_id;
 });
 
