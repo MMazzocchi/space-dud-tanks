@@ -65,6 +65,14 @@ var TankGameBaseScene = function(canvas_switcher, connection, vr) {
     renderer.setViewport(0, 0, width*ratio, height*ratio);
   };
 
+  that.on('setup', function() {
+    window.addEventListener('resize', resize);
+  });
+
+  that.on('teardown', function() {
+    window.removeEventListener('resize', resize);
+  });
+
   // Public methods
   that.getScene = function() { return scene; };
   that.getCamera = function() { return camera; };

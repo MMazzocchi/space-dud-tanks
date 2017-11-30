@@ -7,15 +7,22 @@ var CanvasSwitcher = function(parent_component) {
 
   // Private methods
   function setup() {
-    canvas_2d.width = parent_component.offsetWidth;
-    canvas_2d.height = parent_component.offsetHeight;
     canvas_2d.style.display = "none";
     parent_component.appendChild(canvas_2d);
 
-    canvas_3d.width = parent_component.offsetWidth;
-    canvas_3d.height = parent_component.offsetHeight;
     canvas_3d.style.display = "none";
     parent_component.appendChild(canvas_3d);
+
+    window.addEventListener('resize', resize);
+    resize();
+  };
+
+  function resize() {
+    canvas_2d.width = window.innerWidth;
+    canvas_2d.height = window.innerHeight;
+
+    canvas_3d.width = window.innerWidth;
+    canvas_3d.height = window.innerHeight;
   };
 
   // Public methods
