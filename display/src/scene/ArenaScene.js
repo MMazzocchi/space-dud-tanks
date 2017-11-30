@@ -12,6 +12,7 @@ var ArenaScene = function(canvas_switcher, connection, vr) {
   var scene = that.getScene();
   var camera = that.getCamera();
   var renderer = that.getRenderer();
+  var controls = that.getControls();
 
   var player_id = connection.getPlayerId();
   var tank_models = {};
@@ -113,6 +114,10 @@ var ArenaScene = function(canvas_switcher, connection, vr) {
   // Public methods
   that.draw = function() {
     renderer.render(scene, camera);
+
+    if(vr === true) {
+      controls.update();
+    }
   };
 
   return that;

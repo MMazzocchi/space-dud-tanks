@@ -2,6 +2,7 @@ var Scene = require('./Scene.js');
 var AnimatedScene = require('./AnimatedScene.js');
 var THREE = require('../../lib/three.min.js');
 require('../../lib/StereoEffect.js');
+require('../../lib/DeviceOrientationControls.js');
 
 var TankGameBaseScene = function(canvas_switcher, connection, vr) {
   var that = AnimatedScene.mixin(new Scene());
@@ -14,6 +15,8 @@ var TankGameBaseScene = function(canvas_switcher, connection, vr) {
   var scene = new THREE.Scene()
   var camera = new THREE.PerspectiveCamera(75, 0.5, 0.1, 10000);
   var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+
+  var controls = new THREE.DeviceOrientationControls(camera);
 
   // Private methods
   function showLoading() {
@@ -62,6 +65,7 @@ var TankGameBaseScene = function(canvas_switcher, connection, vr) {
   that.getScene = function() { return scene; };
   that.getCamera = function() { return camera; };
   that.getRenderer = function() { return renderer; };
+  that.getControls = function() { return controls; };
 
   setup();
 
